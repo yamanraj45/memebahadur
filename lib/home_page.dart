@@ -1,5 +1,6 @@
-import 'dart:io';
 import 'dart:async';
+import 'dart:io';
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -15,12 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  
 File _image;
   final picker = ImagePicker();
 
-  Future getImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+  Future getImage(ImageSource source) async {
+    final pickedFile = await picker.getImage(source: source);
 
     setState(() {
       _image = File(pickedFile.path);
@@ -255,6 +256,7 @@ File _image;
               child: Icon(Icons.camera),
               backgroundColor: Colors.red,
               label: 'Camera',
+              onTap:() => getImage(ImageSource.camera),
               labelStyle: TextStyle(fontSize: 18.0),
 
               
@@ -263,7 +265,8 @@ File _image;
               child: Icon(Icons.photo_library),
               backgroundColor: Colors.red,
               label: 'Gallery',
-              onTap:() => {getImage},
+              
+              onTap:() => getImage(ImageSource.gallery),
               labelStyle: TextStyle(fontSize: 18.0),
               
             ),
