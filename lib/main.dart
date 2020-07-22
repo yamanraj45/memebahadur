@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:memebahadur/Home/mainhome.dart';
+
+import 'package:memebahadur/home_page.dart';
 import 'package:memebahadur/template/maintemplate.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
         '/templates': (BuildContext context) => TemplateHome(),
         
       },
-      home: HomeScreen(),
+      home: HomePage(),
     );
   }
 }
