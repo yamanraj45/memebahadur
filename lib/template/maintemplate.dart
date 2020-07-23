@@ -11,30 +11,110 @@ class _TemplateHomeState extends State<TemplateHome> {
     return Scaffold(
       
       appBar: AppBar(title: Text('Template'),),
-      body: ListView(
-        
-        children: <Widget>[
-          SafeArea(child: 
-            SizedBox(
-              height: 50.0,
-              
-              child: Stack(
-              children: <Widget>[
-                Column(children: <Widget>[
+      body: SingleChildScrollView(
+
+        child: 
+        Column(
+          children: <Widget>[
 
 
-                  Row(children: <Widget>[
-                      Text('ASD')
-                  ]),
-                  Row(
-                    children: <Widget>[Text('AD')],
-                  )
+            
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+             Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+             Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+             Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+             Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+             Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
+            Row(children: <Widget>[
+              Text('Hello')
+            ],),
 
 
-                ],)
-              ],
-            ),)
-      ,)],),
+
+          ],
+        ),
+      )
     );
   }
 }

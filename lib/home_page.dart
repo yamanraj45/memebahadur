@@ -5,6 +5,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:memebahadur/ContinueScreen.dart';
+
 import 'package:memebahadur/general_model.dart';
 
 import 'package:memebahadur/wavy_header.dart';
@@ -26,6 +28,10 @@ File _image;
     setState(() {
       _image = File(pickedFile.path);
     });
+     Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ContinueScreen(this._image)));
   }
 
 
@@ -275,7 +281,7 @@ File _image;
               backgroundColor: Colors.red,
               label: 'Template',
               labelStyle: TextStyle(fontSize: 18.0),
-              onTap: () => print('FIRST CHILD')
+              onTap:  () => Navigator.of(context).pushNamed('/templates'),
             ),
           ],
         ),
