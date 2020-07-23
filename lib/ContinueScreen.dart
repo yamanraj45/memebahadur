@@ -40,6 +40,20 @@ class _ContinueScreenState extends State<ContinueScreen> {
           ),
         ],
       ),
-    );
+  bottomNavigationBar:BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          
+          elevation: 8.0,
+          items:[
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xFF3461eb),
+            icon: Icon(Icons.save), title: Text('Save To Template')),
+          BottomNavigationBarItem(
+            backgroundColor: Color(0xFF3461eb),
+            icon: Icon(Icons.save), title: Text('Save To Template')),
+          
+        ],
+
+     ) );
   }
 }

@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import './EditMenu.dart';
-import './FilterList.dart';
+
 import 'package:image/image.dart' as img;
 
 class Editor extends StatefulWidget {
@@ -41,12 +41,7 @@ class EditorState extends State<Editor> {
               width: MediaQuery.of(context).size.width,
               child: _imageWidget,
             ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.13,
-              width: MediaQuery.of(context).size.width,
-              child: FilterList(this),
-              // color: Colors.yellow,
-            ),
+            
           ],
         ),
       ),
