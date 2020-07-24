@@ -23,7 +23,7 @@ class EditMenu extends StatelessWidget {
               VerticalDivider(),
               IconButton(
                 icon: Icon(
-                  Icons.equalizer,
+                  Icons.text_fields,
                   color: Colors.white70,
                 ),
                 onPressed: () {},
@@ -31,7 +31,7 @@ class EditMenu extends StatelessWidget {
               VerticalDivider(),
               IconButton(
                 icon: Icon(
-                  Icons.tune,
+                  Icons.photo,
                   color: Colors.white70,
                 ),
                 onPressed: () {},
