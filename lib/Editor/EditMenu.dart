@@ -15,7 +15,7 @@ class EditMenu extends StatelessWidget {
             children: <Widget>[
               IconButton(
                 icon: Icon(
-                  Icons.brightness_1,
+                  Icons.format_bold,
                   color: Colors.white70,
                 ),
                 onPressed: () {},
@@ -23,7 +23,7 @@ class EditMenu extends StatelessWidget {
               VerticalDivider(),
               IconButton(
                 icon: Icon(
-                  Icons.text_fields,
+                  Icons.format_italic,
                   color: Colors.white70,
                 ),
                 onPressed: () {},
@@ -31,7 +31,7 @@ class EditMenu extends StatelessWidget {
               VerticalDivider(),
               IconButton(
                 icon: Icon(
-                  Icons.photo,
+                  Icons.format_underlined,
                   color: Colors.white70,
                 ),
                 onPressed: () {},
@@ -39,7 +39,7 @@ class EditMenu extends StatelessWidget {
               VerticalDivider(),
               IconButton(
                 icon: Icon(
-                  Icons.undo,
+                  Icons.font_download,
                   color: Colors.white70,
                 ),
                 onPressed: () {
@@ -64,7 +64,7 @@ class EditMenu extends StatelessWidget {
               VerticalDivider(),
               IconButton(
                 icon: Icon(
-                  Icons.save_alt,
+                  Icons.format_size,
                   color: Colors.white70,
                 ),
                 onPressed: () {},
