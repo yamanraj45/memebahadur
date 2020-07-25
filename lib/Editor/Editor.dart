@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
+import 'DragItem.dart';
+
 class Editor extends StatefulWidget {
   final File _imageselected;
   Editor(this._imageselected);
@@ -10,26 +12,40 @@ class Editor extends StatefulWidget {
 }
 
 class EditorState extends State<Editor> {
+  List<DragItem> texts = [];
+
+  _onAddTextPress(Offset offset) {
+    setState(() {
+      texts.add(
+        DragItem(
+          Offset.zero,
+          "Add your text here",
+          Colors.white,
+          offset,
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double heightMultiplier = 0.68;
+    double width = MediaQuery.of(context).size.width;
     File _image = widget._imageselected;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Edit Screen"),
-        actions: <Widget>[
-          FlatButton(child: Icon(Icons.save), onPressed: () {})
-        ],
-      ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(8.00),
           child: Column(
             children: <Widget>[
+              SizedBox(
+                height: 50,
+              ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.68,
-                width: MediaQuery.of(context).size.width,
-                child: Image.file(_image),
+                height: height * heightMultiplier,
+                width: width,
+                child: Stack(children: <Widget>[Image.file(_image)] + texts),
               ),
               SizedBox(
                 height: 50,
@@ -42,7 +58,10 @@ class EditorState extends State<Editor> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.blueAccent)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Offset offset = Offset(8, 58);
+                    _onAddTextPress(offset);
+                  },
                   label: Text('Add Text'),
                   icon: Icon(Icons.text_fields),
                 ),
@@ -51,13 +70,6 @@ class EditorState extends State<Editor> {
           ),
         ),
       ),
-      // bottomNavigationBar: Container(
-      //   height: MediaQuery.of(context).size.height * 0.08,
-      //   width: MediaQuery.of(context).size.width,
-      //   // color: Colors.green,
-      //   color: Colors.black,
-      //   child: EditMenu(),
-      // ),
     );
   }
 }

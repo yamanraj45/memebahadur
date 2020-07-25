@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
                   child: Align(
                       alignment: Alignment.topLeft,
                       child: Image.asset(
-                        'assets/images/name.png',
+                        'assets/images/tvshows.png',
                         height: 40.0,
                         color: Colors.white,
                       )),

@@ -13,7 +13,7 @@ class ContinueScreen extends StatefulWidget {
 class _ContinueScreenState extends State<ContinueScreen> {
   @override
   Widget build(BuildContext context) {
-    File image = widget._imageselected; // yesari access garne
+    File image = widget._imageselected;
     return Scaffold(
         appBar: AppBar(
           title: Text("Continue"),
