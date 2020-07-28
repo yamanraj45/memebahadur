@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       routes: <String, WidgetBuilder>{
         '/templates': (BuildContext context) => TemplateHome(),
+        '/home': (BuildContext context) => HomePage(),
       },
       home: HomePage(),
     );
