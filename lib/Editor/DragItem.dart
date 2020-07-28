@@ -4,35 +4,34 @@ class DragItem extends StatefulWidget {
   final Offset initPos;
   final Offset widgetOffset;
   final String label;
-  final Color itemColor;
+  final Color color;
+  Offset position = Offset(0.0, 0.0);
 
-  DragItem(this.initPos, this.label, this.itemColor, this.widgetOffset);
+  DragItem(this.initPos, this.label, this.widgetOffset,
+      {this.color = Colors.black});
 
   @override
   DragItemState createState() => DragItemState();
 }
 
 class DragItemState extends State<DragItem> {
-  Offset position = Offset(0.0, 0.0);
-
   @override
   void initState() {
     super.initState();
-    position = widget.initPos;
   }
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      left: position.dx,
-      top: position.dy,
+      left: widget.position.dx,
+      top: widget.position.dy,
       child: Draggable(
         child: Container(
           child: Center(
             child: Text(
               widget.label,
               style: TextStyle(
-                color: Colors.red,
+                color: widget.color,
                 decoration: TextDecoration.none,
                 fontSize: 20.0,
               ),
@@ -42,7 +41,7 @@ class DragItemState extends State<DragItem> {
         onDraggableCanceled: (velocity, offset) {
           print(offset);
           setState(() {
-            position = offset - widget.widgetOffset;
+            widget.position = offset - widget.widgetOffset;
           });
         },
         maxSimultaneousDrags: 1,
@@ -52,7 +51,7 @@ class DragItemState extends State<DragItem> {
             child: Text(
               widget.label,
               style: TextStyle(
-                color: Colors.red,
+                color: widget.color,
                 decoration: TextDecoration.none,
                 fontSize: 18.0,
               ),
