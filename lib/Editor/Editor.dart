@@ -14,6 +14,8 @@ class Editor extends StatefulWidget {
 }
 
 class EditorState extends State<Editor> {
+  String bottomText = '';
+  String upperText = '';
   List<DragItem> texts = [];
 
   _onAddTextPress(Offset offset) {
@@ -58,10 +60,19 @@ class EditorState extends State<Editor> {
         .writeAsBytes(img.encodeJpg(decodedImage))
         .then((value) => showDialogBox("Saved"));
 
-    SnackBar savedSnackBar = SnackBar(
-      content: Text('Image Saved'),
+    final snackBar = SnackBar(
+      content: Text('Yay! A SnackBar!'),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
     );
-    Scaffold.of(context).showSnackBar(savedSnackBar);
+
+    // Find the Scaffold in the widget tree and use
+    // it to show a SnackBar.
+    Scaffold.of(context).showSnackBar(snackBar);
   }
 
   showDialogBox(String text) {
@@ -93,7 +104,7 @@ class EditorState extends State<Editor> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double heightMultiplier = 0.68;
+    double heightMultiplier = 0.40;
     double width = MediaQuery.of(context).size.width;
     File _image = widget._imageselected;
 
@@ -104,52 +115,126 @@ class EditorState extends State<Editor> {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                      height: 80,
-                      child: SafeArea(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.arrow_back),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    child: AlertDialog(
-                                      title: Text("Exit"),
-                                      content:
-                                          Text("Have You Saved Your Meme?"),
-                                      actions: <Widget>[
-                                        FlatButton(
-                                          child: Text("Yes"),
-                                          onPressed: () => Navigator.of(context)
-                                              .pushNamed('/home'),
-                                        ),
-                                        FlatButton(
-                                          child: Text("No"),
-                                          onPressed: Navigator.of(context).pop,
-                                        )
-                                      ],
-                                    ));
-                              },
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                _onSavePress();
-                              },
-                              icon: Icon(Icons.save),
-                            )
-                          ],
+                    height: 80,
+                    child: SafeArea(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  child: AlertDialog(
+                                    title: Text("Exit"),
+                                    content: Text("Have You Saved Your Meme?"),
+                                    actions: <Widget>[
+                                      FlatButton(
+                                        child: Text("Yes"),
+                                        onPressed: () => Navigator.of(context)
+                                            .pushNamed('/home'),
+                                      ),
+                                      FlatButton(
+                                        child: Text("No"),
+                                        onPressed: Navigator.of(context).pop,
+                                      )
+                                    ],
+                                  ));
+                            },
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              _onSavePress();
+                            },
+                            icon: Icon(Icons.save),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 50.00),
+                  ),
+                  Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Text(
+                        upperText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 26,
                         ),
                       )),
-                  Container(
-                    height: height * heightMultiplier,
-                    width: width,
-                    alignment: Alignment.center,
-                    child:
-                        Stack(children: <Widget>[Image.file(_image)] + texts),
+                  Column(children: <Widget>[
+                    Container(
+                      color: Colors.black,
+                      height: height * heightMultiplier,
+                      width: width,
+                      alignment: Alignment.bottomCenter,
+                      child: Stack(
+                          alignment: Alignment.center,
+                          children: <Widget>[
+                                Image.file(_image),
+                                Container(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Text(
+                                      bottomText.toUpperCase(),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: Colors.yellow,
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 26,
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            offset: Offset(2.0, 2.0),
+                                            blurRadius: 3.0,
+                                            color: Colors.black87,
+                                          ),
+                                          Shadow(
+                                            offset: Offset(2.0, 2.0),
+                                            blurRadius: 8.0,
+                                            color: Colors.black87,
+                                          ),
+                                        ],
+                                      ),
+                                    ))
+                              ] +
+                              texts),
+                    ),
+                  ]),
+                  Padding(
+                    padding: EdgeInsets.only(top: 20.00),
                   ),
                   SizedBox(
-                    height: 50,
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          hintText: 'Enter Upper Text'),
+                      onChanged: (val) {
+                        setState(() {
+                          upperText = val;
+                        });
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    child: TextField(
+                      textAlign: TextAlign.center,
+                      decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          hintText: 'Enter Bottom Text'),
+                      onChanged: (val) {
+                        setState(() {
+                          bottomText = val;
+                        });
+                      },
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(3.00),
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -166,7 +251,10 @@ class EditorState extends State<Editor> {
                       label: Text('Add Text'),
                       icon: Icon(Icons.text_fields),
                     ),
-                  )
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(3.00),
+                  ),
                 ],
               ),
             ),

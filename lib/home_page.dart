@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
@@ -108,155 +108,140 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                WavyHeader(),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 100.0),
-                    child: Container(
-                      height: 50.0,
-                      margin: const EdgeInsets.all(10.0),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0,
-                      ),
-                      decoration: new BoxDecoration(
-                        color: Color(0xFFFCFCFC).withOpacity(0.3),
-                        borderRadius: new BorderRadius.circular(10.0),
-                      ),
-                      child: TextField(
-                        decoration: InputDecoration(
-                            suffixIcon: Icon(Icons.search),
-                            hintText: 'Search For Templates',
-                            border: InputBorder.none),
+      body: DoubleBackToCloseApp(
+        snackBar: const SnackBar(
+          content: Text('Tap back again to leave'),
+        ),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Stack(
+                children: <Widget>[
+                  WavyHeader(),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 100.0),
+                      child: Container(
+                        height: 50.0,
+                        margin: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                        ),
+                        decoration: new BoxDecoration(
+                          color: Color(0xFFFCFCFC).withOpacity(0.3),
+                          borderRadius: new BorderRadius.circular(10.0),
+                        ),
+                        child: TextField(
+                          decoration: InputDecoration(
+                              suffixIcon: Icon(Icons.search),
+                              hintText: 'Search For Templates',
+                              border: InputBorder.none),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    top: 40.0,
-                    left: 10.0,
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 40.0,
+                      left: 10.0,
+                    ),
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Image.asset(
+                          'assets/images/tvshows.png',
+                          height: 40.0,
+                          color: Colors.white,
+                        )),
+                    // child: Text("Nearby",style: TextStyle(fontSize: 40.0,color: Color(0xFFFCFCFC),fontWeight: FontWeight.bold),)),
                   ),
-                  child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Image.asset(
-                        'assets/images/tvshows.png',
-                        height: 40.0,
-                        color: Colors.white,
-                      )),
-                  // child: Text("Nearby",style: TextStyle(fontSize: 40.0,color: Color(0xFFFCFCFC),fontWeight: FontWeight.bold),)),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10.0,
+                  left: 10.0,
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                left: 10.0,
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Categories",
+                      style: TextStyle(
+                          fontSize: 30.0,
+                          color: Colors.black54,
+                          fontWeight: FontWeight.bold),
+                    )),
               ),
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Categories",
-                    style: TextStyle(
-                        fontSize: 30.0,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
-                  )),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10.0),
-              height: 120.0,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return _buildFruitCategoryList(
-                        context, index, fruitsCategoryList.fruitsCategory);
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                left: 10.0,
+              Container(
+                padding: EdgeInsets.only(left: 10.0),
+                height: 120.0,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 4,
+                    itemBuilder: (context, index) {
+                      return _buildFruitCategoryList(
+                          context, index, fruitsCategoryList.fruitsCategory);
+                    }),
               ),
-              child: Text(
-                "Most Popular",
-                style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10.0,
+                  left: 10.0,
+                ),
+                child: Text(
+                  "Most Popular",
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10.0),
-              height: 220.0,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return _buildPopularList(
-                        context, index, fruitsCategoryList.popular);
-                  }),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                top: 10.0,
-                left: 10.0,
+              Container(
+                padding: EdgeInsets.only(left: 10.0),
+                height: 220.0,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return _buildPopularList(
+                          context, index, fruitsCategoryList.popular);
+                    }),
               ),
-              child: Text(
-                "Homes",
-                style: TextStyle(
-                    fontSize: 30.0,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.bold),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 10.0,
+                  left: 10.0,
+                ),
+                child: Text(
+                  "Homes",
+                  style: TextStyle(
+                      fontSize: 30.0,
+                      color: Colors.black54,
+                      fontWeight: FontWeight.bold),
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(left: 10.0),
-              height: 150.0,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return _buildHomeList(
-                        context, index, fruitsCategoryList.homes);
-                  }),
-            ),
-          ],
+              Container(
+                padding: EdgeInsets.only(left: 10.0),
+                height: 150.0,
+                child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 3,
+                    itemBuilder: (context, index) {
+                      return _buildHomeList(
+                          context, index, fruitsCategoryList.homes);
+                    }),
+              ),
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _currentIndex,
-        elevation: 8.0,
-        items: [
-          BottomNavigationBarItem(
-              backgroundColor: Color(0xFF3461eb),
-              icon: Icon(Icons.home),
-              title: Text('Home')),
-          BottomNavigationBarItem(
-              backgroundColor: Color(0xFF5c7066),
-              icon: Icon(Icons.save),
-              title: Text('My Memes'))
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
       floatingActionButton: SpeedDial(
-        foregroundColor: Color(0xFF5c7066),
+        foregroundColor: Colors.white,
         overlayColor: Color(0xFF5c7066),
         child: Icon(Icons.add),
-        backgroundColor: Colors.lightBlueAccent,
+        backgroundColor: Color(0xFF3461eb),
         shape: CircleBorder(),
         children: [
           SpeedDialChild(
