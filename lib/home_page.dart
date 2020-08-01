@@ -30,6 +30,7 @@ class _HomePageState extends State<HomePage> {
         context, MaterialPageRoute(builder: (context) => Editor(this._image)));
   }
 
+  int _currentIndex = 0;
   Widget _buildPopularList(context, index, List<Popular> listImages) {
     return Container(
       width: 200.0,
@@ -102,8 +103,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +235,26 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
+        currentIndex: _currentIndex,
+        elevation: 8.0,
+        items: [
+          BottomNavigationBarItem(
+              backgroundColor: Color(0xFF3461eb),
+              icon: Icon(Icons.home),
+              title: Text('Home')),
+          BottomNavigationBarItem(
+              backgroundColor: Color(0xFF5c7066),
+              icon: Icon(Icons.save),
+              title: Text('My Memes'))
+        ],
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
       floatingActionButton: SpeedDial(
         foregroundColor: Colors.white,
