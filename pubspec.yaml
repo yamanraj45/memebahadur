@@ -32,8 +32,8 @@ dependencies:
   image: any
   path_provider: any
   double_back_to_close_app: ^1.2.0
-
-  
+  image_gallery_saver: ^1.2.2
+  permission_handler: any
 
 dev_dependencies:
   flutter_test:

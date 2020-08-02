@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 
-class DragItem extends StatefulWidget {
+class DraggableItem extends StatefulWidget {
   final Offset initPos;
   final Offset widgetOffset;
   final String label;
   final Color color;
   Offset position = Offset(0.0, 0.0);
 
-  DragItem(this.initPos, this.label, this.widgetOffset,
+  DraggableItem(this.initPos, this.label, this.widgetOffset,
       {this.color = Colors.black});
 
   @override
-  DragItemState createState() => DragItemState();
+  DraggableItemState createState() => DraggableItemState();
 }
 
-class DragItemState extends State<DragItem> {
+class DraggableItemState extends State<DraggableItem> {
   @override
   void initState() {
     super.initState();
@@ -27,13 +27,14 @@ class DragItemState extends State<DragItem> {
       top: widget.position.dy,
       child: Draggable(
         child: Container(
+          // height: 100,
+          width: 100,
+          color: Colors.red,
           child: Center(
-            child: Text(
-              widget.label,
-              style: TextStyle(
-                color: widget.color,
-                decoration: TextDecoration.none,
-                fontSize: 20.0,
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "hehehe",
+                border: InputBorder.none,
               ),
             ),
           ),

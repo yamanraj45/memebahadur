@@ -1,27 +1,35 @@
 import 'dart:io';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:memebahadur/widgets/MemeText.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:memebahadur/Editor/EditMenu.dart';
+import 'package:memebahadur/Screens/Editor/EditMenu.dart';
 import "package:image/image.dart" as img;
-import 'DragItem.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'DraggableItem.dart';
 
 class Editor extends StatefulWidget {
   final File _imageselected;
   Editor(this._imageselected);
+
   @override
   EditorState createState() => EditorState();
 }
 
 class EditorState extends State<Editor> {
+  static GlobalKey previewContainer = new GlobalKey();
   String bottomText = '';
   String upperText = '';
-  List<DragItem> texts = [];
+  List<DraggableItem> texts = [];
 
   _onAddTextPress(Offset offset) {
     setState(() {
       texts.add(
-        DragItem(
+        DraggableItem(
           Offset.zero,
           "Add your text here",
           offset,
@@ -31,48 +39,15 @@ class EditorState extends State<Editor> {
     });
   }
 
-  _onSavePress() async {
-    // Form image object here
-    var image = widget._imageselected;
-    var imageBytes = image.readAsBytesSync();
-    var decodedImage = img.decodeImage(imageBytes);
-
-    for (var text in texts) {
-      var imageText = text.label;
-      var offset = text.position;
-
-      // Perform offset calculation if necessary
-      // write text to image
-      img.drawString(
-        decodedImage,
-        img.arial_24,
-        offset.dx.toInt(),
-        offset.dx.toInt(),
-        imageText,
-      );
-      print("Writing $imageText");
-    }
-    var appDirectory = await getExternalStorageDirectory();
-    appDirectory.create(recursive: true);
-
-    print(appDirectory.path);
-    File('${appDirectory.path}/myimage.jpg')
-        .writeAsBytes(img.encodeJpg(decodedImage))
-        .then((value) => showDialogBox("Saved"));
-
-    final snackBar = SnackBar(
-      content: Text('Yay! A SnackBar!'),
-      action: SnackBarAction(
-        label: 'Undo',
-        onPressed: () {
-          // Some code to undo the change.
-        },
-      ),
-    );
-
-    // Find the Scaffold in the widget tree and use
-    // it to show a SnackBar.
-    Scaffold.of(context).showSnackBar(snackBar);
+  takeScreenshot() async {
+    RenderRepaintBoundary boundary =
+        previewContainer.currentContext.findRenderObject();
+    ui.Image image = await boundary.toImage(pixelRatio: 5.0);
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+    // _askPermission();
+    ImageGallerySaver.saveImage(pngBytes)
+        .then((value) => print("SAved: $value"));
   }
 
   showDialogBox(String text) {
@@ -124,27 +99,28 @@ class EditorState extends State<Editor> {
                             icon: Icon(Icons.arrow_back),
                             onPressed: () {
                               showDialog(
-                                  context: context,
-                                  child: AlertDialog(
-                                    title: Text("Exit"),
-                                    content: Text("Have You Saved Your Meme?"),
-                                    actions: <Widget>[
-                                      FlatButton(
-                                        child: Text("Yes"),
-                                        onPressed: () => Navigator.of(context)
-                                            .pushNamed('/home'),
-                                      ),
-                                      FlatButton(
-                                        child: Text("No"),
-                                        onPressed: Navigator.of(context).pop,
-                                      )
-                                    ],
-                                  ));
+                                context: context,
+                                child: AlertDialog(
+                                  title: Text("Exit"),
+                                  content: Text("Have You Saved Your Meme?"),
+                                  actions: <Widget>[
+                                    FlatButton(
+                                      child: Text("Yes"),
+                                      onPressed: () => Navigator.of(context)
+                                          .pushNamed('/home'),
+                                    ),
+                                    FlatButton(
+                                      child: Text("No"),
+                                      onPressed: Navigator.of(context).pop,
+                                    )
+                                  ],
+                                ),
+                              );
                             },
                           ),
                           IconButton(
                             onPressed: () {
-                              _onSavePress();
+                              takeScreenshot();
                             },
                             icon: Icon(Icons.save),
                           )
@@ -155,53 +131,46 @@ class EditorState extends State<Editor> {
                   Padding(
                     padding: EdgeInsets.only(bottom: 50.00),
                   ),
-                  Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        upperText,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 26,
-                        ),
-                      )),
-                  Column(children: <Widget>[
-                    Container(
-                      color: Colors.black,
-                      height: height * heightMultiplier,
-                      width: width,
-                      alignment: Alignment.bottomCenter,
-                      child: Stack(
-                          alignment: Alignment.center,
-                          children: <Widget>[
-                                Image.file(_image),
-                                Container(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Text(
-                                      bottomText.toUpperCase(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: Colors.yellow,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 26,
-                                        shadows: <Shadow>[
-                                          Shadow(
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 3.0,
-                                            color: Colors.black87,
-                                          ),
-                                          Shadow(
-                                            offset: Offset(2.0, 2.0),
-                                            blurRadius: 8.0,
-                                            color: Colors.black87,
-                                          ),
-                                        ],
+                  RepaintBoundary(
+                    key: previewContainer,
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            color: Colors.white,
+                            child: Text(
+                              upperText,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 26,
+                              ),
+                            ),
+                          ),
+                          Container(
+                            color: Colors.white,
+                            height: height * heightMultiplier,
+                            width: width,
+                            alignment: Alignment.bottomCenter,
+                            child: Stack(
+                                alignment: Alignment.center,
+                                children: <Widget>[
+                                      Container(
+                                        child: MemeText(bottomText),
                                       ),
-                                    ))
-                              ] +
-                              texts),
+                                      Image.file(_image),
+                                      Container(
+                                        alignment: Alignment.bottomCenter,
+                                        child: MemeText(bottomText),
+                                      )
+                                    ] +
+                                    texts),
+                          ),
+                        ],
+                      ),
                     ),
-                  ]),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 20.00),
                   ),
