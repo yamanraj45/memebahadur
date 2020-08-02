@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -35,44 +36,48 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _navigator[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              title: Text('All Template'), icon: Icon(Icons.border_all)),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.save), title: Text('My Meme'))
-        ],
-      ),
-      floatingActionButton: SpeedDial(
-        foregroundColor: Colors.white,
-        overlayColor: Color(0xFF5c7066),
-        child: Icon(Icons.add),
-        backgroundColor: Color(0xFF3461eb),
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.camera),
-            backgroundColor: Colors.red,
-            label: 'Camera',
-            onTap: () => getImage(ImageSource.camera),
-            labelStyle: TextStyle(fontSize: 18.0),
+        body: DoubleBackToCloseApp(
+          child: _navigator[_currentIndex],
+          snackBar: const SnackBar(
+            content: Text('Tap back again to Exit The App'),
           ),
-          SpeedDialChild(
-            child: Icon(Icons.photo_library),
-            backgroundColor: Colors.red,
-            label: 'Gallery',
-            onTap: () => getImage(ImageSource.gallery),
-            labelStyle: TextStyle(fontSize: 18.0),
-          ),
-        ],
-      ),
-    );
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                title: Text('All Template'), icon: Icon(Icons.border_all)),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.save), title: Text('My Meme'))
+          ],
+        ),
+        floatingActionButton: SpeedDial(
+          foregroundColor: Colors.white,
+          overlayColor: Color(0xFF5c7066),
+          child: Icon(Icons.add),
+          backgroundColor: Color(0xFF3461eb),
+          shape: CircleBorder(),
+          children: [
+            SpeedDialChild(
+              child: Icon(Icons.camera),
+              backgroundColor: Colors.red,
+              label: 'Camera',
+              onTap: () => getImage(ImageSource.camera),
+              labelStyle: TextStyle(fontSize: 18.0),
+            ),
+            SpeedDialChild(
+              child: Icon(Icons.photo_library),
+              backgroundColor: Colors.red,
+              label: 'Gallery',
+              onTap: () => getImage(ImageSource.gallery),
+              labelStyle: TextStyle(fontSize: 18.0),
+            ),
+          ],
+        ));
   }
 }

@@ -6,10 +6,9 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:memebahadur/widgets/MemeText.dart';
-import 'package:path_provider/path_provider.dart';
+
 import 'package:memebahadur/Screens/Editor/EditMenu.dart';
-import "package:image/image.dart" as img;
-import 'package:permission_handler/permission_handler.dart';
+
 import 'DraggableItem.dart';
 
 class Editor extends StatefulWidget {
