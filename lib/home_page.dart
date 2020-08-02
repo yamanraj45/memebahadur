@@ -237,56 +237,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        currentIndex: _currentIndex,
-        elevation: 8.0,
-        items: [
-          BottomNavigationBarItem(
-              backgroundColor: Color(0xFF3461eb),
-              icon: Icon(Icons.home),
-              title: Text('Home')),
-          BottomNavigationBarItem(
-              backgroundColor: Color(0xFF5c7066),
-              icon: Icon(Icons.save),
-              title: Text('My Memes'))
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ),
-      floatingActionButton: SpeedDial(
-        foregroundColor: Colors.white,
-        overlayColor: Color(0xFF5c7066),
-        child: Icon(Icons.add),
-        backgroundColor: Color(0xFF3461eb),
-        shape: CircleBorder(),
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.camera),
-            backgroundColor: Colors.red,
-            label: 'Camera',
-            onTap: () => getImage(ImageSource.camera),
-            labelStyle: TextStyle(fontSize: 18.0),
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.photo_library),
-            backgroundColor: Colors.red,
-            label: 'Gallery',
-            onTap: () => getImage(ImageSource.gallery),
-            labelStyle: TextStyle(fontSize: 18.0),
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.cloud_download),
-            backgroundColor: Colors.red,
-            label: 'Template',
-            labelStyle: TextStyle(fontSize: 18.0),
-            onTap: () => Navigator.of(context).pushNamed('/templates'),
-          ),
-        ],
-      ),
     );
   }
 }
