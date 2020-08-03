@@ -6,9 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:memebahadur/widgets/MemeText.dart';
-
 import 'package:memebahadur/Screens/Editor/EditMenu.dart';
-
 import 'DraggableItem.dart';
 
 class Editor extends StatefulWidget {
@@ -41,12 +39,10 @@ class EditorState extends State<Editor> {
   takeScreenshot() async {
     RenderRepaintBoundary boundary =
         previewContainer.currentContext.findRenderObject();
-    ui.Image image = await boundary.toImage(pixelRatio: 5.0);
+    ui.Image image = await boundary.toImage(pixelRatio: 3.0);
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
-    // _askPermission();
-    ImageGallerySaver.saveImage(pngBytes)
-        .then((value) => print("SAved: $value"));
+    ImageGallerySaver.saveImage(pngBytes).then((value) => print("Saved"));
   }
 
   showDialogBox(String text) {
