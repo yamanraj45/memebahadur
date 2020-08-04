@@ -77,10 +77,11 @@ class NavigationBarState extends State<NavigationBar> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
-          title: Text(
-            'MemeBahadur',
-            style: TextStyle(fontFamily: 'Atma'),
-          ),
+          title: Text('MemeBahadur',
+              style: TextStyle(
+                  fontFamily: 'logo2',
+                  fontWeight: FontWeight.bold,
+                  color: Colors.cyanAccent)),
           centerTitle: true,
         ),
         body: DoubleBackToCloseApp(
@@ -104,8 +105,6 @@ class NavigationBarState extends State<NavigationBar> {
           ],
         ),
         floatingActionButton: SpeedDial(
-          foregroundColor: Colors.black,
-          overlayColor: Colors.black,
           child: Icon(Icons.add),
           shape: CircleBorder(),
           children: [

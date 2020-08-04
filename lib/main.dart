@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       routes: <String, WidgetBuilder>{
-        '/home': (BuildContext context) => HomeScreen(),
+        '/home': (BuildContext context) => NavigationBar(),
       },
     );
   }
