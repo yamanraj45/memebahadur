@@ -23,13 +23,6 @@ class _TemplateState extends State<Template> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[600],
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        title: Text('MemeBahadur'),
-        centerTitle: true,
-      ),
       body: Column(
         children: <Widget>[
           Padding(
