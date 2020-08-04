@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:memebahadur/utils/permissions.dart';
+import 'package:memebahadur/utils/dialogs.dart';
 import 'package:memebahadur/widgets/MemeText.dart';
 import 'package:memebahadur/Screens/Editor/EditMenu.dart';
 import 'DraggableItem.dart';
@@ -43,32 +45,6 @@ class EditorState extends State<Editor> {
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
     ImageGallerySaver.saveImage(pngBytes).then((value) => print("Saved"));
-  }
-
-  showDialogBox(String text) {
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // Create AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Simple Alert"),
-      content: Text(text),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 
   @override
@@ -114,8 +90,16 @@ class EditorState extends State<Editor> {
                             },
                           ),
                           IconButton(
-                            onPressed: () {
-                              takeScreenshot();
+                            onPressed: () async {
+                              bool status = await isStoragePermissionGranted();
+                              if (status) {
+                                takeScreenshot();
+                                showSavingDialog(context);
+                              } else {
+                                showFailedDialog(
+                                    context, "No storage Permission");
+                                await askStoragePermission();
+                              }
                             },
                             icon: Icon(Icons.save),
                           )
