@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
-import 'package:memebahadur/Screens/MyMeme.dart/MyMeme.dart';
+import 'package:memebahadur/Screens/MyMeme/MyMeme.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 
 class NavigationBar extends StatefulWidget {
@@ -110,18 +110,15 @@ class NavigationBarState extends State<NavigationBar> {
           children: [
             SpeedDialChild(
               child: Icon(Icons.camera),
-              backgroundColor: Colors.red,
               label: 'Camera',
               onTap: () => getImage(ImageSource.camera),
-              labelStyle: TextStyle(fontSize: 18.0),
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
             ),
             SpeedDialChild(
-              child: Icon(Icons.photo_library),
-              backgroundColor: Colors.red,
-              label: 'Gallery',
-              onTap: () => getImage(ImageSource.gallery),
-              labelStyle: TextStyle(fontSize: 18.0),
-            ),
+                child: Icon(Icons.photo_library),
+                label: 'Gallery',
+                onTap: () => getImage(ImageSource.gallery),
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
           ],
         ));
   }

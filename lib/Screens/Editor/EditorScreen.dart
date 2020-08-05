@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:memebahadur/utils/permissions.dart';
-import 'package:memebahadur/utils/dialogs.dart';
 import 'package:memebahadur/widgets/MemeText.dart';
 import 'package:memebahadur/Screens/Editor/EditMenu.dart';
+import 'package:memebahadur/utils/permissions.dart';
+import 'package:memebahadur/utils/dialogs.dart';
 import 'DraggableItem.dart';
 
 class Editor extends StatefulWidget {
@@ -67,6 +67,32 @@ class EditorState extends State<Editor> {
     ImageGallerySaver.saveImage(pngBytes).then((value) => print("Saved"));
   }
 
+  showDialogBox(String text) {
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // Create AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Simple Alert"),
+      content: Text(text),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -75,8 +101,7 @@ class EditorState extends State<Editor> {
     File _image = widget._imageselected;
 
     return WillPopScope(
-      onWillPop: () => showExitDialog(),
-      child: Scaffold(
+        child: Scaffold(
           body: Builder(builder: (context) {
             return SingleChildScrollView(
               child: Container(
@@ -142,6 +167,7 @@ class EditorState extends State<Editor> {
                                   alignment: Alignment.center,
                                   children: <Widget>[
                                         Container(
+                                          alignment: Alignment.bottomCenter,
                                           child: MemeText(bottomText),
                                         ),
                                         Image.file(_image),
@@ -221,7 +247,8 @@ class EditorState extends State<Editor> {
             width: MediaQuery.of(context).size.width,
             color: Colors.black,
             child: EditMenu(),
-          )),
-    );
+          ),
+        ),
+        onWillPop: () async => showExitDialog());
   }
 }
