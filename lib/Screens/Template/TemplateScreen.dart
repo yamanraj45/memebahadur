@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 
 import 'TemplateListItem.dart';
 
@@ -54,9 +55,19 @@ class _TemplateState extends State<Template> {
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
               itemBuilder: (BuildContext context, int index) {
-                return TemplateListItem(
-                  templateImage: _templateList[index]['image'],
-                  templateName: _templateList[index]['name'],
+                return InkResponse(
+                  child: TemplateListItem(
+                    templateImage: _templateList[index]['image'],
+                    templateName: _templateList[index]['name'],
+                  ),
+                  onTap: () {
+                    print("Tapped on ${_templateList[index]['image']}");
+                    Image image = Image.asset(_templateList[index]['image']);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => Editor(image)),
+                    );
+                  },
                 );
               },
             ),

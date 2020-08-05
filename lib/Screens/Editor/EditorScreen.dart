@@ -12,7 +12,7 @@ import 'package:memebahadur/utils/dialogs.dart';
 import 'DraggableItem.dart';
 
 class Editor extends StatefulWidget {
-  final File _imageselected;
+  final Image _imageselected;
   Editor(this._imageselected);
 
   @override
@@ -98,7 +98,7 @@ class EditorState extends State<Editor> {
     double height = MediaQuery.of(context).size.height;
     double heightMultiplier = 0.40;
     double width = MediaQuery.of(context).size.width;
-    File _image = widget._imageselected;
+    Image _image = widget._imageselected;
 
     return WillPopScope(
         child: Scaffold(
@@ -170,7 +170,7 @@ class EditorState extends State<Editor> {
                                           alignment: Alignment.bottomCenter,
                                           child: MemeText(bottomText),
                                         ),
-                                        Image.file(_image),
+                                        _image,
                                         Container(
                                           alignment: Alignment.bottomCenter,
                                           child: MemeText(bottomText),

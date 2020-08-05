@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:memebahadur/Screens/MyMeme/MyMeme.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
+import 'package:memebahadur/utils/dialogs.dart';
 
 class NavigationBar extends StatefulWidget {
   @override
@@ -15,18 +16,20 @@ class NavigationBar extends StatefulWidget {
 }
 
 class NavigationBarState extends State<NavigationBar> {
-  File _image;
+  File _imagePath;
   final picker = ImagePicker();
 
   Future getImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
     setState(() {
-      _image = File(pickedFile.path);
+      _imagePath = File(pickedFile.path);
     });
-    // TODO: DISPLAY LOADING SCREEN
+    Image image = Image.file(_imagePath);
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => Editor(this._image)));
+      context,
+      MaterialPageRoute(builder: (context) => Editor(image)),
+    );
   }
 
   int _currentIndex = 0;
