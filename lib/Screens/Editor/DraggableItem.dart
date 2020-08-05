@@ -15,6 +15,7 @@ class DraggableItem extends StatefulWidget {
 }
 
 class DraggableItemState extends State<DraggableItem> {
+  String _text = "Add your text here";
   @override
   void initState() {
     super.initState();
@@ -29,13 +30,23 @@ class DraggableItemState extends State<DraggableItem> {
         child: Container(
           // height: 100,
           width: 100,
-          color: Colors.red,
+          // color: Colors.red,
           child: Center(
             child: TextField(
               decoration: InputDecoration(
-                hintText: "hehehe",
+                hintText: _text,
+                hintStyle: TextStyle(
+                  fontSize: 20.0,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
                 border: InputBorder.none,
               ),
+              onChanged: (text) {
+                setState(() {
+                  _text = text;
+                });
+              },
             ),
           ),
         ),

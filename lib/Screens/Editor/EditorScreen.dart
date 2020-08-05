@@ -21,6 +21,7 @@ class Editor extends StatefulWidget {
 
 class EditorState extends State<Editor> {
   final GlobalKey previewContainer = new GlobalKey();
+  final Offset _offset = Offset(0, 160);
   String bottomText = '';
   String upperText = '';
   List<DraggableItem> texts = [];
@@ -227,8 +228,7 @@ class EditorState extends State<Editor> {
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: Colors.blueAccent)),
                         onPressed: () {
-                          Offset offset = Offset(8, 88);
-                          _onAddTextPress(offset);
+                          _onAddTextPress(_offset);
                         },
                         label: Text('Add Text'),
                         icon: Icon(Icons.text_fields),
