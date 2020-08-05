@@ -20,7 +20,7 @@ class Editor extends StatefulWidget {
 }
 
 class EditorState extends State<Editor> {
-  static GlobalKey previewContainer = new GlobalKey();
+  final GlobalKey previewContainer = new GlobalKey();
   String bottomText = '';
   String upperText = '';
   List<DraggableItem> texts = [];
