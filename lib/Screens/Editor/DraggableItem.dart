@@ -15,12 +15,13 @@ class DraggableItem extends StatefulWidget {
 }
 
 class DraggableItemState extends State<DraggableItem> {
-  String _text = "Add your text here";
+  String _text = "Hello";
   @override
   void initState() {
     super.initState();
   }
 
+  final myController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -33,18 +34,26 @@ class DraggableItemState extends State<DraggableItem> {
           // color: Colors.red,
           child: Center(
             child: TextField(
+              controller: myController,
               decoration: InputDecoration(
                 hintText: _text,
                 hintStyle: TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                    fontSize: 20.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(2.0, 2.0),
+                        blurRadius: 3.0,
+                        color: Colors.black87,
+                      ),
+                    ]),
                 border: InputBorder.none,
               ),
               onChanged: (text) {
                 setState(() {
-                  _text = text;
+                  print(_text);
+                  _text = myController.text;
                 });
               },
             ),

@@ -31,7 +31,7 @@ class EditorState extends State<Editor> {
       texts.add(
         DraggableItem(
           Offset.zero,
-          "Add your text here",
+          "",
           offset,
           color: Colors.red,
         ),
@@ -242,12 +242,6 @@ class EditorState extends State<Editor> {
               ),
             );
           }),
-          bottomNavigationBar: Container(
-            height: MediaQuery.of(context).size.height * 0.08,
-            width: MediaQuery.of(context).size.width,
-            color: Colors.black,
-            child: EditMenu(),
-          ),
         ),
         onWillPop: () async => showExitDialog());
   }

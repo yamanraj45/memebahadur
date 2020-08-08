@@ -8,7 +8,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:memebahadur/Screens/MyMeme/MyMeme.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
-import 'package:memebahadur/utils/dialogs.dart';
 
 class NavigationBar extends StatefulWidget {
   @override
@@ -37,49 +36,16 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-          // Add a ListView to the drawer. This ensures the user can scroll
-          // through the options in the drawer if there isn't enough vertical
-          // space to fit everything.
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              SafeArea(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 50),
-                    ),
-                    ListTile(
-                      title: Text(
-                        'Settings',
-                      ),
-                      onTap: () {
-                        // Update the state of the app
-                        // ...
-                        // Then close the drawer
-                        Navigator.pop(context);
-                      },
-                    ),
-                    ListTile(
-                      title: Text('About Us'),
-                      onTap: () {
-                        // Update the state of the app
-                        // ...
-                        // Then close the drawer
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.transparent,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.info),
+              color: Colors.cyanAccent,
+              onPressed: () {},
+            )
+          ],
           title: Text('MemeBahadur',
               style: TextStyle(
                   fontFamily: 'logo2',
