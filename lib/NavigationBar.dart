@@ -43,7 +43,7 @@ class NavigationBarState extends State<NavigationBar> {
             IconButton(
               icon: Icon(Icons.info),
               color: Colors.cyanAccent,
-              onPressed: () {},
+              onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
             )
           ],
           title: Text('MemeBahadur',
