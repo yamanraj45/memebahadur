@@ -20,9 +20,10 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),
+      themeMode: ThemeMode.dark,
       title: 'MemeBahadur',
       home: SplashScreen(
-        seconds: 3,
+        seconds: 1,
         navigateAfterSeconds: NavigationBar(),
         image: Image.asset('assets/images/logo.png'),
         photoSize: 200,
