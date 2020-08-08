@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
+import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/utils/path.dart';
 import 'package:splashscreen/splashscreen.dart';
 
@@ -38,6 +39,7 @@ class _MyAppState extends State<MyApp> {
       ),
       routes: <String, WidgetBuilder>{
         '/home': (BuildContext context) => NavigationBar(),
+        '/aboutus': (BuildContext context) => AboutUs(),
       },
     );
   }
