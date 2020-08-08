@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:memebahadur/widgets/MemeText.dart';
-import 'package:memebahadur/Screens/Editor/EditMenu.dart';
 import 'package:memebahadur/utils/permissions.dart';
 import 'package:memebahadur/utils/dialogs.dart';
 import 'DraggableItem.dart';
@@ -22,6 +20,7 @@ class Editor extends StatefulWidget {
 class EditorState extends State<Editor> {
   final GlobalKey previewContainer = new GlobalKey();
   final Offset _offset = Offset(0, 160);
+  bool imageEdited = false;
   String bottomText = '';
   String upperText = '';
   List<DraggableItem> texts = [];
@@ -39,24 +38,12 @@ class EditorState extends State<Editor> {
     });
   }
 
-  showExitDialog() {
-    showDialog(
-      context: context,
-      child: AlertDialog(
-        title: Text("Exit"),
-        content: Text("Have You Saved Your Meme?"),
-        actions: <Widget>[
-          FlatButton(
-            child: Text("Yes"),
-            onPressed: () => Navigator.of(context).pushNamed('/home'),
-          ),
-          FlatButton(
-            child: Text("No"),
-            onPressed: Navigator.of(context).pop,
-          )
-        ],
-      ),
-    );
+  _onPressedBack() {
+    if (imageEdited) {
+      showExitDialog(context);
+    } else {
+      Navigator.of(context).pushNamed('/home');
+    }
   }
 
   takeScreenshot() async {
@@ -68,32 +55,6 @@ class EditorState extends State<Editor> {
     ImageGallerySaver.saveImage(pngBytes).then((value) => print("Saved"));
   }
 
-  showDialogBox(String text) {
-    Widget okButton = FlatButton(
-      child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // Create AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Simple Alert"),
-      content: Text(text),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -102,154 +63,160 @@ class EditorState extends State<Editor> {
     Image _image = widget._imageselected;
 
     return WillPopScope(
-        child: GestureDetector(
-          child: Scaffold(
-            body: Builder(
-              builder: (context) {
-                return SingleChildScrollView(
-                  child: Container(
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 80,
-                          child: SafeArea(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Icon(Icons.arrow_back),
-                                  onPressed: () {
-                                    showExitDialog();
-                                  },
-                                ),
-                                IconButton(
-                                  onPressed: () async {
-                                    bool status =
-                                        await isStoragePermissionGranted();
-                                    if (status) {
-                                      takeScreenshot();
-                                      showSavingDialog(context);
-                                    } else {
-                                      showFailedDialog(
-                                          context, "No storage Permission");
-                                      await askStoragePermission();
-                                    }
-                                  },
-                                  icon: Icon(Icons.save),
-                                )
-                              ],
-                            ),
+      child: GestureDetector(
+        child: Scaffold(
+          body: Builder(
+            builder: (context) {
+              return SingleChildScrollView(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(
+                        height: 80,
+                        child: SafeArea(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.arrow_back),
+                                onPressed: _onPressedBack,
+                              ),
+                              IconButton(
+                                onPressed: () async {
+                                  bool status =
+                                      await isStoragePermissionGranted();
+                                  if (status) {
+                                    takeScreenshot();
+                                    showSavingDialog(context);
+                                  } else {
+                                    showFailedDialog(
+                                        context, "No storage Permission");
+                                    await askStoragePermission();
+                                  }
+                                },
+                                icon: Icon(Icons.save),
+                              )
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 50.00),
-                        ),
-                        RepaintBoundary(
-                          key: previewContainer,
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: <Widget>[
-                                Container(
-                                  color: Colors.white,
-                                  child: Text(
-                                    upperText,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 26,
-                                    ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 50.00),
+                      ),
+                      RepaintBoundary(
+                        key: previewContainer,
+                        child: Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                color: Colors.white,
+                                child: Text(
+                                  upperText,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 26,
                                   ),
                                 ),
-                                Container(
-                                  color: Colors.white,
-                                  height: height * heightMultiplier,
-                                  width: width,
-                                  alignment: Alignment.bottomCenter,
-                                  child: Stack(
-                                      alignment: Alignment.center,
-                                      children: <Widget>[
-                                            Container(
-                                              alignment: Alignment.bottomCenter,
-                                              child: MemeText(bottomText),
-                                            ),
-                                            _image,
-                                            Container(
-                                              alignment: Alignment.bottomCenter,
-                                              child: MemeText(bottomText),
-                                            )
-                                          ] +
-                                          texts),
-                                ),
-                              ],
-                            ),
+                              ),
+                              Container(
+                                color: Colors.white,
+                                height: height * heightMultiplier,
+                                width: width,
+                                alignment: Alignment.bottomCenter,
+                                child: Stack(
+                                    alignment: Alignment.center,
+                                    children: <Widget>[
+                                          Container(
+                                            alignment: Alignment.bottomCenter,
+                                            child: MemeText(bottomText),
+                                          ),
+                                          _image,
+                                          Container(
+                                            alignment: Alignment.bottomCenter,
+                                            child: MemeText(bottomText),
+                                          )
+                                        ] +
+                                        texts),
+                              ),
+                            ],
                           ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20.00),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.00),
+                      ),
+                      SizedBox(
+                        child: TextField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              hintText: 'Enter Upper Text'),
+                          onChanged: (val) {
+                            setState(() {
+                              upperText = val;
+                              imageEdited = true;
+                            });
+                          },
                         ),
-                        SizedBox(
-                          child: TextField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                hintText: 'Enter Upper Text'),
-                            onChanged: (val) {
-                              setState(() {
-                                upperText = val;
-                              });
-                            },
-                          ),
+                      ),
+                      SizedBox(
+                        child: TextField(
+                          textAlign: TextAlign.center,
+                          decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20)),
+                              hintText: 'Enter Bottom Text'),
+                          onChanged: (val) {
+                            setState(() {
+                              bottomText = val;
+                              imageEdited = true;
+                            });
+                          },
                         ),
-                        SizedBox(
-                          child: TextField(
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(20)),
-                                hintText: 'Enter Bottom Text'),
-                            onChanged: (val) {
-                              setState(() {
-                                bottomText = val;
-                              });
-                            },
-                          ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(3.00),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton.icon(
+                          padding: EdgeInsets.all(14.00),
+                          color: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.blueAccent)),
+                          onPressed: () {
+                            setState(() {
+                              imageEdited = true;
+                            });
+                            _onAddTextPress(_offset);
+                          },
+                          label: Text('Add Text'),
+                          icon: Icon(Icons.text_fields),
                         ),
-                        Padding(
-                          padding: EdgeInsets.all(3.00),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton.icon(
-                            padding: EdgeInsets.all(14.00),
-                            color: Colors.grey,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(color: Colors.blueAccent)),
-                            onPressed: () {
-                              _onAddTextPress(_offset);
-                            },
-                            label: Text('Add Text'),
-                            icon: Icon(Icons.text_fields),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.all(3.00),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(3.00),
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
+                ),
+              );
+            },
           ),
-          onTap: () {
-            WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-          },
         ),
-        onWillPop: () async => showExitDialog());
+        onTap: () {
+          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+        },
+      ),
+      onWillPop: () {
+        _onPressedBack();
+      },
+    );
   }
 }

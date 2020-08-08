@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart';
 
+showExitDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    child: AlertDialog(
+      title: Text("Exit"),
+      content: Text("Have You Saved Your Meme?"),
+      actions: <Widget>[
+        FlatButton(
+          child: Text("Yes"),
+          onPressed: () => Navigator.of(context).pushNamed('/home'),
+        ),
+        FlatButton(
+          child: Text("No"),
+          onPressed: Navigator.of(context).pop,
+        )
+      ],
+    ),
+  );
+}
+
 void showAlertDialog(BuildContext context,
     {List<Widget> children,
     String title = "",
