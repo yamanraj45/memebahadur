@@ -10,15 +10,30 @@ class Template extends StatefulWidget {
 
 class _TemplateState extends State<Template> {
   final _templateList = [
-    for (int extraImage = 1; extraImage < 15; extraImage++)
+    for (int trendImage = 1; trendImage < 6; trendImage++)
+      {
+        'name': 'Trend $trendImage',
+        'image': 'assets/images/1/Trend ($trendImage).jpg'
+      },
+    for (int pashupatiImage = 1; pashupatiImage < 8; pashupatiImage++)
+      {
+        'name': 'Pashupati $pashupatiImage',
+        'image': 'assets/images/2/Pashupati ($pashupatiImage).jpg'
+      },
+    for (int haribahadurImage = 1; haribahadurImage < 4; haribahadurImage++)
+      {
+        'name': 'Haribahadur $haribahadurImage',
+        'image': 'assets/images/3/Hari ($haribahadurImage).jpg'
+      },
+    for (int herapheriImage = 1; herapheriImage < 6; herapheriImage++)
+      {
+        'name': 'Pashupati $herapheriImage',
+        'image': 'assets/images/4/HeraPheri ($herapheriImage).jpg'
+      },
+    for (int extraImage = 1; extraImage < 19; extraImage++)
       {
         'name': 'Extra $extraImage',
-        'image': 'assets/images/Extra ($extraImage).jpg'
-      },
-    for (int realImage = 1; realImage < 15; realImage++)
-      {
-        'name': 'Real $realImage',
-        'image': 'assets/images/Real ($realImage).jpg'
+        'image': 'assets/images/5/Extra ($extraImage).jpg'
       },
   ];
   @override

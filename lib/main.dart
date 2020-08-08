@@ -24,18 +24,17 @@ class _MyAppState extends State<MyApp> {
       home: SplashScreen(
         seconds: 1,
         navigateAfterSeconds: NavigationBar(),
-        image: Image.asset('assets/images/logo.jpg'),
+        image: Image.asset('assets/images/logo.png'),
         photoSize: 200,
         backgroundColor: Colors.black,
-        loaderColor: Colors.cyanAccent,
+        loaderColor: Colors.grey,
         styleTextUnderTheLoader: TextStyle(
           backgroundColor: Colors.black,
           color: Colors.white,
         ),
         loadingText: Text(
           'Getting Things Ready',
-          style:
-              TextStyle(color: Colors.cyanAccent, fontWeight: FontWeight.bold),
+          style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
         ),
       ),
       routes: <String, WidgetBuilder>{
