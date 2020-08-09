@@ -9,15 +9,6 @@ class AboutUs extends StatelessWidget {
           title: Text('About Us'),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(8.00),
-              child: IconButton(
-                icon: Icon(Icons.share),
-                onPressed: () {},
-              ),
-            )
-          ],
         ),
         body: Container(
           child: Column(
