@@ -8,9 +8,9 @@ showExitDialog(BuildContext context) {
       content: Text("Have You Saved Your Meme?"),
       actions: <Widget>[
         FlatButton(
-          child: Text("Yes"),
-          onPressed: () => Navigator.of(context).pushNamed('/home'),
-        ),
+            child: Text("Yes"),
+            onPressed: () => Navigator.of(context)
+                .pushNamedAndRemoveUntil('/home', (route) => false)),
         FlatButton(
           child: Text("No"),
           onPressed: Navigator.of(context).pop,
