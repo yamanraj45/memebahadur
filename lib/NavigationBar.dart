@@ -37,6 +37,7 @@ class NavigationBarState extends State<NavigationBar> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          leading: null,
           elevation: 0,
           backgroundColor: Colors.transparent,
           actions: <Widget>[

@@ -30,7 +30,7 @@ class _TemplateState extends State<Template> {
         'name': 'Pashupati $herapheriImage',
         'image': 'assets/images/4/HeraPheri ($herapheriImage).jpg'
       },
-    for (int extraImage = 1; extraImage < 19; extraImage++)
+    for (int extraImage = 1; extraImage < 92; extraImage++)
       {
         'name': 'Extra $extraImage',
         'image': 'assets/images/5/Extra ($extraImage).jpg'
@@ -44,22 +44,17 @@ class _TemplateState extends State<Template> {
           Padding(
             padding: const EdgeInsets.only(top: 10.0),
             child: Container(
-              height: 50.0,
-              margin: const EdgeInsets.all(10.0),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20.0,
-              ),
-              decoration: new BoxDecoration(
-                color: Color(0xFFFCFCFC).withOpacity(0.3),
-                borderRadius: new BorderRadius.circular(10.0),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                    suffixIcon: Icon(Icons.search),
-                    hintText: 'Search For Templates',
-                    border: InputBorder.none),
-              ),
-            ),
+                alignment: Alignment.center,
+                height: 50.0,
+                margin: const EdgeInsets.all(10.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
+                ),
+                decoration: new BoxDecoration(
+                  color: Color(0xFFFCFCFC).withOpacity(0.3),
+                  borderRadius: new BorderRadius.circular(10.0),
+                ),
+                child: Text('Create Meme Share Happiness')),
           ),
           Padding(
             padding: EdgeInsets.all(5.00),
