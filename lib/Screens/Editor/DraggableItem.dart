@@ -52,6 +52,8 @@ class DraggableItemState extends State<DraggableItem> {
           child: Container(
             child: IntrinsicWidth(
               child: TextField(
+                keyboardType: TextInputType.multiline,
+                maxLines: null,
                 style: TextStyle(
                   shadows: shadow,
                   fontSize: 20.0,
@@ -73,7 +75,6 @@ class DraggableItemState extends State<DraggableItem> {
             ),
           ),
           onDraggableCanceled: (velocity, offset) {
-            print(offset);
             setState(() {
               widget.position = offset - widget.widgetOffset;
             });

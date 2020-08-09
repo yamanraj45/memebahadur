@@ -76,7 +76,6 @@ class _TemplateState extends State<Template> {
                     templateName: _templateList[index]['name'],
                   ),
                   onTap: () {
-                    print("Tapped on ${_templateList[index]['image']}");
                     Image image = Image.asset(_templateList[index]['image']);
                     Navigator.push(
                       context,
