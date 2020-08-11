@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
+import 'package:memebahadur/Screens/MyMeme/MyMemeScreen.dart';
 
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 
@@ -31,6 +32,8 @@ class NavigationBarState extends State<NavigationBar> {
     );
   }
 
+  int _currentIndex = 0;
+  final navigationScreens = [Template(), MyMemeScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,11 +56,25 @@ class NavigationBarState extends State<NavigationBar> {
           centerTitle: true,
         ),
         body: DoubleBackToCloseApp(
-          child: Template(),
+          child: navigationScreens[_currentIndex],
           snackBar: const SnackBar(
             content: Text('Tap back again to Exit The App'),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            selectedItemColor: Colors.cyanAccent,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home), title: Text('Home')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.save_alt), title: Text('MyMeme'))
+            ]),
         floatingActionButton: SpeedDial(
           child: Icon(Icons.add),
           shape: CircleBorder(),

@@ -36,6 +36,7 @@ dependencies:
   permission_handler: any
   path_provider_ex:
   splashscreen:
+  vector_math:
 
 dev_dependencies:
   flutter_test:
