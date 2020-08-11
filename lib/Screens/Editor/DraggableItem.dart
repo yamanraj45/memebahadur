@@ -50,24 +50,27 @@ class DraggableItemState extends State<DraggableItem> {
       top: widget.position.dy,
       child: Focus(
         onFocusChange: (value) => {setState(() {})},
-        child: GestureDetector(
-          onScaleStart: (ScaleStartDetails details) {
-            _previouScale = _scale;
-            print(details);
-            setState(() {});
-          },
-          onScaleUpdate: (ScaleUpdateDetails details) {
-            _scale = _previouScale * details.scale;
-            print(details);
-            setState(() {});
-          },
-          onScaleEnd: (ScaleEndDetails details) {
-            _previouScale = 1.0;
-            print(details);
-            setState(() {});
-          },
-          child: Draggable(
-            child: Container(
+        child: Draggable(
+          child: Container(
+            child: GestureDetector(
+              onDoubleTap: () {
+                print("tapppp");
+              },
+              onScaleStart: (ScaleStartDetails details) {
+                _previouScale = _scale;
+                print(details);
+                setState(() {});
+              },
+              onScaleUpdate: (ScaleUpdateDetails details) {
+                _scale = _previouScale * details.scale;
+                print(details);
+                setState(() {});
+              },
+              onScaleEnd: (ScaleEndDetails details) {
+                _previouScale = 1.0;
+                print(details);
+                setState(() {});
+              },
               child: IntrinsicWidth(
                 child: SizedBox(
                   child: TextField(
@@ -94,23 +97,23 @@ class DraggableItemState extends State<DraggableItem> {
                 ),
               ),
             ),
-            onDraggableCanceled: (velocity, offset) {
-              setState(() {
-                widget.position = offset - widget.widgetOffset;
-              });
-            },
-            maxSimultaneousDrags: 1,
-            childWhenDragging: Container(),
-            feedback: Container(
-              child: Center(
-                child: Text(
-                  (myController.text == "") ? _text : myController.text,
-                  style: TextStyle(
-                    shadows: shadow,
-                    color: Colors.white,
-                    decoration: TextDecoration.none,
-                    fontSize: 20.0,
-                  ),
+          ),
+          onDraggableCanceled: (velocity, offset) {
+            setState(() {
+              widget.position = offset - widget.widgetOffset;
+            });
+          },
+          maxSimultaneousDrags: 1,
+          childWhenDragging: Container(),
+          feedback: Container(
+            child: Center(
+              child: Text(
+                (myController.text == "") ? _text : myController.text,
+                style: TextStyle(
+                  shadows: shadow,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                  fontSize: 20.0,
                 ),
               ),
             ),
