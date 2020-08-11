@@ -13,29 +13,28 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onScaleStart: (ScaleStartDetails details) {
-        _previouScale = _scale;
-        print(details);
-        setState(() {});
-      },
-      onScaleUpdate: (ScaleUpdateDetails details) {
-        _scale = _previouScale * details.scale;
-        print(details);
-        setState(() {});
-      },
-      onScaleEnd: (ScaleEndDetails details) {
-        _previouScale = 1.0;
-        print(details);
-        setState(() {});
-      },
-      child: Center(
-        child: Transform(
-            transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
-            child: Text(
-              'Helloasdasdasd',
-              style: TextStyle(fontSize: _scale * 20),
-            )),
-      ),
-    );
+        onScaleStart: (ScaleStartDetails details) {
+          _previouScale = _scale;
+          print(details);
+          setState(() {});
+        },
+        onScaleUpdate: (ScaleUpdateDetails details) {
+          _scale = _previouScale * details.scale;
+          print(details);
+          setState(() {});
+        },
+        onScaleEnd: (ScaleEndDetails details) {
+          _previouScale = 1.0;
+          print(details);
+          setState(() {});
+        },
+        child: Center(
+            child: Transform(
+                transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
+                child: SizedBox(
+                    height: _scale * 2000,
+                    child: TextField(
+                      decoration: InputDecoration(hintText: 'asdasdasd'),
+                    )))));
   }
 }

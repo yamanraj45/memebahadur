@@ -39,6 +39,8 @@ class DraggableItemState extends State<DraggableItem> {
         offset: Offset(-1.5, 1.5),
         color: Colors.black),
   ];
+  double _scale = 1.0;
+  double _previouScale = 1.0;
 
   final myController = TextEditingController();
   @override
@@ -48,48 +50,67 @@ class DraggableItemState extends State<DraggableItem> {
       top: widget.position.dy,
       child: Focus(
         onFocusChange: (value) => {setState(() {})},
-        child: Draggable(
-          child: Container(
-            child: IntrinsicWidth(
-              child: TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                style: TextStyle(
-                  shadows: shadow,
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                controller: myController,
-                decoration: InputDecoration(
-                  hintText: _text,
-                  hintStyle: TextStyle(
-                    shadows: shadow,
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    // fontWeight: FontWeight.bold,
+        child: GestureDetector(
+          onScaleStart: (ScaleStartDetails details) {
+            _previouScale = _scale;
+            print(details);
+            setState(() {});
+          },
+          onScaleUpdate: (ScaleUpdateDetails details) {
+            _scale = _previouScale * details.scale;
+            print(details);
+            setState(() {});
+          },
+          onScaleEnd: (ScaleEndDetails details) {
+            _previouScale = 1.0;
+            print(details);
+            setState(() {});
+          },
+          child: Draggable(
+            child: Container(
+              child: IntrinsicWidth(
+                child: SizedBox(
+                  child: TextField(
+                    keyboardType: TextInputType.multiline,
+                    maxLines: null,
+                    style: TextStyle(
+                      shadows: shadow,
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    controller: myController,
+                    decoration: InputDecoration(
+                      hintText: _text,
+                      hintStyle: TextStyle(
+                        shadows: shadow,
+                        fontSize: 20.0,
+                        color: Colors.white,
+                        // fontWeight: FontWeight.bold,
+                      ),
+                      border: InputBorder.none,
+                    ),
                   ),
-                  border: InputBorder.none,
                 ),
               ),
             ),
-          ),
-          onDraggableCanceled: (velocity, offset) {
-            setState(() {
-              widget.position = offset - widget.widgetOffset;
-            });
-          },
-          maxSimultaneousDrags: 1,
-          childWhenDragging: Container(),
-          feedback: Container(
-            child: Center(
-              child: Text(
-                (myController.text == "") ? _text : myController.text,
-                style: TextStyle(
-                  shadows: shadow,
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 20.0,
+            onDraggableCanceled: (velocity, offset) {
+              setState(() {
+                widget.position = offset - widget.widgetOffset;
+              });
+            },
+            maxSimultaneousDrags: 1,
+            childWhenDragging: Container(),
+            feedback: Container(
+              child: Center(
+                child: Text(
+                  (myController.text == "") ? _text : myController.text,
+                  style: TextStyle(
+                    shadows: shadow,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
+                    fontSize: 20.0,
+                  ),
                 ),
               ),
             ),
