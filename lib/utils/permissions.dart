@@ -6,6 +6,11 @@ var permissions = [
 
 askPermissions() async {
   await permissions.request();
+  while (!await isStoragePermissionGranted()) {
+    // if (!await isStoragePermissionGranted()) {
+    await askStoragePermission();
+  }
+  // }}
 }
 
 Future<bool> isStoragePermissionGranted() async {
