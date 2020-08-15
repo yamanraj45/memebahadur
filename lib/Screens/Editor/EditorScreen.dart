@@ -196,7 +196,7 @@ class EditorState extends State<Editor> {
                             });
                             _onAddTextPress(_offset);
                           },
-                          label: Text('Add Text'),
+                          label: Text('Add Extra Text'),
                           icon: Icon(Icons.text_fields),
                         ),
                       ),
