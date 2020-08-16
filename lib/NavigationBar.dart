@@ -76,6 +76,8 @@ class NavigationBarState extends State<NavigationBar> {
                   icon: Icon(Icons.save_alt), title: Text('MyMeme'))
             ]),
         floatingActionButton: SpeedDial(
+          curve: Curves.decelerate,
+          overlayColor: Colors.transparent,
           child: Icon(Icons.add),
           shape: CircleBorder(),
           children: [
