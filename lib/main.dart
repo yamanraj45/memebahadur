@@ -3,6 +3,7 @@ import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/utils/path.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:memebahadur/utils/permissions.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     PathUtils.getDataDir();
+    askPermissions();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       darkTheme: ThemeData.dark(),

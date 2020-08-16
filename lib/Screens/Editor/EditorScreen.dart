@@ -165,8 +165,31 @@ class EditorState extends State<Editor> {
                             },
                           ),
                         ),
+<<<<<<< HEAD
                         Padding(
                           padding: EdgeInsets.all(5.00),
+=======
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(3.00),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: RaisedButton.icon(
+                          padding: EdgeInsets.all(14.00),
+                          color: Colors.grey,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(color: Colors.blueAccent)),
+                          onPressed: () {
+                            setState(() {
+                              imageEdited = true;
+                            });
+                            _onAddTextPress(_offset);
+                          },
+                          label: Text('Add Extra Text'),
+                          icon: Icon(Icons.text_fields),
+>>>>>>> d577ba9468a40ca58c87a2d63140b4b6947ace26
                         ),
                         SizedBox(
                           child: TextField(
