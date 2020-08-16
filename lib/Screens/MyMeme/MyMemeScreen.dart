@@ -35,7 +35,7 @@ class SavedImageListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(3.00),
-        child: savedImage != ''
+        child: savedImage != null
             ? FittedBox(
                 fit: BoxFit.cover,
                 child: Image.file(savedImage),
@@ -43,7 +43,6 @@ class SavedImageListItem extends StatelessWidget {
             : Center(
                 child: Text(
                   'No Meme Created',
-                  style: TextStyle(color: Colors.white),
                 ),
               ));
   }

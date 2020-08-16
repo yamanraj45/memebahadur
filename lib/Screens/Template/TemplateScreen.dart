@@ -41,49 +41,6 @@ class _TemplateState extends State<Template> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Container(
-            alignment: Alignment.bottomCenter,
-            height: MediaQuery.of(context).size.height * 0.20,
-            child: Stack(
-              children: <Widget>[
-                ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: <Widget>[
-                    Card(
-                      shadowColor: Colors.grey,
-                      child: Image.asset('assets/images/logo.png'),
-                      elevation: 8.00,
-                    ),
-                    Card(
-                      shadowColor: Colors.grey,
-                      child: Image.asset('assets/images/logo.png'),
-                      elevation: 8.00,
-                    ),
-                    Card(
-                      shadowColor: Colors.grey,
-                      child: Image.asset('assets/images/logo.png'),
-                      elevation: 8.00,
-                    ),
-                    Card(
-                      shadowColor: Colors.grey,
-                      child: Image.asset('assets/images/logo.png'),
-                      elevation: 8.00,
-                    ),
-                    Card(
-                      shadowColor: Colors.grey,
-                      child: Image.asset('assets/images/logo.png'),
-                      elevation: 8.00,
-                    ),
-                    Card(
-                      shadowColor: Colors.grey,
-                      child: Image.asset('assets/images/logo.png'),
-                      elevation: 8.00,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
           Padding(padding: EdgeInsets.all(5.00)),
           Expanded(
             child: GridView.builder(
