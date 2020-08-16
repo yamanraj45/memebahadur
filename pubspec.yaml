@@ -37,6 +37,8 @@ dependencies:
   path_provider_ex:
   splashscreen:
   local_image_provider:
+  storage_path:
+  
  
 
 dev_dependencies:
