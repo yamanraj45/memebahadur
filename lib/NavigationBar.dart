@@ -92,6 +92,11 @@ class NavigationBarState extends State<NavigationBar> {
                 label: 'Gallery',
                 onTap: () => getImage(ImageSource.gallery),
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
+            SpeedDialChild(
+                child: Icon(Icons.screen_lock_portrait),
+                label: 'Tweet',
+                onTap: () => Navigator.pushNamed(context, '/tweet'),
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
           ],
         ));
   }
