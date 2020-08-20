@@ -30,6 +30,7 @@ dependencies:
   flutter_speed_dial:
   image_picker: ^0.6.7+4
   image: any
+  
   path_provider: any
   double_back_to_close_app: ^1.2.0
   image_gallery_saver: ^1.2.2

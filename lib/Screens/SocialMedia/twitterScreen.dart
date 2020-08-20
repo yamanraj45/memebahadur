@@ -14,7 +14,7 @@ class _TweetState extends State<Tweet> {
   static var txdate = DateTime.now();
   int hour = txdate.hour;
   int min = txdate.minute;
-  String date = DateFormat.yMMMd().format(txdate);
+
   String platform = 'iPhone';
   String retweetcomment = '45';
   String likes = '45';
@@ -24,6 +24,11 @@ class _TweetState extends State<Tweet> {
   File _avatar;
   File twitterImage;
   final picker = ImagePicker();
+  static int day = txdate.day;
+  static int month = txdate.month;
+  static int year = txdate.year;
+
+  String date = DateFormat.yMMMd().format(txdate);
 
   Future getAvatar() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
@@ -45,7 +50,18 @@ class _TweetState extends State<Tweet> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Twitter Text'),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.share),
+              onPressed: () {},
+            ),
+            IconButton(
+              icon: Icon(Icons.save),
+              onPressed: () {},
+            ),
+          ],
         ),
         body: SafeArea(
             child: SingleChildScrollView(
@@ -58,274 +74,6 @@ class _TweetState extends State<Tweet> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.90,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Divider(
-                                    color: Colors.grey,
-                                    height: 10.0,
-                                  ),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[]),
-                                  Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text(
-                                          'Edit The Picture Above With THe Table Below',
-                                          style: TextStyle(
-                                            fontSize: 20.00,
-                                          ),
-                                        ),
-                                        TextField(
-                                          onChanged: (value) {
-                                            setState(() {
-                                              name = value;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            hintText: 'Enter Account Name',
-                                          ),
-                                        ),
-                                        TextField(
-                                          onChanged: (value) {
-                                            setState(() {
-                                              handle = value;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                              hintText: 'Enter Username'),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ])),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.90,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[]),
-                                  Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        SizedBox(
-                                          child: Row(
-                                            children: <Widget>[
-                                              Text('Image On Tweet '),
-                                              Switch(
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    isImage = value;
-                                                  });
-                                                },
-                                                value: isImage,
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        isImage
-                                            ? SizedBox(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceEvenly,
-                                                  children: <Widget>[
-                                                    RaisedButton(
-                                                      child: Text('Camera'),
-                                                      onPressed: () =>
-                                                          getTwitterImage(
-                                                              ImageSource
-                                                                  .camera),
-                                                    ),
-                                                    RaisedButton(
-                                                      child: Text('Gallery'),
-                                                      onPressed: () =>
-                                                          getTwitterImage(
-                                                              ImageSource
-                                                                  .gallery),
-                                                    )
-                                                  ],
-                                                ),
-                                              )
-                                            : Container()
-                                      ],
-                                    ),
-                                  ),
-                                ])),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.90,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[]),
-                                  Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                                flex: 3,
-                                                child: TextField(
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  decoration: InputDecoration(
-                                                      hintText: 'Dare'),
-                                                )),
-                                            Text('\t'),
-                                            Expanded(
-                                                flex: 3,
-                                                child: TextField(
-                                                  decoration: InputDecoration(
-                                                      hintText: 'Year'),
-                                                )),
-                                            Text('\t'),
-                                            Expanded(
-                                                flex: 3,
-                                                child: TextField(
-                                                  keyboardType:
-                                                      TextInputType.datetime,
-                                                  decoration: InputDecoration(
-                                                      hintText: 'Month'),
-                                                ))
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ])),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.90,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[]),
-                                  Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Expanded(
-                                              flex: 3,
-                                              child: TextField(
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    retweetcomment = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                    hintText: 'Retweet'),
-                                              ),
-                                            ),
-                                            Text('\t'),
-                                            Expanded(
-                                              flex: 3,
-                                              child: TextField(
-                                                onChanged: (value) {
-                                                  setState(() {
-                                                    likes = value;
-                                                  });
-                                                },
-                                                decoration: InputDecoration(
-                                                    hintText: ' Like'),
-                                              ),
-                                            ),
-                                            Text('\t'),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ])),
-                        Container(
-                            width: MediaQuery.of(context).size.width * 0.90,
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[]),
-                                  Container(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Row(
-                                          children: <Widget>[
-                                            Text('Android'),
-                                            Spacer(),
-                                            Flexible(
-                                              child: RadioListTile(
-                                                  value: 'Android',
-                                                  groupValue: platform,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      platform = value;
-                                                    });
-                                                  }),
-                                            ),
-                                            Text('iPhone'),
-                                            Flexible(
-                                              child: RadioListTile(
-                                                  value: 'iPhone',
-                                                  groupValue: platform,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      platform = value;
-                                                    });
-                                                  }),
-                                            )
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    child: Container(
-                                      color: Colors.grey,
-                                    ),
-                                    height: 30.0,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                  )
-                                ])),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -430,7 +178,11 @@ class _TweetState extends State<Tweet> {
                                 ],
                               ),
                               Column(
-                                children: <Widget>[Text('\t $date ')],
+                                children: <Widget>[
+                                  hour == null
+                                      ? Text('\t $date ')
+                                      : Text('\t $day $month $year')
+                                ],
                               ),
                               Column(
                                 children: <Widget>[
@@ -514,6 +266,255 @@ class _TweetState extends State<Tweet> {
                         Padding(
                           padding: EdgeInsets.all(5.00),
                         ),
+                      ])),
+              Padding(padding: EdgeInsets.all(30.00)),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[]),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text(
+                                'Edit The Picture Above With THe Table Below',
+                                style: TextStyle(
+                                  fontSize: 20.00,
+                                ),
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    name = value;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  hintText: 'Enter Account Name',
+                                ),
+                              ),
+                              TextField(
+                                onChanged: (value) {
+                                  setState(() {
+                                    handle = value;
+                                  });
+                                },
+                                decoration:
+                                    InputDecoration(hintText: 'Enter Username'),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ])),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[]),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              SizedBox(
+                                child: Row(
+                                  children: <Widget>[
+                                    Text('Image On Tweet '),
+                                    Switch(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isImage = value;
+                                        });
+                                      },
+                                      value: isImage,
+                                    )
+                                  ],
+                                ),
+                              ),
+                              isImage
+                                  ? SizedBox(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: <Widget>[
+                                          RaisedButton(
+                                            child: Text('Camera'),
+                                            onPressed: () => getTwitterImage(
+                                                ImageSource.camera),
+                                          ),
+                                          RaisedButton(
+                                            child: Text('Gallery'),
+                                            onPressed: () => getTwitterImage(
+                                                ImageSource.gallery),
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : Container()
+                            ],
+                          ),
+                        ),
+                      ])),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[]),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: RaisedButton(
+                                      child: Text('Change Date'),
+                                      onPressed: () => showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(1800),
+                                              lastDate: DateTime(2500))
+                                          .then((value) {
+                                        setState(() {
+                                          year = value.year;
+                                          month = value.month;
+                                          day = value.day;
+                                        });
+                                      }),
+                                    ),
+                                  ),
+                                  Spacer(),
+                                  Expanded(
+                                    child: RaisedButton(
+                                        child: Text('Change Time'),
+                                        onPressed: () => {
+                                              showTimePicker(
+                                                      context: context,
+                                                      initialTime: TimeOfDay(
+                                                          hour: 12, minute: 00))
+                                                  .then((value) {
+                                                setState(() {
+                                                  hour = value.hour;
+                                                  min = value.minute;
+                                                });
+                                              })
+                                            }),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ])),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[]),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextField(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          retweetcomment = value;
+                                        });
+                                      },
+                                      decoration:
+                                          InputDecoration(hintText: 'Retweet'),
+                                    ),
+                                  ),
+                                  Text('\t'),
+                                  Expanded(
+                                    flex: 3,
+                                    child: TextField(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          likes = value;
+                                        });
+                                      },
+                                      decoration:
+                                          InputDecoration(hintText: ' Like'),
+                                    ),
+                                  ),
+                                  Text('\t'),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ])),
+              Container(
+                  width: MediaQuery.of(context).size.width * 0.90,
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[]),
+                        Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text('Android'),
+                                  Spacer(),
+                                  Flexible(
+                                    child: RadioListTile(
+                                        value: 'Android',
+                                        groupValue: platform,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            platform = value;
+                                          });
+                                        }),
+                                  ),
+                                  Text('iPhone'),
+                                  Flexible(
+                                    child: RadioListTile(
+                                        value: 'iPhone',
+                                        groupValue: platform,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            platform = value;
+                                          });
+                                        }),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                        )
                       ])),
             ],
           )),

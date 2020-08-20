@@ -195,6 +195,8 @@ class EditorState extends State<Editor> {
                 );
               },
             ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
             floatingActionButton: showFab
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
