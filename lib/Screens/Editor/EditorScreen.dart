@@ -1,5 +1,8 @@
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:memebahadur/utils/path.dart';
+import 'package:path/path.dart' as paths;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +11,8 @@ import 'package:memebahadur/widgets/MemeText.dart';
 import 'package:memebahadur/utils/permissions.dart';
 import 'package:memebahadur/utils/dialogs.dart';
 import 'DraggableItem.dart';
+import 'dart:typed_data';
+import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 class Editor extends StatefulWidget {
   final Image _imageselected;
@@ -23,8 +28,10 @@ class EditorState extends State<Editor> {
   bool imageEdited = false;
   String bottomText = '';
   String upperText = '';
+  bool savedbeforeshare = false;
   List<DraggableItem> texts = [];
 
+  String filed;
   _onAddTextPress(Offset offset) {
     setState(() {
       texts.add(
@@ -35,6 +42,21 @@ class EditorState extends State<Editor> {
           color: Colors.red,
         ),
       );
+    });
+  }
+
+  _onshareButtonPress() {
+    takeScreenshot();
+
+    PathUtils.getDataDir().then((directory) async {
+      List<FileSystemEntity> files = directory.listSync();
+      List<String> filename = files.map((e) => paths.basename(e.path)).toList();
+      filename.sort((a, b) => b.compareTo(a));
+
+      String latestFile = filename[0];
+      print('${directory.path}/$latestFile');
+      Share.file("MemeBahadur", "MemeBahadur Image",
+          File('${directory.path}/$latestFile').readAsBytesSync(), "image/jpg");
     });
   }
 
@@ -81,20 +103,30 @@ class EditorState extends State<Editor> {
                                 icon: Icon(Icons.arrow_back),
                                 onPressed: _onPressedBack,
                               ),
-                              IconButton(
-                                onPressed: () async {
-                                  bool status =
-                                      await isStoragePermissionGranted();
-                                  if (status) {
-                                    takeScreenshot();
-                                    showSavingDialog(context);
-                                  } else {
-                                    showFailedDialog(
-                                        context, "No storage Permission");
-                                    await askStoragePermission();
-                                  }
-                                },
-                                icon: Icon(Icons.save),
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    IconButton(
+                                      onPressed: () => _onshareButtonPress(),
+                                      icon: Icon(Icons.share),
+                                    ),
+                                    IconButton(
+                                      onPressed: () async {
+                                        bool status =
+                                            await isStoragePermissionGranted();
+                                        if (status) {
+                                          takeScreenshot();
+                                          showSavingDialog(context);
+                                        } else {
+                                          showFailedDialog(
+                                              context, "No storage Permission");
+                                          await askStoragePermission();
+                                        }
+                                      },
+                                      icon: Icon(Icons.save),
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
