@@ -57,6 +57,7 @@ class EditorState extends State<Editor> {
 
   @override
   Widget build(BuildContext context) {
+    final bool showFab = MediaQuery.of(context).viewInsets.bottom == 0.0;
     double height = MediaQuery.of(context).size.height;
     double heightMultiplier = 0.40;
     double width = MediaQuery.of(context).size.width;
@@ -65,151 +66,159 @@ class EditorState extends State<Editor> {
     return WillPopScope(
       child: GestureDetector(
         child: Scaffold(
-          body: Builder(
-            builder: (context) {
-              return SingleChildScrollView(
-                child: Container(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 80,
-                        child: SafeArea(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              IconButton(
-                                icon: Icon(Icons.arrow_back),
-                                onPressed: _onPressedBack,
-                              ),
-                              IconButton(
-                                onPressed: () async {
-                                  bool status =
-                                      await isStoragePermissionGranted();
-                                  if (status) {
-                                    takeScreenshot();
-                                    showSavingDialog(context);
-                                  } else {
-                                    showFailedDialog(
-                                        context, "No storage Permission");
-                                    await askStoragePermission();
-                                  }
-                                },
-                                icon: Icon(Icons.save),
-                              )
-                            ],
+            body: Builder(
+              builder: (context) {
+                return SingleChildScrollView(
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 80,
+                          child: SafeArea(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(Icons.arrow_back),
+                                  onPressed: _onPressedBack,
+                                ),
+                                IconButton(
+                                  onPressed: () async {
+                                    bool status =
+                                        await isStoragePermissionGranted();
+                                    if (status) {
+                                      takeScreenshot();
+                                      showSavingDialog(context);
+                                    } else {
+                                      showFailedDialog(
+                                          context, "No storage Permission");
+                                      await askStoragePermission();
+                                    }
+                                  },
+                                  icon: Icon(Icons.save),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(bottom: 50.00),
-                      ),
-                      RepaintBoundary(
-                        key: previewContainer,
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                color: Colors.white,
-                                child: Text(
-                                  upperText,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 26,
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 50.00),
+                        ),
+                        RepaintBoundary(
+                          key: previewContainer,
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  color: Colors.white,
+                                  child: Text(
+                                    upperText,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 26,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                color: Colors.white,
-                                height: height * heightMultiplier,
-                                width: width,
-                                alignment: Alignment.bottomCenter,
-                                child: Stack(
-                                    alignment: Alignment.center,
-                                    children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.bottomCenter,
-                                            child: MemeText(bottomText),
-                                          ),
-                                          _image,
-                                          Container(
-                                            alignment: Alignment.bottomCenter,
-                                            child: MemeText(bottomText),
-                                          )
-                                        ] +
-                                        texts),
-                              ),
-                            ],
+                                Container(
+                                  color: Colors.white,
+                                  height: height * heightMultiplier,
+                                  width: width,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Stack(
+                                      alignment: Alignment.center,
+                                      children: <Widget>[
+                                            Container(
+                                              alignment: Alignment.bottomCenter,
+                                              child: MemeText(bottomText),
+                                            ),
+                                            _image,
+                                            Container(
+                                              alignment: Alignment.bottomCenter,
+                                              child: MemeText(bottomText),
+                                            )
+                                          ] +
+                                          texts),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.00),
-                      ),
-                      SizedBox(
-                        child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              hintText: 'Enter Upper Text'),
-                          onChanged: (val) {
-                            setState(() {
-                              upperText = val;
-                              imageEdited = true;
-                            });
-                          },
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.00),
                         ),
-                      ),
-                      SizedBox(
-                        child: TextField(
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              hintText: 'Enter Bottom Text'),
-                          onChanged: (val) {
-                            setState(() {
-                              bottomText = val;
-                              imageEdited = true;
-                            });
-                          },
+                        SizedBox(
+                          child: TextField(
+                            keyboardType: TextInputType.multiline,
+                            maxLines: null,
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Enter Upper Text'),
+                            onChanged: (val) {
+                              setState(() {
+                                upperText = val;
+                                imageEdited = true;
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(3.00),
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: RaisedButton.icon(
-                          padding: EdgeInsets.all(14.00),
-                          color: Colors.grey,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18.0),
-                              side: BorderSide(color: Colors.blueAccent)),
-                          onPressed: () {
-                            setState(() {
-                              imageEdited = true;
-                            });
-                            _onAddTextPress(_offset);
-                          },
-                          label: Text('Add Extra Text'),
-                          icon: Icon(Icons.text_fields),
+                        Padding(
+                          padding: EdgeInsets.all(5.00),
                         ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(3.00),
-                      ),
-                    ],
+                        SizedBox(
+                          child: TextField(
+                            textAlign: TextAlign.center,
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                hintText: 'Enter Bottom Text'),
+                            onChanged: (val) {
+                              setState(() {
+                                bottomText = val;
+                                imageEdited = true;
+                              });
+                            },
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(3.00),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(3.00),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          ),
-        ),
+                );
+              },
+            ),
+            floatingActionButton: showFab
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      FloatingActionButton(
+                        heroTag: 1,
+                        child: Icon(Icons.photo),
+                        tooltip: 'Add Photo',
+                        onPressed: null,
+                      ),
+                      FloatingActionButton(
+                        onPressed: () {
+                          setState(() {
+                            imageEdited = true;
+                          });
+                          _onAddTextPress(_offset);
+                        },
+                        heroTag: 2,
+                        tooltip: 'Add Additional Text',
+                        child: Icon(Icons.text_fields),
+                      )
+                    ],
+                  )
+                : null),
         onTap: () {
           WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         },

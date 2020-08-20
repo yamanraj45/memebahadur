@@ -1,5 +1,6 @@
+import 'dart:io';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math_64.dart' show Vector3;
 
 class MyMemeScreen extends StatefulWidget {
   @override
@@ -7,34 +8,42 @@ class MyMemeScreen extends StatefulWidget {
 }
 
 class _MyMemeScreenState extends State<MyMemeScreen> {
-  double _scale = 1.0;
-  double _previouScale = 1.0;
+  static String path = '/storage/emulated/0/memebahadur/';
+  static Directory main = Directory(path);
+  static List allItem = main.listSync();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onScaleStart: (ScaleStartDetails details) {
-          _previouScale = _scale;
-          print(details);
-          setState(() {});
-        },
-        onScaleUpdate: (ScaleUpdateDetails details) {
-          _scale = _previouScale * details.scale;
-          print(details);
-          setState(() {});
-        },
-        onScaleEnd: (ScaleEndDetails details) {
-          _previouScale = 1.0;
-          print(details);
-          setState(() {});
-        },
-        child: Center(
-            child: Transform(
-                transform: Matrix4.diagonal3(Vector3(_scale, _scale, _scale)),
-                child: SizedBox(
-                    height: _scale * 2000,
-                    child: TextField(
-                      decoration: InputDecoration(hintText: 'asdasdasd'),
-                    )))));
+    return GridView.builder(
+      itemCount: allItem.length,
+      gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+      itemBuilder: (BuildContext context, int index) {
+        return InkResponse(
+          child: SavedImageListItem(savedImage: allItem[index]),
+        );
+      },
+    );
+  }
+}
+
+class SavedImageListItem extends StatelessWidget {
+  final savedImage;
+  SavedImageListItem({this.savedImage});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.all(3.00),
+        child: savedImage != null
+            ? FittedBox(
+                fit: BoxFit.cover,
+                child: Image.file(savedImage),
+              )
+            : Center(
+                child: Text(
+                  'No Meme Created',
+                ),
+              ));
   }
 }
