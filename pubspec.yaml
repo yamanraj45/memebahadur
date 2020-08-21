@@ -38,6 +38,8 @@ dependencies:
   splashscreen:
   local_image_provider:
   storage_path:
+  shared_preferences:
+  provider:
   
  
 

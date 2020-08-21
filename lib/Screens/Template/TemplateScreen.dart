@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
+import 'package:memebahadur/utils/Theme.dart';
+import 'package:provider/provider.dart';
 
 import 'TemplateListItem.dart';
 
@@ -41,6 +43,15 @@ class _TemplateState extends State<Template> {
     return Scaffold(
       body: Column(
         children: <Widget>[
+          Consumer<ThemeNotifier>(
+            builder: (cibtext, notifier, child) => SwitchListTile(
+              title: Text('DarkMode'),
+              onChanged: (val) {
+                notifier.toogleTheme();
+              },
+              value: notifier.darkTheme,
+            ),
+          ),
           Padding(padding: EdgeInsets.all(5.00)),
           Expanded(
             child: GridView.builder(
