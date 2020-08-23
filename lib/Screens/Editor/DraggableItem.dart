@@ -49,27 +49,45 @@ class DraggableItemState extends State<DraggableItem> {
       child: Focus(
         onFocusChange: (value) => {setState(() {})},
         child: Draggable(
-          child: Container(
-            child: IntrinsicWidth(
-              child: TextField(
-                keyboardType: TextInputType.multiline,
-                maxLines: null,
-                style: TextStyle(
-                  shadows: shadow,
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-                controller: myController,
-                decoration: InputDecoration(
-                  hintText: _text,
-                  hintStyle: TextStyle(
+          child: GestureDetector(
+            onScaleStart: (ScaleStartDetails details) {
+              // _previouScale = _scale;
+              print(details);
+              setState(() {});
+            },
+            onScaleUpdate: (ScaleUpdateDetails details) {
+              // _scale = _previouScale * details.scale;
+              print(details);
+              setState(() {});
+            },
+            onScaleEnd: (ScaleEndDetails details) {
+              // _previouScale = 1.0;
+              print(details);
+              setState(() {});
+            },
+            onDoubleTap: () => print("*" * 100),
+            child: Container(
+              child: IntrinsicWidth(
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: null,
+                  style: TextStyle(
                     shadows: shadow,
                     fontSize: 20.0,
                     color: Colors.white,
-                    // fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.bold,
                   ),
-                  border: InputBorder.none,
+                  controller: myController,
+                  decoration: InputDecoration(
+                    hintText: _text,
+                    hintStyle: TextStyle(
+                      shadows: shadow,
+                      fontSize: 20.0,
+                      color: Colors.white,
+                      // fontWeight: FontWeight.bold,
+                    ),
+                    border: InputBorder.none,
+                  ),
                 ),
               ),
             ),

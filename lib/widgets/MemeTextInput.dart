@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class MemeTextInput extends StatefulWidget {
   final String text;
-  final onTap;
-  MemeTextInput({@required this.text, this.onTap});
+  final bool isEnabled;
+
+  MemeTextInput({@required this.text, @required this.isEnabled});
 
   @override
   _MemeTextInputState createState() => _MemeTextInputState();
@@ -11,7 +12,7 @@ class MemeTextInput extends StatefulWidget {
 
 class _MemeTextInputState extends State<MemeTextInput> {
   final TextEditingController _controller = TextEditingController();
-  final String defaultText = "Kaushal Add your text here";
+  final String defaultText = "Add your text here";
   var shadow = [
     Shadow(
         // bottomLeft
@@ -35,8 +36,7 @@ class _MemeTextInputState extends State<MemeTextInput> {
   Widget build(BuildContext context) {
     return Container(
       child: TextField(
-        onTap: widget.onTap,
-        enableInteractiveSelection: false,
+        enabled: widget.isEnabled,
         keyboardType: TextInputType.multiline,
         maxLines: null,
         style: TextStyle(
