@@ -11,7 +11,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
   String dislikeCount = "K";
   String likeCount = "M";
   String viewsCount = "B";
-  String subscribercount = 'B';
+  String subscribernumcount = 'B';
   String title = 'Create Meme Share Happiness';
   String views = '45';
   String like = '45';
@@ -21,6 +21,8 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
   final picker = ImagePicker();
   File videoImage;
   File _avatar;
+  String postedTime = '4';
+  String videopostedTime = 'weeks';
 
   Future getVideoImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
@@ -58,6 +60,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
       body: SingleChildScrollView(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
@@ -77,14 +80,16 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                       children: <Widget>[
                         Row(
                           children: <Widget>[
-                            SizedBox(),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Text(
-                                '  $title',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
+                            Padding(
+                              padding: EdgeInsets.only(left: 15.00),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Text(
+                                  '  $title',
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ),
                           ],
@@ -92,9 +97,12 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                         Icon(Icons.arrow_drop_down)
                       ],
                     ),
-                    Text(
-                      "   $views$viewsCount views \t 4 weeks ago",
-                      style: TextStyle(fontSize: 13),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.00),
+                      child: Text(
+                        "   $views$viewsCount views \t $postedTime $videopostedTime ago",
+                        style: TextStyle(fontSize: 13),
+                      ),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.00),
@@ -210,287 +218,353 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                   ],
                 ),
               ),
-              Container(
-                alignment: Alignment.center,
-                width: MediaQuery.of(context).size.width * 0.9,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text('Use Form Below To Edit The Text Above'),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        RaisedButton(
-                          child: Text('Gallery'),
-                          onPressed: () => getVideoImage(ImageSource.gallery),
+              Text(
+                'Use Form Below To Edit The Text Above',
+                textAlign: TextAlign.center,
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                child: Container(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          RaisedButton(
+                            child: Text('Gallery'),
+                            onPressed: () => getVideoImage(ImageSource.gallery),
+                          ),
+                          RaisedButton(
+                            onPressed: () => getVideoImage(ImageSource.camera),
+                            child: Text('Camera'),
+                          )
+                        ],
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            title = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            hintText: 'Enter Title ',
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.grey)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red))),
+                      ),
+                      TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            channelName = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            hintText: 'Enter Channel Name ',
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                                borderSide: BorderSide(color: Colors.grey)),
+                            focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(color: Colors.red))),
+                      ),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.41,
+                                  child: TextField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        like = value;
+                                      });
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        hintText: 'Subscriber',
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.red))),
+                                  ),
+                                ),
+                                Spacer(),
+                                SizedBox(
+                                  child: DropdownButton(
+                                    hint: Text(''),
+                                    value: subscribernumcount,
+                                    items: [
+                                      DropdownMenuItem(
+                                        child: Text('K'),
+                                        value: 'K',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('M'),
+                                        value: 'M',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('B'),
+                                        value: 'B',
+                                      ),
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        subscribernumcount = value;
+                                      });
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
                         ),
-                        RaisedButton(
-                          onPressed: () => getVideoImage(ImageSource.camera),
-                          child: Text('Camera'),
-                        )
-                      ],
-                    ),
-                    TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          title = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          hintText: 'Enter Title ',
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red))),
-                    ),
-                    TextField(
-                      onChanged: (value) {
-                        setState(() {
-                          channelName = value;
-                        });
-                      },
-                      decoration: InputDecoration(
-                          hintText: 'Enter Channel Name ',
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.grey)),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.red))),
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
+                      ),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.41,
+                                  child: TextField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        like = value;
+                                      });
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        hintText: 'Views',
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.red))),
+                                  ),
+                                ),
+                                Spacer(),
+                                DropdownButton(
+                                  hint: Text(''),
+                                  value: viewsCount,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text('K'),
+                                      value: 'K',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('M'),
+                                      value: 'M',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('B'),
+                                      value: 'B',
+                                    ),
+                                  ],
                                   onChanged: (value) {
                                     setState(() {
-                                      like = value;
+                                      viewsCount = value;
                                     });
                                   },
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                      hintText: 'Subscriber',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.red))),
-                                ),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('K'),
-                                    value: 'K',
-                                    groupValue: subscriberCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        subscriberCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('M'),
-                                    value: 'M',
-                                    groupValue: subscriberCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        subscriberCount = value;
-                                      });
-                                    }),
-                              ),
-                            ],
-                          ),
-                        ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.41,
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        like = value;
+                                      });
+                                    },
+                                    decoration: InputDecoration(
+                                        hintText: 'Like',
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.red))),
+                                  ),
+                                ),
+                                Spacer(),
+                                DropdownButton(
+                                  hint: Text(''),
+                                  value: likeCount,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text('K'),
+                                      value: 'K',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('M'),
+                                      value: 'M',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('B'),
+                                      value: 'B',
+                                    ),
+                                  ],
                                   onChanged: (value) {
                                     setState(() {
-                                      like = value;
+                                      likeCount = value;
                                     });
                                   },
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                      hintText: 'Views',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.red))),
-                                ),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('K'),
-                                    value: 'K',
-                                    groupValue: viewsCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        viewsCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('M'),
-                                    value: 'M',
-                                    groupValue: viewsCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        viewsCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('B'),
-                                    value: 'B',
-                                    groupValue: viewsCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        viewsCount = value;
-                                      });
-                                    }),
-                              )
-                            ],
-                          ),
-                        ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
-                                  keyboardType: TextInputType.number,
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.41,
+                                  child: TextField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        like = value;
+                                      });
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        hintText: 'DisLike',
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.red))),
+                                  ),
+                                ),
+                                Spacer(),
+                                DropdownButton(
+                                  hint: Text(''),
+                                  value: dislikeCount,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text('K'),
+                                      value: 'K',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('M'),
+                                      value: 'M',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('B'),
+                                      value: 'B',
+                                    ),
+                                  ],
                                   onChanged: (value) {
                                     setState(() {
-                                      like = value;
+                                      dislikeCount = value;
                                     });
                                   },
-                                  decoration: InputDecoration(
-                                      hintText: 'Like',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.red))),
-                                ),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('K'),
-                                    value: 'K',
-                                    groupValue: likeCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        likeCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('M'),
-                                    value: 'M',
-                                    groupValue: likeCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        likeCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('B'),
-                                    value: 'B',
-                                    groupValue: likeCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        likeCount = value;
-                                      });
-                                    }),
-                              )
-                            ],
-                          ),
-                        ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
+                      Container(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.41,
+                                  child: TextField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        postedTime = value;
+                                      });
+                                    },
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                        hintText: 'Time',
+                                        enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            borderSide:
+                                                BorderSide(color: Colors.grey)),
+                                        focusedBorder: OutlineInputBorder(
+                                            borderSide:
+                                                BorderSide(color: Colors.red))),
+                                  ),
+                                ),
+                                Spacer(),
+                                DropdownButton(
+                                  hint: Text(''),
+                                  value: videopostedTime,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text('hours'),
+                                      value: 'hour',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('days'),
+                                      value: 'days',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('weeks'),
+                                      value: 'weeks',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('months'),
+                                      value: 'months',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('years'),
+                                      value: 'years',
+                                    )
+                                  ],
                                   onChanged: (value) {
                                     setState(() {
-                                      like = value;
+                                      videopostedTime = value;
                                     });
                                   },
-                                  keyboardType: TextInputType.number,
-                                  decoration: InputDecoration(
-                                      hintText: 'DisLike',
-                                      enabledBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.grey)),
-                                      focusedBorder: OutlineInputBorder(
-                                          borderSide:
-                                              BorderSide(color: Colors.red))),
-                                ),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('K'),
-                                    value: 'K',
-                                    groupValue: dislikeCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        dislikeCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('M'),
-                                    value: 'M',
-                                    groupValue: dislikeCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        dislikeCount = value;
-                                      });
-                                    }),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                    title: Text('B'),
-                                    value: 'B',
-                                    groupValue: dislikeCount,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        dislikeCount = value;
-                                      });
-                                    }),
-                              )
-                            ],
-                          ),
-                        ],
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
