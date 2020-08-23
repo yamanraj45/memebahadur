@@ -42,8 +42,18 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Youtube Screen'),
-        backgroundColor: Colors.red,
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.save),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Center(
@@ -140,13 +150,14 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                         Container(
                           child: Row(
                             children: <Widget>[
-                              SizedBox(
-                                height: 50,
-                                child: CircleAvatar(
-                                  backgroundImage:
-                                      AssetImage('assets/icon/icon.png'),
-                                  radius: 30.00,
-                                ),
+                              GestureDetector(
+                                onTap: () => getAvatar(),
+                                child: _avatar != null
+                                    ? CircleAvatar(
+                                        radius: 30.0,
+                                        backgroundImage: FileImage(_avatar),
+                                      )
+                                    : Icon(Icons.add),
                               ),
                               Column(
                                 children: <Widget>[
