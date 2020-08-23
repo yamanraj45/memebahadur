@@ -97,6 +97,12 @@ class NavigationBarState extends State<NavigationBar> {
                 label: 'Tweet',
                 onTap: () => Navigator.pushNamed(context, '/tweet'),
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
+            SpeedDialChild(
+              child: Icon(Icons.youtube_searched_for),
+              label: 'Youtube',
+              onTap: () => Navigator.pushNamed(context, '/youtubescreen'),
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
           ],
         ));
   }
