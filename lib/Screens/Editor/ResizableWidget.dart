@@ -6,8 +6,8 @@ class ResizebleWidget extends StatefulWidget {
     @required this.child,
     @required this.index,
     this.isSelected = false,
-    this.height = 100,
-    this.width = 100,
+    this.height = 50,
+    this.width = 125,
     this.opacity = 1,
   });
   final Widget child;
@@ -24,18 +24,24 @@ class ResizebleWidget extends StatefulWidget {
 class _ResizebleWidgetState extends State<ResizebleWidget> {
   double height;
   double width;
-
-  double top = 0;
-  double left = 0;
-  _ResizebleWidgetState({this.height = 100, this.width = 100});
+  double top = 100;
+  double left = 110;
+  double fontScaleX = 1.0;
+  double fontScaleY = 1.0;
+  @override
+  void initState() {
+    super.initState();
+    height = widget.height;
+    width = widget.width;
+  }
 
   void onDrag(double dx, double dy) {
     var newHeight = height + dy;
     var newWidth = width + dx;
 
     setState(() {
-      height = newHeight > 0 ? newHeight : 0;
-      width = newWidth > 0 ? newWidth : 0;
+      height = newHeight > 20 ? newHeight : 20;
+      width = newWidth > 20 ? newWidth : 20;
     });
   }
 
@@ -48,7 +54,11 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
         child: Container(
           height: height,
           width: width,
-          child: widget.child,
+          alignment: Alignment.topCenter,
+          child: Transform(
+            transform: Matrix4.diagonal3Values(fontScaleX, fontScaleY, 1.0),
+            child: widget.child,
+          ),
         ),
       )
     ];
@@ -84,12 +94,13 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var mid = (dx + dy) / 2;
             var newHeight = height - 2 * mid;
             var newWidth = width - 2 * mid;
-
             setState(() {
-              height = newHeight > 0 ? newHeight : 0;
-              width = newWidth > 0 ? newWidth : 0;
+              height = newHeight > 20 ? newHeight : 20;
+              width = newWidth > 20 ? newWidth : 20;
               top = top + mid;
               left = left + mid;
+              fontScaleX = newWidth / 150;
+              fontScaleY = newHeight / 50;
             });
           },
         ),
@@ -102,9 +113,9 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
           opacity: widget.opacity,
           onDrag: (dx, dy) {
             var newHeight = height - dy;
-
             setState(() {
-              height = newHeight > 0 ? newHeight : 0;
+              height = newHeight > 20 ? newHeight : 20;
+              fontScaleY = newHeight / 50.0;
               top = top + dy;
             });
           },
@@ -123,10 +134,12 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var newWidth = width + 2 * mid;
 
             setState(() {
-              height = newHeight > 0 ? newHeight : 0;
-              width = newWidth > 0 ? newWidth : 0;
+              height = newHeight > 20 ? newHeight : 20;
+              width = newWidth > 20 ? newWidth : 20;
               top = top - mid;
               left = left - mid;
+              fontScaleX = newWidth / 150;
+              fontScaleY = newHeight / 50;
             });
           },
         ),
@@ -141,7 +154,8 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var newWidth = width + dx;
 
             setState(() {
-              width = newWidth > 0 ? newWidth : 0;
+              width = newWidth > 20 ? newWidth : 20;
+              fontScaleX = newWidth / 150;
             });
           },
         ),
@@ -159,10 +173,12 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var newWidth = width + 2 * mid;
 
             setState(() {
-              height = newHeight > 0 ? newHeight : 0;
-              width = newWidth > 0 ? newWidth : 0;
+              height = newHeight > 20 ? newHeight : 20;
+              width = newWidth > 20 ? newWidth : 20;
               top = top - mid;
               left = left - mid;
+              fontScaleX = newWidth / 150;
+              fontScaleY = newHeight / 50;
             });
           },
         ),
@@ -177,7 +193,8 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var newHeight = height + dy;
 
             setState(() {
-              height = newHeight > 0 ? newHeight : 0;
+              height = newHeight > 20 ? newHeight : 20;
+              fontScaleY = newHeight / 50;
             });
           },
         ),
@@ -195,10 +212,12 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var newWidth = width + 2 * mid;
 
             setState(() {
-              height = newHeight > 0 ? newHeight : 0;
-              width = newWidth > 0 ? newWidth : 0;
+              height = newHeight > 20 ? newHeight : 20;
+              width = newWidth > 20 ? newWidth : 20;
               top = top - mid;
               left = left - mid;
+              fontScaleX = newWidth / 150;
+              fontScaleY = newHeight / 50;
             });
           },
         ),
@@ -213,8 +232,9 @@ class _ResizebleWidgetState extends State<ResizebleWidget> {
             var newWidth = width - dx;
 
             setState(() {
-              width = newWidth > 0 ? newWidth : 0;
+              width = newWidth > 20 ? newWidth : 20;
               left = left + dx;
+              fontScaleX = newWidth / 150;
             });
           },
         ),
