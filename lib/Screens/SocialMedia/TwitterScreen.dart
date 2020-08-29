@@ -46,6 +46,37 @@ class _TweetState extends State<Tweet> {
     });
   }
 
+  _showImagePicker() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("From where do you want to take the photo?"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  GestureDetector(
+                    child: Text("Gallery"),
+                    onTap: () {
+                      Navigator.pop(context);
+                      getTwitterImage(ImageSource.gallery);
+                    },
+                  ),
+                  Padding(padding: EdgeInsets.all(8.0)),
+                  GestureDetector(
+                    child: Text("Camera"),
+                    onTap: () {
+                      Navigator.pop(context);
+                      getTwitterImage(ImageSource.camera);
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   Future getTwitterImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
@@ -181,25 +212,63 @@ class _TweetState extends State<Tweet> {
                                   errorBorder: InputBorder.none,
                                   enabledBorder: InputBorder.none),
                             ),
-                            Padding(
-                              padding: EdgeInsets.all(20.00),
-                            ),
                             isImage
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(20.0),
                                     child: twitterImage != null
-                                        ? Image.file(twitterImage)
+                                        ? GestureDetector(
+                                            onTap: () => _showImagePicker(),
+                                            child: Image.file(twitterImage),
+                                          )
                                         : Stack(
                                             children: <Widget>[
                                               Opacity(
-                                                opacity: 0.2,
-                                                child: Image.asset(
-                                                  'assets/images/logo.png',
+                                                opacity: 0,
+                                                child: Container(
+                                                  child: Image.asset(
+                                                    'assets/images/logo.png',
+                                                  ),
                                                 ),
                                               ),
-                                              CircleAvatar(
-                                                foregroundColor: Colors.black,
-                                                child: Icon(Icons.add),
+                                              Positioned.fill(
+                                                bottom: 30.0,
+                                                child: Container(
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    minRadius: 50.00,
+                                                    maxRadius: 80.00,
+                                                    child: ClipRect(
+                                                      child: CircleAvatar(
+                                                        backgroundColor:
+                                                            Colors.transparent,
+                                                        radius: 60.0,
+                                                        child: Column(
+                                                          children: <Widget>[
+                                                            RaisedButton(
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              50.0)),
+                                                              color: Colors
+                                                                  .blue[300],
+                                                              onPressed: () {
+                                                                _showImagePicker();
+                                                              },
+                                                              child: Icon(
+                                                                Icons.add,
+                                                                color: Colors
+                                                                    .black,
+                                                                size: 50.0,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -346,8 +415,13 @@ class _TweetState extends State<Tweet> {
                                 });
                               },
                               decoration: InputDecoration(
-                                hintText: 'Enter Account Name',
-                              ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  labelText: 'Account Name'),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.00),
                             ),
                             TextField(
                               onChanged: (value) {
@@ -356,8 +430,11 @@ class _TweetState extends State<Tweet> {
                                   handle = value;
                                 });
                               },
-                              decoration:
-                                  InputDecoration(hintText: 'Enter Username'),
+                              decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  labelText: 'Username'),
                             ),
                           ],
                         ),
@@ -396,26 +473,6 @@ class _TweetState extends State<Tweet> {
                                 ],
                               ),
                             ),
-                            isImage
-                                ? SizedBox(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: <Widget>[
-                                        RaisedButton(
-                                          child: Text('Camera'),
-                                          onPressed: () => getTwitterImage(
-                                              ImageSource.camera),
-                                        ),
-                                        RaisedButton(
-                                          child: Text('Gallery'),
-                                          onPressed: () => getTwitterImage(
-                                              ImageSource.gallery),
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                : Container()
                           ],
                         ),
                       ),
@@ -441,7 +498,10 @@ class _TweetState extends State<Tweet> {
                               children: <Widget>[
                                 Expanded(
                                   child: RaisedButton(
-                                    child: Text('Change Date'),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: Icon(Icons.date_range),
                                     onPressed: () => showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),
@@ -460,7 +520,11 @@ class _TweetState extends State<Tweet> {
                                 Spacer(),
                                 Expanded(
                                   child: RaisedButton(
-                                      child: Text('Change Time'),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      child: Icon(Icons.timer),
                                       onPressed: () => {
                                             showTimePicker(
                                               context: context,
@@ -512,8 +576,12 @@ class _TweetState extends State<Tweet> {
                                         retweetcomment = value;
                                       });
                                     },
-                                    decoration:
-                                        InputDecoration(hintText: 'Retweet'),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        labelText: 'Retweet'),
                                   ),
                                 ),
                                 Text('\t'),
@@ -526,8 +594,12 @@ class _TweetState extends State<Tweet> {
                                         likes = value;
                                       });
                                     },
-                                    decoration:
-                                        InputDecoration(hintText: ' Like'),
+                                    decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        labelText: 'Like'),
                                   ),
                                 ),
                                 Text('\t'),

@@ -75,62 +75,6 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                       GestureDetector(
                         child: videoImage != null
                             ? Image.file(videoImage)
-<<<<<<< HEAD:lib/Screens/SocialMedia/youtubeScreen.dart
-                            : Image.asset('assets/icon/icon.png')),
-                    Padding(
-                      padding: EdgeInsets.all(8.00),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.only(left: 15.00),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                child: Text(
-                                  '  $title',
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_drop_down)
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 15.00),
-                      child: Text(
-                        "   $views$viewsCount views \t $postedTime $videopostedTime ago",
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.00),
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50.00,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Icon(Icons.add),
-                            Icon(Icons.add_to_photos),
-                            Icon(Icons.screen_share),
-                            Icon(Icons.archive),
-                            Icon(Icons.add_to_photos)
-                          ],
-                        )),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-=======
                             : Opacity(
                                 opacity: 0.2,
                                 child: Image.asset('assets/images/logo.png'),
@@ -142,7 +86,6 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
->>>>>>> 6cb8851f575de934ac01a8b11e9be4e3c0e5dfb7:lib/Screens/SocialMedia/YoutubeScreen.dart
                         children: <Widget>[
                           Row(
                             children: <Widget>[
