@@ -33,7 +33,7 @@ class NavigationBarState extends State<NavigationBar> {
   }
 
   int _currentIndex = 0;
-  final navigationScreens = [Template(), MyMemeScreen()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +56,10 @@ class NavigationBarState extends State<NavigationBar> {
           centerTitle: true,
         ),
         body: DoubleBackToCloseApp(
-          child: navigationScreens[_currentIndex],
+          child: IndexedStack(
+            index: _currentIndex,
+            children: <Widget>[Template(), MyMemeScreen()],
+          ),
           snackBar: const SnackBar(
             content: Text('Tap back again to Exit The App'),
           ),
