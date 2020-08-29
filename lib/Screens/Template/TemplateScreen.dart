@@ -39,32 +39,35 @@ class _TemplateState extends State<Template> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.all(5.00)),
-          Expanded(
-            child: GridView.builder(
-              itemCount: _templateList.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-              itemBuilder: (BuildContext context, int index) {
-                return InkResponse(
-                  child: TemplateListItem(
-                    templateImage: _templateList[index]['image'],
-                    templateName: _templateList[index]['name'],
-                  ),
-                  onTap: () {
-                    Image image = Image.asset(_templateList[index]['image']);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Editor(image)),
-                    );
-                  },
-                );
-              },
-            ),
-          )
-        ],
+      body: Container(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.all(5.00)),
+            Expanded(
+              child: GridView.builder(
+                itemCount: _templateList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkResponse(
+                    child: TemplateListItem(
+                      templateImage: _templateList[index]['image'],
+                      templateName: _templateList[index]['name'],
+                    ),
+                    onTap: () {
+                      Image image = Image.asset(_templateList[index]['image']);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Editor(image)),
+                      );
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

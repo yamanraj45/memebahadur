@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
+import 'package:memebahadur/utils/screenshot.dart';
+import 'package:memebahadur/widgets/MemeScaffold.dart';
+
 class YoutubeScreen extends StatefulWidget {
   @override
   _YoutubeScreenState createState() => _YoutubeScreenState();
 }
 
 class _YoutubeScreenState extends State<YoutubeScreen> {
+  final GlobalKey previewContainer = new GlobalKey();
   String dislikeCount = "K";
   String likeCount = "M";
   String viewsCount = "B";
@@ -38,176 +42,189 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
     });
   }
 
+  _onBackPress() {
+    onBackPress(context, flag: false);
+  }
+
+  _onSavePress() {
+    onSavePress(context, previewContainer);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.share),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.save),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: SingleChildScrollView(
+    return MemeScaffold(
+      onBackKeyPress: () {
+        _onBackPress();
+      },
+      onBackPress: _onBackPress,
+      onSavePress: _onSavePress,
+      child: SingleChildScrollView(
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    GestureDetector(
+              RepaintBoundary(
+                key: previewContainer,
+                child: Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      GestureDetector(
                         child: videoImage != null
                             ? Image.file(videoImage)
-                            : Image.asset('assets/icon/icon.png')),
-                    Padding(
-                      padding: EdgeInsets.all(8.00),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            SizedBox(),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              child: Text(
-                                '  $title',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
+                            : Opacity(
+                                opacity: 0.2,
+                                child: Image.asset('assets/images/logo.png'),
                               ),
-                            ),
-                          ],
-                        ),
-                        Icon(Icons.arrow_drop_down)
-                      ],
-                    ),
-                    Text(
-                      "   $views$viewsCount views \t 4 weeks ago",
-                      style: TextStyle(fontSize: 13),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.00),
-                    ),
-                    SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: 50.00,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            Icon(Icons.add),
-                            Icon(Icons.add_to_photos),
-                            Icon(Icons.screen_share),
-                            Icon(Icons.archive),
-                            Icon(Icons.add_to_photos)
-                          ],
-                        )),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: <Widget>[
-                          Text(
-                            '\t$like$likeCount',
-                            style: TextStyle(fontSize: 11),
-                          ),
-                          Text(
-                            '\t\t\t\t\t\t$dislike$dislikeCount',
-                            style: TextStyle(fontSize: 11),
-                          ),
-                          Text(
-                            '\t\t\t\t\tShare',
-                            style: TextStyle(fontSize: 11),
-                          ),
-                          Text(
-                            '\t\tDownload',
-                            style: TextStyle(fontSize: 11),
-                          ),
-                          Text(
-                            'Save',
-                            style: TextStyle(fontSize: 11),
-                          )
-                        ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.00),
-                    ),
-                    Divider(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Container(
-                          child: Row(
+                      Padding(
+                        padding: EdgeInsets.all(8.00),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
                             children: <Widget>[
-                              GestureDetector(
-                                onTap: () => getAvatar(),
-                                child: _avatar != null
-                                    ? CircleAvatar(
-                                        radius: 30.0,
-                                        backgroundImage: FileImage(_avatar),
-                                      )
-                                    : Icon(Icons.add),
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      '  $channelName',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
-                                    ),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.topLeft,
-                                        child: Text(
-                                          '$subscriberCount Subscriber',
-                                          style: TextStyle(fontSize: 11),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                              SizedBox(),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: Text(
+                                  '  $title',
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
-                        SizedBox(),
-                        Row(
+                          Icon(Icons.arrow_drop_down)
+                        ],
+                      ),
+                      Text(
+                        "   $views$viewsCount views \t 4 weeks ago",
+                        style: TextStyle(fontSize: 13),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.00),
+                      ),
+                      SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: 50.00,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              Icon(Icons.add),
+                              Icon(Icons.add_to_photos),
+                              Icon(Icons.screen_share),
+                              Icon(Icons.archive),
+                              Icon(Icons.add_to_photos)
+                            ],
+                          )),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Text(
-                              'Subscribe',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontWeight: FontWeight.bold),
+                              '\t$like$likeCount',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                            Text(
+                              '\t\t\t\t\t\t$dislike$dislikeCount',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                            Text(
+                              '\t\t\t\t\tShare',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                            Text(
+                              '\t\tDownload',
+                              style: TextStyle(fontSize: 11),
+                            ),
+                            Text(
+                              'Save',
+                              style: TextStyle(fontSize: 11),
                             )
                           ],
-                        )
-                      ],
-                    ),
-                    Divider(),
-                  ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.00),
+                      ),
+                      Divider(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Container(
+                            child: Row(
+                              children: <Widget>[
+                                GestureDetector(
+                                  onTap: () => getAvatar(),
+                                  child: _avatar != null
+                                      ? CircleAvatar(
+                                          radius: 20.0,
+                                          backgroundImage: FileImage(_avatar),
+                                        )
+                                      : Opacity(
+                                          opacity: 0.5,
+                                          child: CircleAvatar(
+                                            radius: 20.0,
+                                            child: Icon(Icons.add),
+                                          ),
+                                        ),
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Text(
+                                        '  $channelName',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          child: Text(
+                                            '$subscriberCount Subscriber',
+                                            style: TextStyle(fontSize: 11),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                          SizedBox(),
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                'Subscribe',
+                                style: TextStyle(
+                                    color: Colors.red,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Divider(),
+                    ],
+                  ),
                 ),
               ),
               Container(
