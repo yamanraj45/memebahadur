@@ -46,6 +46,7 @@ class _TemplateState extends State<Template> {
             Padding(padding: EdgeInsets.all(5.00)),
             Expanded(
               child: GridView.builder(
+                cacheExtent: 10000,
                 itemCount: _templateList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4),
