@@ -8,9 +8,9 @@ showExitDialog(BuildContext context) {
       content: Text("Do You Want To Discard Changes ?"),
       actions: <Widget>[
         FlatButton(
-            child: Text("Yes"),
-            onPressed: () => Navigator.of(context)
-                .pushNamedAndRemoveUntil('/home', (route) => false)),
+          child: Text("Yes"),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         FlatButton(
           child: Text("No"),
           onPressed: Navigator.of(context).pop,

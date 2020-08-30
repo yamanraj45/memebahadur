@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/utils/Theme.dart';
+import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
+import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
 import 'package:memebahadur/utils/path.dart';
 import 'package:provider/provider.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -27,7 +29,7 @@ class _MyAppState extends State<MyApp> {
           builder: (context, ThemeNotifier notifier, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: notifier.darkTheme ? dark : light,
+          theme: notifier.darkTheme ? light : dark,
           title: 'MemeBahadur',
           home: SplashScreen(
             seconds: 1,
@@ -48,6 +50,8 @@ class _MyAppState extends State<MyApp> {
           routes: <String, WidgetBuilder>{
             '/home': (BuildContext context) => NavigationBar(),
             '/aboutus': (BuildContext context) => AboutUs(),
+            '/tweet': (BuildContext context) => Tweet(),
+            '/youtubescreen': (BuildContext context) => YoutubeScreen(),
           },
         );
       }),

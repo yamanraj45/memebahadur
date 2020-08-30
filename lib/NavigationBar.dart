@@ -44,15 +44,18 @@ class NavigationBarState extends State<NavigationBar> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.info),
-              color: Colors.cyanAccent,
+              color: Colors.black,
               onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
             )
           ],
-          title: Text('MemeBahadur',
-              style: TextStyle(
-                  fontFamily: 'logo2',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.cyanAccent)),
+          title: Text(
+            'Memebahadur',
+            style: TextStyle(
+                fontFamily: 'logo2',
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
           centerTitle: true,
         ),
         body: DoubleBackToCloseApp(
@@ -66,7 +69,7 @@ class NavigationBarState extends State<NavigationBar> {
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
-            selectedItemColor: Colors.cyanAccent,
+            selectedItemColor: Colors.black,
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
@@ -95,6 +98,17 @@ class NavigationBarState extends State<NavigationBar> {
                 label: 'Gallery',
                 onTap: () => getImage(ImageSource.gallery),
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
+            SpeedDialChild(
+                child: Icon(Icons.screen_lock_portrait),
+                label: 'Tweet',
+                onTap: () => Navigator.pushNamed(context, '/tweet'),
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
+            SpeedDialChild(
+              child: Icon(Icons.youtube_searched_for),
+              label: 'Youtube',
+              onTap: () => Navigator.pushNamed(context, '/youtubescreen'),
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
           ],
         ));
   }

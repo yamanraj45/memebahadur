@@ -39,6 +39,7 @@ class _TemplateState extends State<Template>
         'image': 'assets/images/5/Extra ($extraImage).jpg'
       },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,10 +50,10 @@ class _TemplateState extends State<Template>
             Padding(padding: EdgeInsets.all(5.00)),
             Expanded(
               child: GridView.builder(
-                cacheExtent: 10000,
+                cacheExtent: 5000,
                 itemCount: _templateList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 4),
+                    crossAxisCount: 3),
                 itemBuilder: (BuildContext context, int index) {
                   return InkResponse(
                     child: TemplateListItem(
