@@ -42,14 +42,15 @@ class _TweetState extends State<Tweet> {
   Future getImage(imageType, {source = ImageSource.gallery}) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile != null) {
+      File path = File(pickedFile.path);
       setState(() {
         isTweetEdited = true;
         switch (imageType) {
           case ImageType.avatar:
-            _avatar = File(pickedFile.path);
+            _avatar = path;
             break;
           case ImageType.twitter:
-            _twitterImage = File(pickedFile.path);
+            _twitterImage = path;
             break;
           default:
             break;

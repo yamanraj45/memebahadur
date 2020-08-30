@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:memebahadur/utils/screenshot.dart';
+import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 
 class YoutubeIcon {
@@ -11,9 +12,9 @@ class YoutubeIcon {
   static const _kFontFam = 'AppIcons';
   static const _kFontPkg = null;
 
-  static const IconData like =
+  static const IconData likes =
       IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData dislike =
+  static const IconData dislikes =
       IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   static const IconData save =
       IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
@@ -32,21 +33,21 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
 
   String title = 'Create Meme Share Happiness';
   String views = '45B';
-  String like = '45M';
-  String dislike = '45';
-  String channelName = 'MemeBahadur';
-  String subscriberCount = '45';
+  String likes = '45M';
+  String dislikes = '45';
+  String channel = 'MemeBahadur';
+  String subscribers = '45';
   final picker = ImagePicker();
-  File videoImage;
+  File _image;
   File _avatar;
-  String postedTime = '4';
-  String videopostedTime = 'weeks';
+  String date = '4';
+  String time = 'weeks';
 
   Future getVideoImage(ImageSource source) async {
     final pickedFile = await picker.getImage(source: source);
 
     setState(() {
-      videoImage = File(pickedFile.path);
+      _image = File(pickedFile.path);
     });
   }
 
@@ -99,6 +100,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width * 0.9;
     return MemeScaffold(
       onBackKeyPress: () {
         _onBackPress();
@@ -114,14 +116,15 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
               RepaintBoundary(
                 key: previewContainer,
                 child: Container(
+                  color: Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        child: videoImage != null
+                        child: _image != null
                             ? GestureDetector(
                                 onTap: () => _showImagePicker(),
-                                child: Image.file(videoImage),
+                                child: Center(child: Image.file(_image)),
                               )
                             : Stack(
                                 children: <Widget>[
@@ -136,10 +139,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                                   Positioned.fill(
                                     bottom: 30.0,
                                     child: Container(
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.transparent,
-                                        minRadius: 50.00,
-                                        maxRadius: 80.00,
+                                      child: Center(
                                         child: ClipRect(
                                           child: CircleAvatar(
                                             backgroundColor: Colors.transparent,
@@ -182,12 +182,16 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                             children: <Widget>[
                               SizedBox(),
                               SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.9,
-                                child: Text(
-                                  '  $title',
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w500),
+                                width: screenWidth * 0.9,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 10.0, bottom: 10),
+                                  child: Text(
+                                    '$title',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w500),
+                                  ),
                                 ),
                               ),
                             ],
@@ -196,43 +200,34 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                         ],
                       ),
                       Text(
-                        "   $views views \t $postedTime $videopostedTime ago",
+                        "   $views views \t $date $time ago",
                         style: TextStyle(fontSize: 13),
                       ),
                       Padding(
                         padding: EdgeInsets.all(5.00),
                       ),
                       SizedBox(
-                          width: MediaQuery.of(context).size.width,
                           height: 50.00,
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Column(
                                 children: <Widget>[
-                                  Icon(
-                                    YoutubeIcon.dislike,
-                                    color: Colors.grey[600],
-                                  ),
+                                  Icon(YoutubeIcon.dislikes,
+                                      color: Colors.grey[600]),
                                   Text(
-                                    '$like',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
+                                    '$likes',
+                                    style: TextStyle(color: Colors.grey[600]),
                                   )
                                 ],
                               ),
                               Column(
                                 children: <Widget>[
-                                  Icon(
-                                    YoutubeIcon.like,
-                                    color: Colors.grey[600],
-                                  ),
+                                  Icon(YoutubeIcon.likes,
+                                      color: Colors.grey[600]),
                                   Text(
-                                    '$dislike',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
+                                    '$dislikes',
+                                    style: TextStyle(color: Colors.grey[600]),
                                   )
                                 ],
                               ),
@@ -312,12 +307,12 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                                   children: <Widget>[
                                     SizedBox(
                                       child: Text(
-                                        '$channelName',
+                                        '  $channel',
                                       ),
                                     ),
                                     Container(
                                       child: Text(
-                                        '$subscriberCount suscribers',
+                                        '  $subscribers suscribers',
                                         style: TextStyle(
                                           fontFamily: 'light',
                                         ),
@@ -353,104 +348,67 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                   ),
                 ),
               ),
+              Padding(padding: EdgeInsets.all(10)),
+              Text(
+                '   Edit YouTube',
+                style: TextStyle(
+                  fontSize: 20.00,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: MediaQuery.of(context).size.width * 0.1),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Container(
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Center(
-                        child: Text(
-                          'Use Form Below To Edit The Text Above',
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                      TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            title = value;
-                          });
-                        },
-                        decoration: InputDecoration(
-                            hintText: 'Enter Title ',
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.grey)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red))),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                      ),
-                      TextField(
-                        onChanged: (value) {
-                          setState(() {
-                            channelName = value;
-                          });
-                        },
-                        maxLength: 25,
-                        decoration: InputDecoration(
-                            hintText: 'Enter Channel Name ',
-                            enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: BorderSide(color: Colors.grey)),
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.red))),
-                      ),
+                      Padding(padding: EdgeInsets.all(5.0)),
+                      InputText(
+                          label: "Title",
+                          maxLength: null,
+                          onChanged: (value) {
+                            setState(() {
+                              title = value;
+                            });
+                          }),
+                      Padding(padding: EdgeInsets.all(5.0)),
+                      InputText(
+                          maxLength: 20,
+                          label: "Channel",
+                          onChanged: (value) {
+                            setState(() {
+                              channel = value;
+                            });
+                          }),
+                      Padding(padding: EdgeInsets.all(5.0)),
                       Container(
                         child: Column(
                           children: <Widget>[
                             Row(
                               children: <Widget>[
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.36,
-                                  child: TextField(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        subscriberCount = value;
-                                      });
-                                    },
-                                    maxLength: 4,
-                                    decoration: InputDecoration(
-                                        hintText: 'Subscriber',
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide:
-                                                BorderSide(color: Colors.grey)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.red))),
-                                  ),
-                                ),
+                                    width: screenWidth * 0.5,
+                                    child: InputText(
+                                        label: "Subscribers",
+                                        onChanged: (value) {
+                                          setState(() {
+                                            subscribers = value;
+                                          });
+                                        })),
                                 Spacer(),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.36,
-                                  child: TextField(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        views = value;
-                                      });
-                                    },
-                                    maxLength: 4,
-                                    decoration: InputDecoration(
-                                        hintText: 'Views',
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide:
-                                                BorderSide(color: Colors.grey)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.red))),
-                                  ),
-                                ),
+                                    width: screenWidth * 0.5,
+                                    child: InputText(
+                                        label: "Views",
+                                        onChanged: (value) {
+                                          setState(() {
+                                            views = value;
+                                          });
+                                        })),
                               ],
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                           ],
                         ),
                       ),
@@ -460,52 +418,28 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                             Row(
                               children: <Widget>[
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.36,
-                                  child: TextField(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        like = value;
-                                      });
-                                    },
-                                    maxLength: 4,
-                                    decoration: InputDecoration(
-                                        hintText: 'Like',
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide:
-                                                BorderSide(color: Colors.grey)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.red))),
-                                  ),
-                                ),
+                                    width: screenWidth * 0.5,
+                                    child: InputText(
+                                        label: "Likes",
+                                        onChanged: (value) {
+                                          setState(() {
+                                            likes = value;
+                                          });
+                                        })),
                                 Spacer(),
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.36,
-                                  child: TextField(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        dislike = value;
-                                      });
-                                    },
-                                    maxLength: 4,
-                                    decoration: InputDecoration(
-                                        hintText: 'DisLike',
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide:
-                                                BorderSide(color: Colors.grey)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.red))),
-                                  ),
+                                  width: screenWidth * 0.5,
+                                  child: InputText(
+                                      label: "Dislikes",
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dislikes = value;
+                                        });
+                                      }),
                                 ),
                               ],
                             ),
+                            Padding(padding: EdgeInsets.all(5.0)),
                           ],
                         ),
                       ),
@@ -516,60 +450,53 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                             Row(
                               children: <Widget>[
                                 SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.41,
-                                  child: TextField(
+                                  width: screenWidth * 0.5,
+                                  child: InputText(
                                     onChanged: (value) {
                                       setState(() {
-                                        postedTime = value;
+                                        date = value;
                                       });
                                     },
-                                    maxLength: 3,
-                                    keyboardType: TextInputType.number,
-                                    decoration: InputDecoration(
-                                        hintText: 'Time',
-                                        enabledBorder: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            borderSide:
-                                                BorderSide(color: Colors.grey)),
-                                        focusedBorder: OutlineInputBorder(
-                                            borderSide:
-                                                BorderSide(color: Colors.red))),
+                                    label: "Time",
                                   ),
                                 ),
                                 Spacer(),
-                                DropdownButton(
-                                  hint: Text(''),
-                                  value: videopostedTime,
-                                  items: [
-                                    DropdownMenuItem(
-                                      child: Text('hours'),
-                                      value: 'hour',
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text('days'),
-                                      value: 'days',
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text('weeks'),
-                                      value: 'weeks',
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text('months'),
-                                      value: 'months',
-                                    ),
-                                    DropdownMenuItem(
-                                      child: Text('years'),
-                                      value: 'years',
-                                    )
-                                  ],
-                                  onChanged: (value) {
-                                    setState(() {
-                                      videopostedTime = value;
-                                    });
-                                  },
-                                )
+                                Container(
+                                  child: DropdownButton(
+                                    hint: Text('Time'),
+                                    value: time,
+                                    items: [
+                                      DropdownMenuItem(
+                                        child: Text('hours'),
+                                        value: 'hour',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('days'),
+                                        value: 'days',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('weeks'),
+                                        value: 'weeks',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('months'),
+                                        value: 'months',
+                                      ),
+                                      DropdownMenuItem(
+                                        child: Text('years'),
+                                        value: 'years',
+                                      )
+                                    ],
+                                    onChanged: (value) {
+                                      setState(() {
+                                        time = value;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: screenWidth * 0.2,
+                                ),
                               ],
                             ),
                           ],
@@ -579,6 +506,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                   ),
                 ),
               ),
+              Padding(padding: EdgeInsets.all(20))
             ],
           ),
         ),

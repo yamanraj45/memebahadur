@@ -30,7 +30,7 @@ dependencies:
   flutter_speed_dial:
   image_picker: ^0.6.7+4
   image: any
-  
+
   path_provider: any
   double_back_to_close_app: ^1.2.0
   image_gallery_saver: ^1.2.2
@@ -40,8 +40,6 @@ dependencies:
   local_image_provider:
   storage_path:
   intl:
-  
- 
 
 dev_dependencies:
   flutter_test:
@@ -52,6 +50,7 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
+
 
   # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -90,12 +89,10 @@ flutter:
       fonts:
         - asset: assets/font/logo2.ttf
 
-
     - family: Bold
       fonts:
         - asset: assets/font/bold.ttf
-        
-        
+
     - family: light
       fonts:
         - asset: assets/font/thin.ttf
@@ -103,7 +100,7 @@ flutter:
     - family: md
       fonts:
         - asset: assets/font/HelveticaNeue Medium.ttf
-        
+
     - family: AppIcons
       fonts:
         - asset: assets/font/Youtubeicon.ttf
