@@ -8,6 +8,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 
+enum ImageType { avatar, twitter }
+
 class Tweet extends StatefulWidget {
   @override
   _TweetState createState() => _TweetState();
@@ -34,16 +36,26 @@ class _TweetState extends State<Tweet> {
   bool isImage = false;
   bool isTweetEdited = false;
   File _avatar;
-  File twitterImage;
+  File _twitterImage;
   final picker = ImagePicker();
 
-  Future getAvatar() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      isTweetEdited = true;
-      _avatar = File(pickedFile.path);
-    });
+  Future getImage(imageType, {source = ImageSource.gallery}) async {
+    final pickedFile = await picker.getImage(source: source);
+    if (pickedFile != null) {
+      setState(() {
+        isTweetEdited = true;
+        switch (imageType) {
+          case ImageType.avatar:
+            _avatar = File(pickedFile.path);
+            break;
+          case ImageType.twitter:
+            _twitterImage = File(pickedFile.path);
+            break;
+          default:
+            break;
+        }
+      });
+    }
   }
 
   _showImagePicker() {
@@ -51,39 +63,32 @@ class _TweetState extends State<Tweet> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("From where do you want to take the photo?"),
+            title: Text("Choose:"),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  GestureDetector(
-                    child: Text("Gallery"),
+                  Divider(),
+                  ListTile(
+                    title: Text("Gallery"),
                     onTap: () {
                       Navigator.pop(context);
-                      getTwitterImage(ImageSource.gallery);
+                      getImage(ImageType.twitter, source: ImageSource.gallery);
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(8.0)),
-                  GestureDetector(
-                    child: Text("Camera"),
+                  Divider(),
+                  ListTile(
+                    title: Text("Camera"),
                     onTap: () {
                       Navigator.pop(context);
-                      getTwitterImage(ImageSource.camera);
+                      getImage(ImageType.twitter, source: ImageSource.camera);
                     },
-                  )
+                  ),
+                  Divider(),
                 ],
               ),
             ),
           );
         });
-  }
-
-  Future getTwitterImage(ImageSource source) async {
-    final pickedFile = await picker.getImage(source: source);
-
-    setState(() {
-      isTweetEdited = true;
-      twitterImage = File(pickedFile.path);
-    });
   }
 
   String formatDate(date) {
@@ -133,7 +138,7 @@ class _TweetState extends State<Tweet> {
                                   Expanded(
                                     flex: 1,
                                     child: GestureDetector(
-                                      onTap: () => getAvatar(),
+                                      onTap: () => getImage(ImageType.avatar),
                                       child: _avatar != null
                                           ? CircleAvatar(
                                               radius: 30.0,
@@ -215,10 +220,10 @@ class _TweetState extends State<Tweet> {
                             isImage
                                 ? ClipRRect(
                                     borderRadius: BorderRadius.circular(20.0),
-                                    child: twitterImage != null
+                                    child: _twitterImage != null
                                         ? GestureDetector(
                                             onTap: () => _showImagePicker(),
-                                            child: Image.file(twitterImage),
+                                            child: Image.file(_twitterImage),
                                           )
                                         : Stack(
                                             children: <Widget>[
