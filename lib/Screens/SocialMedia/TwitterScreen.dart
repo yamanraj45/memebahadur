@@ -251,11 +251,13 @@ class _TweetState extends State<Tweet> {
                                                         child: Column(
                                                           children: <Widget>[
                                                             RaisedButton(
-                                                              shape: RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              50.0)),
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            50.0),
+                                                              ),
                                                               color: Colors
                                                                   .blue[300],
                                                               onPressed: () {
@@ -391,25 +393,29 @@ class _TweetState extends State<Tweet> {
                             ),
                           ])),
                 ),
-                Padding(padding: EdgeInsets.all(30.00)),
+                // Padding(padding: EdgeInsets.all(30.00)),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[]),
+                      Divider(
+                        color: Colors.black,
+                      ),
+                      // Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: <Widget>[]),
                       Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              'Edit The Picture Above With The Table Below',
+                              'Edit Tweet',
                               style: TextStyle(
                                 fontSize: 20.00,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                             TextField(
@@ -465,7 +471,7 @@ class _TweetState extends State<Tweet> {
                             SizedBox(
                               child: Row(
                                 children: <Widget>[
-                                  Text('Image On Tweet '),
+                                  Text('Show Image:'),
                                   Switch(
                                     onChanged: (value) {
                                       setState(() {
@@ -506,7 +512,15 @@ class _TweetState extends State<Tweet> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15.0),
                                     ),
-                                    child: Icon(Icons.date_range),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.date_range),
+                                        VerticalDivider(
+                                          color: Colors.red,
+                                        ),
+                                        Text("Date")
+                                      ],
+                                    ),
                                     onPressed: () => showDatePicker(
                                       context: context,
                                       initialDate: DateTime.now(),

@@ -20,6 +20,7 @@ class _MemeScaffoldState extends State<MemeScaffold> {
     return WillPopScope(
       onWillPop: widget.onBackKeyPress,
       child: Scaffold(
+        // resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
