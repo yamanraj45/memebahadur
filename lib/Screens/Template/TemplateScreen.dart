@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
-import 'package:memebahadur/utils/Theme.dart';
-import 'package:provider/provider.dart';
 
 import 'TemplateListItem.dart';
 
@@ -10,7 +8,10 @@ class Template extends StatefulWidget {
   _TemplateState createState() => _TemplateState();
 }
 
-class _TemplateState extends State<Template> {
+class _TemplateState extends State<Template>
+    with AutomaticKeepAliveClientMixin<Template> {
+  @override
+  bool get wantKeepAlive => true;
   final _templateList = [
     for (int trendImage = 1; trendImage < 6; trendImage++)
       {
@@ -41,41 +42,50 @@ class _TemplateState extends State<Template> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Consumer<ThemeNotifier>(
-            builder: (cibtext, notifier, child) => SwitchListTile(
-              title: Text('DarkMode'),
-              onChanged: (val) {
-                notifier.toogleTheme();
-              },
-              value: notifier.darkTheme,
-            ),
-          ),
-          Padding(padding: EdgeInsets.all(5.00)),
-          Expanded(
-            child: GridView.builder(
-              itemCount: _templateList.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-              itemBuilder: (BuildContext context, int index) {
-                return InkResponse(
-                  child: TemplateListItem(
-                    templateImage: _templateList[index]['image'],
-                    templateName: _templateList[index]['name'],
-                  ),
-                  onTap: () {
-                    Image image = Image.asset(_templateList[index]['image']);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Editor(image)),
-                    );
-                  },
-                );
-              },
-            ),
-          )
-        ],
+      body: Container(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.all(5.00)),
+            Expanded(
+              child: GridView.builder(
+                cacheExtent: 10000,
+                itemCount: _templateList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkResponse(
+                    child: TemplateListItem(
+                      templateImage: _templateList[index]['image'],
+                      templateName: _templateList[index]['name'],
+                    ),
+                    onTap: () {
+                      Image image = Image.asset(_templateList[index]['image']);
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (c, a1, a2) => Editor(image),
+                          maintainState: true,
+                          transitionsBuilder: (c, anim, a2, child) =>
+                              SlideTransition(
+                                  position: Tween(
+                                    begin: Offset(1.0, 0.0),
+                                    end: Offset(0.0, 0.0),
+                                  ).animate(
+                                    CurvedAnimation(
+                                        parent: anim, curve: Curves.linear),
+                                  ),
+                                  child: child),
+                          transitionDuration: Duration(milliseconds: 400),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

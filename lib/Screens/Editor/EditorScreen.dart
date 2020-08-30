@@ -42,7 +42,7 @@ class EditorState extends State<Editor> {
     if (imageEdited) {
       showExitDialog(context);
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+      Navigator.of(context).pop();
     }
   }
 
