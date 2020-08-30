@@ -6,6 +6,8 @@ import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 
+enum ImageType { avatar, youtube }
+
 class YoutubeIcon {
   YoutubeIcon._();
 
@@ -42,13 +44,26 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
   File _avatar;
   String date = '4';
   String time = 'weeks';
+  bool isYoutubeEdited = false;
 
-  Future getVideoImage(ImageSource source) async {
+  Future getImage(imageType, {source = ImageSource.gallery}) async {
     final pickedFile = await picker.getImage(source: source);
-
-    setState(() {
-      _image = File(pickedFile.path);
-    });
+    if (pickedFile != null) {
+      File path = File(pickedFile.path);
+      setState(() {
+        isYoutubeEdited = true;
+        switch (imageType) {
+          case ImageType.avatar:
+            _avatar = path;
+            break;
+          case ImageType.youtube:
+            _image = path;
+            break;
+          default:
+            break;
+        }
+      });
+    }
   }
 
   _showImagePicker() {
@@ -56,38 +71,32 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text("From where do you want to take the photo?"),
+            title: Text("Choose:"),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  GestureDetector(
-                    child: Text("Gallery"),
+                  Divider(),
+                  ListTile(
+                    title: Text("Gallery"),
                     onTap: () {
                       Navigator.pop(context);
-                      getVideoImage(ImageSource.gallery);
+                      getImage(ImageType.youtube, source: ImageSource.gallery);
                     },
                   ),
-                  Padding(padding: EdgeInsets.all(8.0)),
-                  GestureDetector(
-                    child: Text("Camera"),
+                  Divider(),
+                  ListTile(
+                    title: Text("Camera"),
                     onTap: () {
                       Navigator.pop(context);
-                      getVideoImage(ImageSource.camera);
+                      getImage(ImageType.youtube, source: ImageSource.camera);
                     },
-                  )
+                  ),
+                  Divider(),
                 ],
               ),
             ),
           );
         });
-  }
-
-  Future getAvatar() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      _avatar = File(pickedFile.path);
-    });
   }
 
   _onBackPress() {
@@ -286,7 +295,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                             child: Row(
                               children: <Widget>[
                                 GestureDetector(
-                                  onTap: () => getAvatar(),
+                                  onTap: () => getImage(ImageType.avatar),
                                   child: _avatar != null
                                       ? CircleAvatar(
                                           backgroundColor: Colors.transparent,
