@@ -15,12 +15,12 @@ class MemeText extends StatelessWidget {
         fontSize: 26,
         shadows: <Shadow>[
           Shadow(
-            offset: Offset(2.0, 2.0),
+            offset: Offset(-0.5, -0.5),
             blurRadius: 3.0,
             color: Colors.black87,
           ),
           Shadow(
-            offset: Offset(2.0, 2.0),
+            offset: Offset(0.5, 0.5),
             blurRadius: 8.0,
             color: Colors.black87,
           ),

@@ -5,7 +5,7 @@ showExitDialog(BuildContext context) {
     context: context,
     child: AlertDialog(
       title: Text("Exit"),
-      content: Text("Have You Saved Your Meme?"),
+      content: Text("Do You Want To Discard Changes ?"),
       actions: <Widget>[
         FlatButton(
             child: Text("Yes"),
