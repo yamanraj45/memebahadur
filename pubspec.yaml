@@ -103,6 +103,10 @@ flutter:
     - family: md
       fonts:
         - asset: assets/font/HelveticaNeue Medium.ttf
+        
+    - family: AppIcons
+      fonts:
+        - asset: assets/font/Youtubeicon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
