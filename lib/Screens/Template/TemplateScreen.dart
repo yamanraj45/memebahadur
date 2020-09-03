@@ -10,7 +10,7 @@ class Template extends StatefulWidget {
 
 class _TemplateState extends State<Template> {
   final _templateList = [
-    for (int trendImage = 1; trendImage < 6; trendImage++)
+    for (int trendImage = 1; trendImage < 9; trendImage++)
       {
         'name': 'Trend $trendImage',
         'image': 'assets/images/1/Trend ($trendImage).jpg'
