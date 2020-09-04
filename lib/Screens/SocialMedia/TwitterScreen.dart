@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:memebahadur/utils/screenshot.dart';
+import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 
 enum ImageType { avatar, twitter }
@@ -16,9 +17,6 @@ class Tweet extends StatefulWidget {
 }
 
 class _TweetState extends State<Tweet> {
-  String date;
-  String time;
-  final previewContainer = new GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -28,6 +26,10 @@ class _TweetState extends State<Tweet> {
     time = "00:00";
   }
 
+  final previewContainer = new GlobalKey();
+  String date;
+  String time;
+  String tweet = '';
   String platform = 'iPhone';
   String retweetcomment = '45';
   String likes = '45';
@@ -42,14 +44,15 @@ class _TweetState extends State<Tweet> {
   Future getImage(imageType, {source = ImageSource.gallery}) async {
     final pickedFile = await picker.getImage(source: source);
     if (pickedFile != null) {
+      File path = File(pickedFile.path);
       setState(() {
         isTweetEdited = true;
         switch (imageType) {
           case ImageType.avatar:
-            _avatar = File(pickedFile.path);
+            _avatar = path;
             break;
           case ImageType.twitter:
-            _twitterImage = File(pickedFile.path);
+            _twitterImage = path;
             break;
           default:
             break;
@@ -171,9 +174,9 @@ class _TweetState extends State<Tweet> {
                                                   Text(
                                                     '$name',
                                                     style: TextStyle(
-                                                        fontSize: 15.0,
+                                                        fontSize: 20.0,
                                                         fontWeight:
-                                                            FontWeight.w900),
+                                                            FontWeight.w500),
                                                   ),
                                                   Container(
                                                     child: Text(
@@ -204,18 +207,15 @@ class _TweetState extends State<Tweet> {
                                     ),
                                   ),
                                 ]),
-                            TextField(
-                              style: TextStyle(
-                                fontFamily: 'bold',
-                              ),
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                  hintText: 'What\'s happening?',
-                                  focusedBorder: InputBorder.none,
-                                  border: InputBorder.none,
-                                  errorBorder: InputBorder.none,
-                                  enabledBorder: InputBorder.none),
+                            Padding(
+                              padding: EdgeInsets.all(5),
+                            ),
+                            Text(
+                              tweet,
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.0),
                             ),
                             isImage
                                 ? ClipRRect(
@@ -407,45 +407,56 @@ class _TweetState extends State<Tweet> {
                       //     mainAxisAlignment: MainAxisAlignment.start,
                       //     crossAxisAlignment: CrossAxisAlignment.start,
                       //     children: <Widget>[]),
+                      Text(
+                        'Edit Tweet',
+                        style: TextStyle(
+                          fontSize: 30.00,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Padding(padding: EdgeInsets.all(10)),
                       Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text(
-                              'Edit Tweet',
-                              style: TextStyle(
-                                fontSize: 20.00,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            TextField(
+                            InputText(
                               onChanged: (value) {
                                 setState(() {
                                   isTweetEdited = true;
                                   name = value;
                                 });
                               },
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  labelText: 'Account Name'),
+                              label: "Account",
+                              maxLength: 20,
                             ),
                             Padding(
                               padding: EdgeInsets.all(5.00),
                             ),
-                            TextField(
+                            InputText(
+                                onChanged: (value) {
+                                  setState(() {
+                                    isTweetEdited = true;
+                                    handle = value;
+                                  });
+                                },
+                                maxLength: 15,
+                                label: "Username"),
+                            Padding(
+                              padding: EdgeInsets.all(5.00),
+                            ),
+                            InputText(
                               onChanged: (value) {
                                 setState(() {
                                   isTweetEdited = true;
-                                  handle = value;
+                                  tweet = value;
                                 });
                               },
-                              decoration: InputDecoration(
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  labelText: 'Username'),
+                              multiline: true,
+                              label: "Tweet",
+                              maxLength: 230,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.all(5.00),
                             ),
                           ],
                         ),
@@ -453,17 +464,13 @@ class _TweetState extends State<Tweet> {
                     ],
                   ),
                 ),
+                Padding(padding: EdgeInsets.all(5)),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[],
-                      ),
                       Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -471,16 +478,88 @@ class _TweetState extends State<Tweet> {
                             SizedBox(
                               child: Row(
                                 children: <Widget>[
-                                  Text('Show Image:'),
-                                  Switch(
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isTweetEdited = true;
-                                        isImage = value;
-                                      });
-                                    },
-                                    value: isImage,
-                                  )
+                                  Container(
+                                    child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Icon(Icons.date_range),
+                                            Text(" Date")
+                                          ],
+                                        ),
+                                        onPressed: () => {
+                                              showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay(
+                                                  hour: 12,
+                                                  minute: 00,
+                                                ),
+                                              ).then((value) {
+                                                if (value != null) {
+                                                  setState(() {
+                                                    isTweetEdited = true;
+                                                    time = formatTime(value);
+                                                  });
+                                                }
+                                              })
+                                            }),
+                                  ),
+                                  Spacer(),
+                                  Container(
+                                    child: RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15.0),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Icon(Icons.timer),
+                                            Text(" Time")
+                                          ],
+                                        ),
+                                        onPressed: () => {
+                                              showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay(
+                                                  hour: 12,
+                                                  minute: 00,
+                                                ),
+                                              ).then((value) {
+                                                if (value != null) {
+                                                  setState(() {
+                                                    isTweetEdited = true;
+                                                    time = formatTime(value);
+                                                  });
+                                                }
+                                              })
+                                            }),
+                                  ),
+                                  Spacer(),
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.image,
+                                        size: 30,
+                                      ),
+                                      Switch(
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isTweetEdited = true;
+                                            isImage = value;
+                                          });
+                                        },
+                                        value: isImage,
+                                      ),
+                                    ],
+                                  ),
+                                  // Spacer(),
                                 ],
                               ),
                             ),
@@ -490,17 +569,13 @@ class _TweetState extends State<Tweet> {
                     ],
                   ),
                 ),
+                Padding(padding: EdgeInsets.all(10)),
                 Container(
                   width: MediaQuery.of(context).size.width * 0.90,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[],
-                      ),
                       Container(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -508,117 +583,28 @@ class _TweetState extends State<Tweet> {
                             Row(
                               children: <Widget>[
                                 Expanded(
-                                  child: RaisedButton(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15.0),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Icon(Icons.date_range),
-                                        VerticalDivider(
-                                          color: Colors.red,
-                                        ),
-                                        Text("Date")
-                                      ],
-                                    ),
-                                    onPressed: () => showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(1800),
-                                      lastDate: DateTime(2500),
-                                    ).then((value) {
-                                      setState(() {
-                                        isTweetEdited = true;
-                                        if (value != null) {
-                                          date = formatDate(value);
-                                        }
-                                      });
-                                    }),
-                                  ),
-                                ),
-                                Spacer(),
-                                Expanded(
-                                  child: RaisedButton(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15.0),
-                                      ),
-                                      child: Icon(Icons.timer),
-                                      onPressed: () => {
-                                            showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay(
-                                                hour: 12,
-                                                minute: 00,
-                                              ),
-                                            ).then((value) {
-                                              if (value != null) {
-                                                setState(() {
-                                                  isTweetEdited = true;
-                                                  time = formatTime(value);
-                                                });
-                                              }
-                                            })
-                                          }),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[],
-                      ),
-                      Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  flex: 3,
-                                  child: TextField(
+                                  flex: 6,
+                                  child: InputText(
                                     onChanged: (value) {
                                       setState(() {
                                         isTweetEdited = true;
                                         retweetcomment = value;
                                       });
                                     },
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        labelText: 'Retweet'),
+                                    label: "Retweets",
                                   ),
                                 ),
-                                Text('\t'),
+                                Spacer(),
                                 Expanded(
-                                  flex: 3,
-                                  child: TextField(
+                                  flex: 6,
+                                  child: InputText(
+                                    label: "Likes",
                                     onChanged: (value) {
                                       setState(() {
                                         isTweetEdited = true;
                                         likes = value;
                                       });
                                     },
-                                    decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        labelText: 'Like'),
                                   ),
                                 ),
                                 Text('\t'),
@@ -627,59 +613,37 @@ class _TweetState extends State<Tweet> {
                           ],
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width * 0.90,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[],
-                      ),
                       Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Text('Android'),
-                                Spacer(),
-                                Flexible(
-                                  child: RadioListTile(
-                                      value: 'Android',
-                                      groupValue: platform,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isTweetEdited = true;
-                                          platform = value;
-                                        });
-                                      }),
-                                ),
-                                Text('iPhone'),
-                                Flexible(
-                                  child: RadioListTile(
-                                      value: 'iPhone',
-                                      groupValue: platform,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          isTweetEdited = true;
-                                          platform = value;
-                                        });
-                                      }),
-                                )
-                              ],
+                            Expanded(
+                              child: RadioListTile(
+                                  title: Text("Android"),
+                                  value: 'Android',
+                                  groupValue: platform,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isTweetEdited = true;
+                                      platform = value;
+                                    });
+                                  }),
                             ),
+                            Expanded(
+                              child: RadioListTile(
+                                  title: Text('iPhone'),
+                                  value: 'iPhone',
+                                  groupValue: platform,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isTweetEdited = true;
+                                      platform = value;
+                                    });
+                                  }),
+                            )
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                      )
                     ],
                   ),
                 ),

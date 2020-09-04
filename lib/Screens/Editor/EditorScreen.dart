@@ -60,73 +60,79 @@ class EditorState extends State<Editor> {
               child: Container(
                 child: Column(
                   children: <Widget>[
-                    Padding(
+                    Container(
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                            isDense: true,
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            hintText: 'Enter Upper Text'),
+                        onChanged: (val) {
+                          setState(() {
+                            upperText = val;
+                            isImageEdited = true;
+                          });
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
                       padding: const EdgeInsets.all(10.0),
-                      child: RepaintBoundary(
-                        key: previewContainer,
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                color: Colors.white,
-                                child: Text(
-                                  upperText,
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 26,
+                      child: Container(
+                        decoration:
+                            BoxDecoration(border: Border.all(width: 0.5)),
+                        child: RepaintBoundary(
+                          key: previewContainer,
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  color: Colors.white,
+                                  child: Text(
+                                    upperText,
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 26,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Container(
-                                color: Colors.white,
-                                height: height * heightMultiplier,
-                                width: width,
-                                alignment: Alignment.bottomCenter,
-                                child: Stack(
-                                    alignment: Alignment.center,
-                                    children: <Widget>[
-                                          Container(
-                                            alignment: Alignment.bottomCenter,
-                                            child: MemeText(bottomText),
-                                          ),
-                                          _image,
-                                          Container(
-                                            alignment: Alignment.bottomCenter,
-                                            child: MemeText(bottomText),
-                                          )
-                                        ] +
-                                        texts),
-                              ),
-                            ],
+                                Container(
+                                  color: Colors.white,
+                                  height: height * heightMultiplier,
+                                  width: width,
+                                  alignment: Alignment.bottomCenter,
+                                  child: Stack(
+                                      alignment: Alignment.center,
+                                      children: <Widget>[
+                                            Container(
+                                              alignment: Alignment.bottomCenter,
+                                              child: MemeText(bottomText),
+                                            ),
+                                            _image,
+                                            Container(
+                                              alignment: Alignment.bottomCenter,
+                                              child: MemeText(bottomText),
+                                            )
+                                          ] +
+                                          texts),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 20.00),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: SizedBox(
-                        child: TextField(
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              hintText: 'Enter Upper Text'),
-                          onChanged: (val) {
-                            setState(() {
-                              upperText = val;
-                              isImageEdited = true;
-                            });
-                          },
-                        ),
-                      ),
                     ),
                     Container(
                       padding: EdgeInsets.all(10),
@@ -136,8 +142,9 @@ class EditorState extends State<Editor> {
                           maxLines: null,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
+                              isDense: true,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                                borderRadius: BorderRadius.circular(50),
                               ),
                               hintText: 'Enter Bottom Text'),
                           onChanged: (val) {
