@@ -11,7 +11,7 @@ class SocialMediaHomepage extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.35,
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -23,6 +23,7 @@ class SocialMediaHomepage extends StatelessWidget {
                       onTap: () =>
                           Navigator.pushNamed(context, '/youtubescreen'),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           ListTile(
                             title: Center(
@@ -34,21 +35,21 @@ class SocialMediaHomepage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.2,
+                              height: MediaQuery.of(context).size.height * 0.18,
                               child: Image.asset(
                                   'assets/images/youtube_logo.png')),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Center(
-                              child: Text(
-                                'Create a fake Youtube Page that look like a real one',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(16.0),
+                          //   child: Center(
+                          //     child: Text(
+                          //       'Create a fake Youtube Page that look like a real one',
+                          //       textAlign: TextAlign.center,
+                          //       style: TextStyle(
+                          //         color: Colors.black.withOpacity(0.6),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -58,7 +59,7 @@ class SocialMediaHomepage extends StatelessWidget {
                   padding: EdgeInsets.all(5.0),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.4,
+                  height: MediaQuery.of(context).size.height * 0.35,
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -69,6 +70,7 @@ class SocialMediaHomepage extends StatelessWidget {
                     child: InkWell(
                       onTap: () => Navigator.pushNamed(context, '/tweet'),
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           ListTile(
                             title: Center(
@@ -80,21 +82,21 @@ class SocialMediaHomepage extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.2,
+                              height: MediaQuery.of(context).size.height * 0.25,
                               child: Image.asset(
                                   'assets/images/twitter_logo.png')),
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Center(
-                              child: Text(
-                                'Create a fake Tweet Page that look like a real one',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black.withOpacity(0.6),
-                                ),
-                              ),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(16.0),
+                          //   child: Center(
+                          //     child: Text(
+                          //       'Create a fake Tweet Page that look like a real one',
+                          //       textAlign: TextAlign.center,
+                          //       style: TextStyle(
+                          //         color: Colors.black.withOpacity(0.6),
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),

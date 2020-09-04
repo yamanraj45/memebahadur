@@ -31,6 +31,6 @@ void onBackPress(BuildContext context, {bool flag = false}) {
   if (flag) {
     showExitDialog(context);
   } else {
-    Navigator.of(context).pushNamedAndRemoveUntil('/home', (route) => false);
+    Navigator.of(context).pop();
   }
 }
