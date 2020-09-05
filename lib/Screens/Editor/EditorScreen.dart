@@ -48,7 +48,7 @@ class EditorState extends State<Editor> {
         onSavePress: _onSavePress,
         child: Builder(
           builder: (context) {
-            return SingleChildScrollView(
+            return Container(
               child: Container(
                 child: Column(
                   children: <Widget>[

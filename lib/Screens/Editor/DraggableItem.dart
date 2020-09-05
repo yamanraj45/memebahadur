@@ -62,6 +62,19 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
   double left = 110;
   double scale = 1.0;
   double angle = 0;
+
+  _onScaleIncrease() {
+    setState(() {
+      scale += 0.1;
+    });
+  }
+
+  _onScaleDecrease() {
+    setState(() {
+      scale = scale <= 0.1 ? 0.1 : scale - 0.1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
@@ -73,11 +86,8 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
               child: Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        scale += 0.1;
-                      });
-                    },
+                    onTap: _onScaleIncrease,
+                    onDoubleTap: _onScaleIncrease,
                     child: CircleAvatar(
                       maxRadius: 15,
                       child: Icon(Icons.add, size: 15),
@@ -85,11 +95,8 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
                   ),
                   Padding(padding: EdgeInsets.only(left: 5)),
                   GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        scale -= 0.1;
-                      });
-                    },
+                    onTap: _onScaleDecrease,
+                    onDoubleTap: _onScaleDecrease,
                     child: CircleAvatar(
                       backgroundColor: Colors.red[300],
                       maxRadius: 15,
