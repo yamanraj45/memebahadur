@@ -104,6 +104,9 @@ flutter:
     - family: AppIcons
       fonts:
         - asset: assets/font/Youtubeicon.ttf
+    - family: TwitterIcon
+      fonts:
+        - asset: assets/font/twittericon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
