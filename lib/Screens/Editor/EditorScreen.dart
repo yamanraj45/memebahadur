@@ -70,6 +70,8 @@ class EditorState extends State<Editor> {
                           onPressed: () {
                             setState(() {
                               latestIndex = 0;
+                              upperText = "";
+                              bottomText = "";
                               currentIndex = null;
                               isImageEdited = true;
                             });
