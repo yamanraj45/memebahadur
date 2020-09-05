@@ -28,7 +28,7 @@ class _DraggableItemState extends State<DraggableItem> {
           onTap: widget.onTap,
           onDoubleTap: widget.onTap,
           onLongPress: widget.onTap,
-          child: DraggableText(
+          child: DraggableItemBase(
             child: widget.child,
             index: widget.index,
             isSelected: widget.isSelected,
@@ -39,8 +39,8 @@ class _DraggableItemState extends State<DraggableItem> {
   }
 }
 
-class DraggableText extends StatefulWidget {
-  DraggableText(
+class DraggableItemBase extends StatefulWidget {
+  DraggableItemBase(
       {@required this.child,
       @required this.index,
       this.isSelected = false,
@@ -54,16 +54,52 @@ class DraggableText extends StatefulWidget {
   final double width;
 
   @override
-  _DraggableTextState createState() => _DraggableTextState();
+  _DraggableItemBaseState createState() => _DraggableItemBaseState();
 }
 
-class _DraggableTextState extends State<DraggableText> {
+class _DraggableItemBaseState extends State<DraggableItemBase> {
   double top = 100;
   double left = 110;
+  double scale = 1.0;
 
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
+      !widget.isSelected
+          ? Container()
+          : Positioned(
+              top: top - 30,
+              left: left,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    scale += 0.1;
+                  });
+                },
+                child: CircleAvatar(
+                  maxRadius: 15,
+                  child: Icon(Icons.add, size: 15),
+                ),
+              ),
+            ),
+      !widget.isSelected
+          ? Container()
+          : Positioned(
+              top: top - 30,
+              left: left + 50,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    scale -= 0.1;
+                  });
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.red[300],
+                  maxRadius: 15,
+                  child: Icon(Icons.remove, size: 15),
+                ),
+              ),
+            ),
       Positioned(
         top: top,
         left: left,
@@ -89,8 +125,11 @@ class _DraggableTextState extends State<DraggableText> {
             left = left + dx;
           });
         },
-        child: Stack(
-          children: children,
+        child: Transform.scale(
+          scale: scale,
+          child: Stack(
+            children: children,
+          ),
         ),
       ),
     );

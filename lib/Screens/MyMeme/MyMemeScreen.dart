@@ -37,159 +37,159 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       ),
                     ),
                   ),
-                  DraggableItem(
-                    isVisible: 0 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 0;
-                      });
-                    },
-                    index: 0,
-                    isSelected: currentIndex == 0,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 0,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 1 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 1;
-                      });
-                    },
-                    index: 1,
-                    isSelected: currentIndex == 1,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 1,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 2 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 2;
-                      });
-                    },
-                    index: 2,
-                    isSelected: currentIndex == 2,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 2,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 3 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 3;
-                      });
-                    },
-                    index: 3,
-                    isSelected: currentIndex == 3,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 3,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 4 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 4;
-                      });
-                    },
-                    index: 4,
-                    isSelected: currentIndex == 4,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 4,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 5 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 5;
-                      });
-                    },
-                    index: 5,
-                    isSelected: currentIndex == 5,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 5,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 6 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 6;
-                      });
-                    },
-                    index: 6,
-                    isSelected: currentIndex == 6,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 6,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 7 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 7;
-                      });
-                    },
-                    index: 7,
-                    isSelected: currentIndex == 7,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 7,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 8 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 8;
-                      });
-                    },
-                    index: 8,
-                    isSelected: currentIndex == 8,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 8,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 9 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 9;
-                      });
-                    },
-                    index: 9,
-                    isSelected: currentIndex == 9,
-                    child: MemeTextInput(
-                      text: "Add text here",
-                      isEnabled: currentIndex == 9,
-                    ),
-                  ),
-                  DraggableItem(
-                    isVisible: 10 > latestIndex,
-                    onTap: () {
-                      setState(() {
-                        currentIndex = 10;
-                      });
-                    },
-                    index: 10,
-                    isSelected: currentIndex == 10,
-                    child: MemeTextInput(
-                      isEnabled: currentIndex == 10,
-                    ),
-                  ),
+                  // DraggableItem(
+                  //   isVisible: 0 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 0;
+                  //     });
+                  //   },
+                  //   index: 0,
+                  //   isSelected: currentIndex == 0,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 0,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 1 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 1;
+                  //     });
+                  //   },
+                  //   index: 1,
+                  //   isSelected: currentIndex == 1,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 1,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 2 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 2;
+                  //     });
+                  //   },
+                  //   index: 2,
+                  //   isSelected: currentIndex == 2,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 2,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 3 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 3;
+                  //     });
+                  //   },
+                  //   index: 3,
+                  //   isSelected: currentIndex == 3,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 3,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 4 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 4;
+                  //     });
+                  //   },
+                  //   index: 4,
+                  //   isSelected: currentIndex == 4,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 4,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 5 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 5;
+                  //     });
+                  //   },
+                  //   index: 5,
+                  //   isSelected: currentIndex == 5,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 5,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 6 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 6;
+                  //     });
+                  //   },
+                  //   index: 6,
+                  //   isSelected: currentIndex == 6,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 6,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 7 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 7;
+                  //     });
+                  //   },
+                  //   index: 7,
+                  //   isSelected: currentIndex == 7,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 7,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 8 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 8;
+                  //     });
+                  //   },
+                  //   index: 8,
+                  //   isSelected: currentIndex == 8,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 8,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 9 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 9;
+                  //     });
+                  //   },
+                  //   index: 9,
+                  //   isSelected: currentIndex == 9,
+                  //   child: MemeTextInput(
+                  //     text: "Add text here",
+                  //     isEnabled: currentIndex == 9,
+                  //   ),
+                  // ),
+                  // DraggableItem(
+                  //   isVisible: 10 > latestIndex,
+                  //   onTap: () {
+                  //     setState(() {
+                  //       currentIndex = 10;
+                  //     });
+                  //   },
+                  //   index: 10,
+                  //   isSelected: currentIndex == 10,
+                  //   child: MemeTextInput(
+                  //     isEnabled: currentIndex == 10,
+                  //   ),
+                  // ),
                 ] +
                 <Widget>[
                   Center(

@@ -45,6 +45,7 @@ class _MemeTextInputState extends State<MemeTextInput> {
           fontWeight: FontWeight.bold,
         ),
         decoration: InputDecoration(
+          isDense: true,
           hintText: widget.text == null ? defaultText : widget.text,
           hintStyle: TextStyle(
             shadows: shadow,
