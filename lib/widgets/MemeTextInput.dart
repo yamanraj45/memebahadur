@@ -4,7 +4,7 @@ class MemeTextInput extends StatefulWidget {
   final String text;
   final bool isEnabled;
 
-  MemeTextInput({@required this.text, @required this.isEnabled});
+  MemeTextInput({this.text, @required this.isEnabled});
 
   @override
   _MemeTextInputState createState() => _MemeTextInputState();

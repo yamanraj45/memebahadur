@@ -168,7 +168,6 @@ class EditorState extends State<Editor> {
                                         index: 0,
                                         isSelected: currentIndex == 0,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 0,
                                         ),
                                       ),
@@ -182,7 +181,6 @@ class EditorState extends State<Editor> {
                                         index: 1,
                                         isSelected: currentIndex == 1,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 1,
                                         ),
                                       ),
@@ -196,7 +194,6 @@ class EditorState extends State<Editor> {
                                         index: 2,
                                         isSelected: currentIndex == 2,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 2,
                                         ),
                                       ),
@@ -210,7 +207,6 @@ class EditorState extends State<Editor> {
                                         index: 3,
                                         isSelected: currentIndex == 3,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 3,
                                         ),
                                       ),
@@ -224,7 +220,6 @@ class EditorState extends State<Editor> {
                                         index: 4,
                                         isSelected: currentIndex == 4,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 4,
                                         ),
                                       ),
@@ -238,7 +233,6 @@ class EditorState extends State<Editor> {
                                         index: 5,
                                         isSelected: currentIndex == 5,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 5,
                                         ),
                                       ),
@@ -252,7 +246,6 @@ class EditorState extends State<Editor> {
                                         index: 6,
                                         isSelected: currentIndex == 6,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 6,
                                         ),
                                       ),
@@ -266,7 +259,6 @@ class EditorState extends State<Editor> {
                                         index: 7,
                                         isSelected: currentIndex == 7,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 7,
                                         ),
                                       ),
@@ -280,7 +272,6 @@ class EditorState extends State<Editor> {
                                         index: 8,
                                         isSelected: currentIndex == 8,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 8,
                                         ),
                                       ),
@@ -294,7 +285,6 @@ class EditorState extends State<Editor> {
                                         index: 9,
                                         isSelected: currentIndex == 9,
                                         child: MemeTextInput(
-                                          text: "Add text here",
                                           isEnabled: currentIndex == 9,
                                         ),
                                       ),

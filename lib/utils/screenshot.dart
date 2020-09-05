@@ -17,6 +17,7 @@ takeScreenshot(GlobalKey previewContainer) async {
 }
 
 void onSavePress(BuildContext context, GlobalKey key) async {
+  WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   bool status = await isStoragePermissionGranted();
   if (status) {
     takeScreenshot(key);
@@ -28,6 +29,7 @@ void onSavePress(BuildContext context, GlobalKey key) async {
 }
 
 void onBackPress(BuildContext context, {bool flag = false}) {
+  WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
   if (flag) {
     showExitDialog(context);
   } else {
