@@ -30,6 +30,7 @@ dependencies:
   flutter_speed_dial:
   image_picker: ^0.6.7+4
   image: any
+
   path_provider: any
   double_back_to_close_app: ^1.2.0
   image_gallery_saver: ^1.2.2
@@ -41,6 +42,7 @@ dependencies:
   shared_preferences:
   provider:
   dotted_border: ^1.0.6
+  intl:
 
 dev_dependencies:
   flutter_test:
@@ -89,6 +91,22 @@ flutter:
     - family: logo2
       fonts:
         - asset: assets/font/logo2.ttf
+
+    - family: Bold
+      fonts:
+        - asset: assets/font/bold.ttf
+
+    - family: light
+      fonts:
+        - asset: assets/font/thin.ttf
+
+    - family: md
+      fonts:
+        - asset: assets/font/HelveticaNeue Medium.ttf
+
+    - family: AppIcons
+      fonts:
+        - asset: assets/font/Youtubeicon.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
