@@ -40,6 +40,7 @@ dependencies:
   storage_path:
   shared_preferences:
   provider:
+  dotted_border: ^1.0.6
 
 dev_dependencies:
   flutter_test:

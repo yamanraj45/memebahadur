@@ -11,7 +11,6 @@ class MemeTextInput extends StatefulWidget {
 }
 
 class _MemeTextInputState extends State<MemeTextInput> {
-  final TextEditingController _controller = TextEditingController();
   final String defaultText = "Add your text here";
   var shadow = [
     Shadow(
@@ -45,14 +44,12 @@ class _MemeTextInputState extends State<MemeTextInput> {
           color: Colors.white,
           fontWeight: FontWeight.bold,
         ),
-        controller: _controller,
         decoration: InputDecoration(
           hintText: widget.text == null ? defaultText : widget.text,
           hintStyle: TextStyle(
             shadows: shadow,
             fontSize: 20.0,
             color: Colors.white,
-            // fontWeight: FontWeight.bold,
           ),
           border: InputBorder.none,
         ),

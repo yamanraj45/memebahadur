@@ -1,46 +1,6 @@
-import 'package:memebahadur/Screens/Editor/ResizableWidget.dart';
-import 'package:path/path.dart';
+import 'package:memebahadur/Screens/Editor/DraggableItem.dart';
 import 'package:flutter/material.dart';
 import 'package:memebahadur/widgets/MemeTextInput.dart';
-import "package:memebahadur/utils/path.dart";
-
-class Resizable extends StatefulWidget {
-  final Widget child;
-  final int index;
-  final bool isSelected;
-  final Function onTap;
-  final bool isVisible;
-  Resizable(
-      {@required this.child,
-      @required this.index,
-      @required this.onTap,
-      this.isVisible = false,
-      this.isSelected = true});
-
-  @override
-  _ResizableState createState() => _ResizableState();
-}
-
-class _ResizableState extends State<Resizable> {
-  @override
-  Widget build(BuildContext context) {
-    return Visibility(
-      visible: widget.isVisible,
-      child: Container(
-        child: GestureDetector(
-          onTap: widget.onTap,
-          onDoubleTap: widget.onTap,
-          onLongPress: widget.onTap,
-          child: ResizebleWidget(
-            child: widget.child,
-            index: widget.index,
-            isSelected: widget.isSelected,
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class MyMemeScreen extends StatefulWidget {
   @override
@@ -77,7 +37,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       ),
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 0 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -91,7 +51,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 0,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 1 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -105,7 +65,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 1,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 2 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -119,7 +79,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 2,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 3 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -133,7 +93,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 3,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 4 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -147,7 +107,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 4,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 5 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -161,7 +121,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 5,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 6 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -175,7 +135,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 6,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 7 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -189,7 +149,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 7,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 8 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -203,7 +163,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 8,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 9 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -217,7 +177,7 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                       isEnabled: currentIndex == 9,
                     ),
                   ),
-                  Resizable(
+                  DraggableItem(
                     isVisible: 10 > latestIndex,
                     onTap: () {
                       setState(() {
@@ -227,7 +187,6 @@ class _MyMemeScreenState extends State<MyMemeScreen> {
                     index: 10,
                     isSelected: currentIndex == 10,
                     child: MemeTextInput(
-                      text: "Add text here",
                       isEnabled: currentIndex == 10,
                     ),
                   ),

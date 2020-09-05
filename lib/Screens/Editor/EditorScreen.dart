@@ -26,16 +26,7 @@ class EditorState extends State<Editor> {
   List<DraggableItem> texts = [];
 
   _onAddTextPress(Offset offset) {
-    setState(() {
-      texts.add(
-        DraggableItem(
-          Offset.zero,
-          "",
-          offset,
-          color: Colors.red,
-        ),
-      );
-    });
+    setState(() {});
   }
 
   _onPressedBack() {

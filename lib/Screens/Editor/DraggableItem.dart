@@ -1,117 +1,96 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 class DraggableItem extends StatefulWidget {
-  final Offset initPos;
-  final Offset widgetOffset;
-  final String label;
-  final Color color;
-  Offset position = Offset(0.0, 0.0);
-
-  DraggableItem(this.initPos, this.label, this.widgetOffset,
-      {this.color = Colors.white});
+  final Widget child;
+  final int index;
+  final bool isSelected;
+  final Function onTap;
+  final bool isVisible;
+  DraggableItem(
+      {@required this.child,
+      @required this.index,
+      @required this.onTap,
+      this.isVisible = false,
+      this.isSelected = true});
 
   @override
-  DraggableItemState createState() => DraggableItemState();
+  _DraggableItemState createState() => _DraggableItemState();
 }
 
-class DraggableItemState extends State<DraggableItem> {
-  final String _text = "Add your text here";
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  var shadow = [
-    Shadow(
-        // bottomLeft
-        offset: Offset(-1.5, -1.5),
-        color: Colors.black),
-    Shadow(
-        // bottomRight
-        offset: Offset(1.5, -1.5),
-        color: Colors.black),
-    Shadow(
-        // topRight
-        offset: Offset(1.5, 1.5),
-        color: Colors.black),
-    Shadow(
-        // topLeft
-        offset: Offset(-1.5, 1.5),
-        color: Colors.black),
-  ];
-
-  final myController = TextEditingController();
+class _DraggableItemState extends State<DraggableItem> {
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: widget.position.dx,
-      top: widget.position.dy,
-      child: Focus(
-        onFocusChange: (value) => {setState(() {})},
-        child: Draggable(
-          child: GestureDetector(
-            onScaleStart: (ScaleStartDetails details) {
-              // _previouScale = _scale;
-              print(details);
-              setState(() {});
-            },
-            onScaleUpdate: (ScaleUpdateDetails details) {
-              // _scale = _previouScale * details.scale;
-              print(details);
-              setState(() {});
-            },
-            onScaleEnd: (ScaleEndDetails details) {
-              // _previouScale = 1.0;
-              print(details);
-              setState(() {});
-            },
-            onDoubleTap: () => print("*" * 100),
-            child: Container(
-              child: IntrinsicWidth(
-                child: TextField(
-                  keyboardType: TextInputType.multiline,
-                  maxLines: null,
-                  style: TextStyle(
-                    shadows: shadow,
-                    fontSize: 20.0,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  controller: myController,
-                  decoration: InputDecoration(
-                    hintText: _text,
-                    hintStyle: TextStyle(
-                      shadows: shadow,
-                      fontSize: 20.0,
-                      color: Colors.white,
-                      // fontWeight: FontWeight.bold,
-                    ),
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-            ),
+    return Visibility(
+      visible: widget.isVisible,
+      child: Container(
+        child: GestureDetector(
+          onTap: widget.onTap,
+          onDoubleTap: widget.onTap,
+          onLongPress: widget.onTap,
+          child: DraggableText(
+            child: widget.child,
+            index: widget.index,
+            isSelected: widget.isSelected,
           ),
-          onDraggableCanceled: (velocity, offset) {
-            setState(() {
-              widget.position = offset - widget.widgetOffset;
-            });
-          },
-          maxSimultaneousDrags: 1,
-          childWhenDragging: Container(),
-          feedback: Container(
-            child: Center(
-              child: Text(
-                (myController.text == "") ? _text : myController.text,
-                style: TextStyle(
-                  shadows: shadow,
-                  color: Colors.white,
-                  decoration: TextDecoration.none,
-                  fontSize: 20.0,
-                ),
-              ),
-            ),
+        ),
+      ),
+    );
+  }
+}
+
+class DraggableText extends StatefulWidget {
+  DraggableText(
+      {@required this.child,
+      @required this.index,
+      this.isSelected = false,
+      this.height,
+      this.width});
+
+  final Widget child;
+  final double height;
+  final int index;
+  final bool isSelected;
+  final double width;
+
+  @override
+  _DraggableTextState createState() => _DraggableTextState();
+}
+
+class _DraggableTextState extends State<DraggableText> {
+  double top = 100;
+  double left = 110;
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> children = [
+      Positioned(
+        top: top,
+        left: left,
+        child: Container(
+          height: widget.height,
+          width: widget.width == null ? 250 : widget.width,
+          child: DottedBorder(
+            padding: const EdgeInsets.all(0),
+            child: widget.child,
+            strokeWidth: 2,
+            color: widget.isSelected ? Colors.red : Colors.transparent,
           ),
+        ),
+      ),
+    ];
+    return Container(
+      child: GestureDetector(
+        onPanUpdate: (details) {
+          var dx = details.delta.dx;
+          var dy = details.delta.dy;
+          setState(() {
+            top = top + dy;
+            left = left + dx;
+          });
+        },
+        child: Stack(
+          children: children,
         ),
       ),
     );
