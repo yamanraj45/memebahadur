@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
@@ -78,103 +80,104 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
   @override
   Widget build(BuildContext context) {
     List<Widget> children = [
-      !widget.isSelected
-          ? Container()
-          : Positioned(
-              top: top - 30,
-              left: left,
-              child: Row(
-                children: [
-                  GestureDetector(
-                    onTap: _onScaleIncrease,
-                    onDoubleTap: _onScaleIncrease,
-                    child: CircleAvatar(
-                      maxRadius: 15,
-                      child: Icon(Icons.add, size: 15),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 5)),
-                  GestureDetector(
-                    onTap: _onScaleDecrease,
-                    onDoubleTap: _onScaleDecrease,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.red[300],
-                      maxRadius: 15,
-                      child: Icon(Icons.remove, size: 15),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 5)),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        angle -= 0.314;
-                      });
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.green[300],
-                      maxRadius: 15,
-                      child: Icon(Icons.rotate_left, size: 15),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.only(left: 5)),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        angle += 0.314;
-                      });
-                    },
-                    child: CircleAvatar(
-                      backgroundColor: Colors.green[300],
-                      maxRadius: 15,
-                      child: Icon(Icons.rotate_right, size: 15),
-                    ),
-                  ),
-                ],
-              ),
-            ),
       Positioned(
         top: top,
         left: left,
-        child: Container(
-          height: widget.height,
-          width: widget.width == null ? 250 : widget.width,
-          child: DottedBorder(
-            padding: const EdgeInsets.all(0),
+        child: Transform.rotate(
+          angle: angle,
+          child: Transform.scale(
+            scale: scale,
             child: GestureDetector(
-                onPanUpdate: (details) {
-                  var dx = details.delta.dx;
-                  var dy = details.delta.dy;
-                  setState(() {
-                    top = top + dy;
-                    left = left + dx;
-                  });
-                },
-                child: widget.child),
-            strokeWidth: 2,
-            color: widget.isSelected ? Colors.red : Colors.transparent,
+              onPanUpdate: (details) {
+                var dx = details.delta.dx;
+                var dy = details.delta.dy;
+                setState(() {
+                  top = top + scale * dy;
+                  left = left + scale * dx;
+                });
+              },
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    !widget.isSelected
+                        ? SizedBox(height: 30)
+                        : Container(
+                            // color: Colors.green,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              // crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                GestureDetector(
+                                  onTap: _onScaleIncrease,
+                                  onDoubleTap: _onScaleIncrease,
+                                  child: CircleAvatar(
+                                    maxRadius: 15,
+                                    child: Icon(Icons.add, size: 15),
+                                  ),
+                                ),
+                                Padding(padding: EdgeInsets.only(left: 15)),
+                                GestureDetector(
+                                  onTap: _onScaleDecrease,
+                                  onDoubleTap: _onScaleDecrease,
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.red[300],
+                                    maxRadius: 15,
+                                    child: Icon(Icons.remove, size: 15),
+                                  ),
+                                ),
+                                Padding(padding: EdgeInsets.only(left: 15)),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      angle -= 0.314;
+                                    });
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green[300],
+                                    maxRadius: 15,
+                                    child: Icon(Icons.rotate_left, size: 15),
+                                  ),
+                                ),
+                                Padding(padding: EdgeInsets.only(left: 15)),
+                                GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      angle += 0.314;
+                                    });
+                                  },
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.green[300],
+                                    maxRadius: 15,
+                                    child: Icon(Icons.rotate_right, size: 15),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                    Container(
+                      height: widget.height,
+                      width: widget.width == null ? 250 : widget.width,
+                      child: DottedBorder(
+                        padding: const EdgeInsets.all(0),
+                        child: GestureDetector(child: widget.child),
+                        strokeWidth: 2,
+                        color:
+                            widget.isSelected ? Colors.red : Colors.transparent,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
     ];
     return Container(
-      child: GestureDetector(
-        // onPanUpdate: (details) {
-        //   var dx = details.delta.dx;
-        //   var dy = details.delta.dy;
-        //   setState(() {
-        //     top = top + dy;
-        //     left = left + dx;
-        //   });
-        // },
-        child: Transform.rotate(
-          angle: angle,
-          child: Transform.scale(
-            scale: scale,
-            child: Stack(
-              children: children,
-            ),
-          ),
-        ),
+      child: Stack(
+        children: children,
       ),
     );
   }
