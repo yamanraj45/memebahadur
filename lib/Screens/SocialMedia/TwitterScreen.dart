@@ -379,7 +379,7 @@ class _TweetState extends State<Tweet> {
                                   ),
                                   Column(
                                     children: <Widget>[
-                                      Icon(Icons.linked_camera)
+                                      Icon(Icons.favorite_border)
                                     ],
                                   ),
                                   Column(
