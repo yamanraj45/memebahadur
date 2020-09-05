@@ -73,7 +73,7 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
 
   _onScaleDecrease() {
     setState(() {
-      scale = scale <= 0.1 ? 0.1 : scale - 0.1;
+      scale = scale < 0.6 ? 0.5 : scale - 0.1;
     });
   }
 
@@ -88,14 +88,6 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
           child: Transform.scale(
             scale: scale,
             child: GestureDetector(
-              onPanUpdate: (details) {
-                var dx = details.delta.dx;
-                var dy = details.delta.dy;
-                setState(() {
-                  top = top + scale * dy;
-                  left = left + scale * dx;
-                });
-              },
               child: Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -131,7 +123,7 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      angle -= 0.314;
+                                      angle -= pi / 10;
                                     });
                                   },
                                   child: CircleAvatar(
@@ -144,7 +136,7 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      angle += 0.314;
+                                      angle += pi / 10;
                                     });
                                   },
                                   child: CircleAvatar(
@@ -175,9 +167,19 @@ class _DraggableItemBaseState extends State<DraggableItemBase> {
         ),
       ),
     ];
-    return Container(
-      child: Stack(
-        children: children,
+    return GestureDetector(
+      onPanUpdate: (details) {
+        var dx = details.delta.dx;
+        var dy = details.delta.dy;
+        setState(() {
+          top = top + scale * (dy);
+          left = left + scale * (dx);
+        });
+      },
+      child: Container(
+        child: Stack(
+          children: children,
+        ),
       ),
     );
   }
