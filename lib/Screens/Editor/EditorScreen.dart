@@ -20,6 +20,8 @@ class EditorState extends State<Editor> {
   int latestIndex = 0;
   final GlobalKey previewContainer = new GlobalKey();
   bool isImageEdited = false;
+  var _uppercontroller = TextEditingController();
+  var _lowercontroller = TextEditingController();
   String bottomText = '';
   String upperText = '';
   List<DraggableItem> texts = [];
@@ -38,7 +40,7 @@ class EditorState extends State<Editor> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double heightMultiplier = 0.40;
+
     double width = MediaQuery.of(context).size.width;
     Image _image = widget._imageselected;
 
@@ -107,7 +109,18 @@ class EditorState extends State<Editor> {
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         textAlign: TextAlign.center,
+                        controller: _uppercontroller,
                         decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                              icon: Icon(Icons.clear),
+                              onPressed: () {
+                                print(upperText);
+                                _uppercontroller.clear();
+                                setState(() {
+                                  upperText = '';
+                                });
+                              },
+                            ),
                             isDense: true,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50),
@@ -149,17 +162,21 @@ class EditorState extends State<Editor> {
                                 ),
                                 Container(
                                   color: Colors.white,
-                                  height: height * heightMultiplier,
+                                  height: height * 0.25,
                                   width: width,
                                   alignment: Alignment.bottomCenter,
                                   child: Stack(
-                                    alignment: Alignment.center,
+                                    alignment: Alignment.bottomCenter,
                                     children: <Widget>[
-                                      Container(
-                                        alignment: Alignment.bottomCenter,
-                                        child: MemeText(bottomText),
+                                      // Container(
+                                      //   alignment: Alignment.bottomCenter,
+                                      //   child: MemeText(bottomText, 20),
+                                      // ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 5.0, right: 5.0),
+                                        child: _image,
                                       ),
-                                      _image,
                                       DraggableItem(
                                         isVisible: 0 < latestIndex,
                                         onTap: () {
@@ -305,7 +322,7 @@ class EditorState extends State<Editor> {
                                       ),
                                       Container(
                                         alignment: Alignment.bottomCenter,
-                                        child: MemeText(bottomText),
+                                        child: MemeText(bottomText, 15),
                                       )
                                     ],
                                   ),
@@ -326,10 +343,21 @@ class EditorState extends State<Editor> {
                       padding: EdgeInsets.all(10),
                       child: SizedBox(
                         child: TextField(
+                          controller: _lowercontroller,
                           keyboardType: TextInputType.multiline,
                           maxLines: null,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(Icons.clear),
+                                onPressed: () {
+                                  print(upperText);
+                                  _lowercontroller.clear();
+                                  setState(() {
+                                    bottomText = '';
+                                  });
+                                },
+                              ),
                               isDense: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
