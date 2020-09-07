@@ -24,17 +24,28 @@ class EditorState extends State<Editor> {
   var _lowercontroller = TextEditingController();
   String bottomText = '';
   String upperText = '';
-  List<DraggableItem> texts = [];
 
   _onBackPress() {
     onBackPress(context, flag: isImageEdited);
   }
 
-  _onSavePress() {
+  _onSavePress() async {
     setState(() {
       currentIndex = null;
     });
-    onSavePress(context, previewContainer);
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+
+    // Add a little delay to prevent bounding box from being captured in screenshot
+    Future.delayed(Duration(milliseconds: 100)).then((value) {
+      onSavePress(context, previewContainer);
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _uppercontroller.dispose();
+    _lowercontroller.dispose();
   }
 
   @override
@@ -70,10 +81,14 @@ class EditorState extends State<Editor> {
                             ],
                           ),
                           onPressed: () {
+                            WidgetsBinding.instance.focusManager.primaryFocus
+                                ?.unfocus();
                             setState(() {
                               latestIndex = 0;
                               upperText = "";
                               bottomText = "";
+                              _uppercontroller.clear();
+                              _lowercontroller.clear();
                               currentIndex = null;
                               isImageEdited = true;
                             });
@@ -111,16 +126,20 @@ class EditorState extends State<Editor> {
                         textAlign: TextAlign.center,
                         controller: _uppercontroller,
                         decoration: InputDecoration(
-                            suffixIcon: IconButton(
-                              icon: Icon(Icons.clear),
-                              onPressed: () {
-                                print(upperText);
-                                _uppercontroller.clear();
-                                setState(() {
-                                  upperText = '';
-                                });
-                              },
-                            ),
+                            suffixIcon: _uppercontroller.text.isNotEmpty
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.close,
+                                      size: 15,
+                                    ),
+                                    onPressed: () {
+                                      _uppercontroller.clear();
+                                      setState(() {
+                                        upperText = '';
+                                      });
+                                    },
+                                  )
+                                : null,
                             isDense: true,
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(50),
@@ -348,16 +367,20 @@ class EditorState extends State<Editor> {
                           maxLines: null,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                              suffixIcon: IconButton(
-                                icon: Icon(Icons.clear),
-                                onPressed: () {
-                                  print(upperText);
-                                  _lowercontroller.clear();
-                                  setState(() {
-                                    bottomText = '';
-                                  });
-                                },
-                              ),
+                              suffixIcon: _uppercontroller.text.isNotEmpty
+                                  ? IconButton(
+                                      icon: Icon(
+                                        Icons.close,
+                                        size: 15,
+                                      ),
+                                      onPressed: () {
+                                        _uppercontroller.clear();
+                                        setState(() {
+                                          upperText = '';
+                                        });
+                                      },
+                                    )
+                                  : null,
                               isDense: true,
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(50),
