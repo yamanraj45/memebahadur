@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 class TemplateListItem extends StatelessWidget {
@@ -8,8 +9,8 @@ class TemplateListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(3.00),
+    return Card(
+      clipBehavior: Clip.antiAlias,
       child: FittedBox(
         fit: BoxFit.cover,
         child: Image.asset(templateImage),

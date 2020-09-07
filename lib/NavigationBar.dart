@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
+import 'package:memebahadur/Screens/MyMeme/MyMemeScreen.dart';
 
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 
@@ -31,6 +32,8 @@ class NavigationBarState extends State<NavigationBar> {
     );
   }
 
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,24 +44,46 @@ class NavigationBarState extends State<NavigationBar> {
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.info),
-              color: Colors.cyanAccent,
+              color: Colors.black,
               onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
             )
           ],
-          title: Text('MemeBahadur',
-              style: TextStyle(
-                  fontFamily: 'logo2',
-                  fontWeight: FontWeight.bold,
-                  color: Colors.cyanAccent)),
+          title: Text(
+            'Memebahadur',
+            style: TextStyle(
+                fontFamily: 'logo2',
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black),
+          ),
           centerTitle: true,
         ),
         body: DoubleBackToCloseApp(
-          child: Template(),
+          child: IndexedStack(
+            index: _currentIndex,
+            children: <Widget>[Template(), MyMemeScreen()],
+          ),
           snackBar: const SnackBar(
             content: Text('Tap back again to Exit The App'),
           ),
         ),
+        bottomNavigationBar: BottomNavigationBar(
+            currentIndex: _currentIndex,
+            selectedItemColor: Colors.black,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home), title: Text('Home')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.save_alt), title: Text('MyMeme'))
+            ]),
         floatingActionButton: SpeedDial(
+          curve: Curves.decelerate,
+          overlayColor: Colors.transparent,
           child: Icon(Icons.add),
           shape: CircleBorder(),
           children: [
@@ -73,6 +98,17 @@ class NavigationBarState extends State<NavigationBar> {
                 label: 'Gallery',
                 onTap: () => getImage(ImageSource.gallery),
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
+            SpeedDialChild(
+                child: Icon(Icons.screen_lock_portrait),
+                label: 'Tweet',
+                onTap: () => Navigator.pushNamed(context, '/tweet'),
+                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
+            SpeedDialChild(
+              child: Icon(Icons.youtube_searched_for),
+              label: 'Youtube',
+              onTap: () => Navigator.pushNamed(context, '/youtubescreen'),
+              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
+            ),
           ],
         ));
   }

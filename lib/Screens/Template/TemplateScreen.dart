@@ -8,7 +8,10 @@ class Template extends StatefulWidget {
   _TemplateState createState() => _TemplateState();
 }
 
-class _TemplateState extends State<Template> {
+class _TemplateState extends State<Template>
+    with AutomaticKeepAliveClientMixin<Template> {
+  @override
+  bool get wantKeepAlive => true;
   final _templateList = [
     for (int trendImage = 1; trendImage < 6; trendImage++)
       {
@@ -39,49 +42,50 @@ class _TemplateState extends State<Template> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Container(
-                alignment: Alignment.center,
-                height: 50.0,
-                margin: const EdgeInsets.all(10.0),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20.0,
-                ),
-                decoration: new BoxDecoration(
-                  color: Color(0xFFFCFCFC).withOpacity(0.3),
-                  borderRadius: new BorderRadius.circular(10.0),
-                ),
-                child: Text('Create Meme Share Happiness')),
-          ),
-          Padding(
-            padding: EdgeInsets.all(5.00),
-          ),
-          Expanded(
-            child: GridView.builder(
-              itemCount: _templateList.length,
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-              itemBuilder: (BuildContext context, int index) {
-                return InkResponse(
-                  child: TemplateListItem(
-                    templateImage: _templateList[index]['image'],
-                    templateName: _templateList[index]['name'],
-                  ),
-                  onTap: () {
-                    Image image = Image.asset(_templateList[index]['image']);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Editor(image)),
-                    );
-                  },
-                );
-              },
-            ),
-          )
-        ],
+      body: Container(
+        padding: EdgeInsets.all(15),
+        child: Column(
+          children: <Widget>[
+            Padding(padding: EdgeInsets.all(5.00)),
+            Expanded(
+              child: GridView.builder(
+                cacheExtent: 10000,
+                itemCount: _templateList.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemBuilder: (BuildContext context, int index) {
+                  return InkResponse(
+                    child: TemplateListItem(
+                      templateImage: _templateList[index]['image'],
+                      templateName: _templateList[index]['name'],
+                    ),
+                    onTap: () {
+                      Image image = Image.asset(_templateList[index]['image']);
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (c, a1, a2) => Editor(image),
+                          maintainState: true,
+                          transitionsBuilder: (c, anim, a2, child) =>
+                              SlideTransition(
+                                  position: Tween(
+                                    begin: Offset(1.0, 0.0),
+                                    end: Offset(0.0, 0.0),
+                                  ).animate(
+                                    CurvedAnimation(
+                                        parent: anim, curve: Curves.linear),
+                                  ),
+                                  child: child),
+                          transitionDuration: Duration(milliseconds: 400),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
