@@ -55,7 +55,7 @@ class EditorState extends State<Editor> {
 
       String latestFile = filename[0];
       print('${directory.path}/$latestFile');
-      Share.file("MemeBahadur", "MemeBahadur Image",
+      Share.file("MemeBahadur", "memebahadur.jpg",
           File('${directory.path}/$latestFile').readAsBytesSync(), "image/jpg");
     });
   }
