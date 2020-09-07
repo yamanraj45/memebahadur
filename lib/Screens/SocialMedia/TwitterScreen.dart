@@ -472,6 +472,9 @@ class _TweetState extends State<Tweet> {
                                             maxLength: 20,
                                           ),
                                         ),
+                                        Padding(
+                                          padding: EdgeInsets.all(5),
+                                        ),
                                         Icon(TwitterIcon.verified),
                                         Switch(
                                           onChanged: (value) {
