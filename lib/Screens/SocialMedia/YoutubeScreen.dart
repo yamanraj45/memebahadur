@@ -271,7 +271,7 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                               Column(
                                 children: <Widget>[
                                   Icon(
-                                    YoutubeIcon.save,
+                                    Icons.add_to_photos,
                                     color: Colors.grey[600],
                                   ),
                                   Text(
