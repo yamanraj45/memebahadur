@@ -8,6 +8,23 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
+import 'package:flutter/widgets.dart';
+
+class TwitterIcon {
+  TwitterIcon._();
+
+  static const _kFontFam = 'twittericon';
+  static const _kFontPkg = null;
+
+  static const IconData verified =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData comment =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData retweet =
+      IconData(0xe802, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData like =
+      IconData(0xe803, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+}
 
 enum ImageType { avatar, twitter }
 
@@ -36,6 +53,7 @@ class _TweetState extends State<Tweet> {
   String name = 'Meme Bahadur';
   String handle = '45developers';
   bool isImage = false;
+  bool isVerified = true;
   bool isTweetEdited = false;
   File _avatar;
   File _twitterImage;
@@ -171,12 +189,29 @@ class _TweetState extends State<Tweet> {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: <Widget>[
-                                                  Text(
-                                                    '$name',
-                                                    style: TextStyle(
-                                                        fontSize: 20.0,
-                                                        fontWeight:
-                                                            FontWeight.w500),
+                                                  Container(
+                                                    child: Row(
+                                                      children: <Widget>[
+                                                        Text(
+                                                          name,
+                                                          style: TextStyle(
+                                                              fontSize: 20.0,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500),
+                                                        ),
+                                                        isVerified
+                                                            ? Icon(
+                                                                TwitterIcon
+                                                                    .verified,
+                                                                size: 18,
+                                                                color: Colors
+                                                                        .lightBlueAccent[
+                                                                    400],
+                                                              )
+                                                            : Container()
+                                                      ],
+                                                    ),
                                                   ),
                                                   Container(
                                                     child: Text(
@@ -370,17 +405,17 @@ class _TweetState extends State<Tweet> {
                                   Column(
                                     children: <Widget>[
                                       Icon(
-                                        Icons.mode_comment,
+                                        TwitterIcon.comment,
                                       )
                                     ],
                                   ),
                                   Column(
-                                    children: <Widget>[Icon(Icons.repeat)],
+                                    children: <Widget>[
+                                      Icon(TwitterIcon.retweet)
+                                    ],
                                   ),
                                   Column(
-                                    children: <Widget>[
-                                      Icon(Icons.linked_camera)
-                                    ],
+                                    children: <Widget>[Icon(TwitterIcon.like)],
                                   ),
                                   Column(
                                     children: <Widget>[Icon(Icons.share)],
@@ -419,15 +454,49 @@ class _TweetState extends State<Tweet> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            InputText(
-                              onChanged: (value) {
-                                setState(() {
-                                  isTweetEdited = true;
-                                  name = value;
-                                });
-                              },
-                              label: "Account",
-                              maxLength: 20,
+                            Column(
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Expanded(
+                                          child: InputText(
+                                            onChanged: (value) {
+                                              setState(() {
+                                                isTweetEdited = true;
+                                                name = value;
+                                              });
+                                            },
+                                            label: "Account",
+                                            maxLength: 20,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(5),
+                                        ),
+                                        Icon(TwitterIcon.verified),
+                                        Switch(
+                                          onChanged: (value) {
+                                            setState(() {
+                                              isVerified = value;
+                                              print(value);
+                                            });
+                                          },
+                                          value: isVerified,
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[],
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                             Padding(
                               padding: EdgeInsets.all(5.00),
@@ -640,7 +709,7 @@ class _TweetState extends State<Tweet> {
                                       platform = value;
                                     });
                                   }),
-                            )
+                            ),
                           ],
                         ),
                       ),

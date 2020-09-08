@@ -6,9 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
-import 'package:memebahadur/Screens/MyMeme/MyMemeScreen.dart';
 
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
+
+import 'Screens/SocialMedia/SocailmediaController.dart';
 
 class NavigationBar extends StatefulWidget {
   @override
@@ -33,7 +34,7 @@ class NavigationBarState extends State<NavigationBar> {
   }
 
   int _currentIndex = 0;
-
+  final navigationScreens = [Template(), SocialMediaHomepage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +62,7 @@ class NavigationBarState extends State<NavigationBar> {
         body: DoubleBackToCloseApp(
           child: IndexedStack(
             index: _currentIndex,
-            children: <Widget>[Template(), MyMemeScreen()],
+            children: <Widget>[Template(), SocialMediaHomepage()],
           ),
           snackBar: const SnackBar(
             content: Text('Tap back again to Exit The App'),
@@ -79,7 +80,8 @@ class NavigationBarState extends State<NavigationBar> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.save_alt), title: Text('MyMeme'))
+                  icon: Icon(Icons.add_circle_outline),
+                  title: Text('Social Media'))
             ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
@@ -98,17 +100,6 @@ class NavigationBarState extends State<NavigationBar> {
                 label: 'Gallery',
                 onTap: () => getImage(ImageSource.gallery),
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
-            SpeedDialChild(
-                child: Icon(Icons.screen_lock_portrait),
-                label: 'Tweet',
-                onTap: () => Navigator.pushNamed(context, '/tweet'),
-                labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
-            SpeedDialChild(
-              child: Icon(Icons.youtube_searched_for),
-              label: 'Youtube',
-              onTap: () => Navigator.pushNamed(context, '/youtubescreen'),
-              labelStyle: TextStyle(fontSize: 18.0, color: Colors.black),
-            ),
           ],
         ));
   }

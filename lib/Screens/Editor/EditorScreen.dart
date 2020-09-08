@@ -1,6 +1,5 @@
 import 'dart:io';
-import 'package:memebahadur/utils/path.dart';
-import 'package:path/path.dart' as paths;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
