@@ -1,6 +1,4 @@
-import 'package:memebahadur/Screens/Editor/DraggableItem.dart';
 import 'package:flutter/material.dart';
-import 'package:memebahadur/widgets/MemeTextInput.dart';
 
 class MyMemeScreen extends StatefulWidget {
   @override
