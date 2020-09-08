@@ -388,16 +388,16 @@ class EditorState extends State<Editor> {
                           maxLines: null,
                           textAlign: TextAlign.center,
                           decoration: InputDecoration(
-                              suffixIcon: _uppercontroller.text.isNotEmpty
+                              suffixIcon: _lowercontroller.text.isNotEmpty
                                   ? IconButton(
                                       icon: Icon(
                                         Icons.close,
                                         size: 15,
                                       ),
                                       onPressed: () {
-                                        _uppercontroller.clear();
+                                        _lowercontroller.clear();
                                         setState(() {
-                                          upperText = '';
+                                          bottomText = '';
                                         });
                                       },
                                     )
