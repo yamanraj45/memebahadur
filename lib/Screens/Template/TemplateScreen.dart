@@ -8,7 +8,10 @@ class Template extends StatefulWidget {
   _TemplateState createState() => _TemplateState();
 }
 
-class _TemplateState extends State<Template> {
+class _TemplateState extends State<Template>
+    with AutomaticKeepAliveClientMixin<Template> {
+  @override
+  bool get wantKeepAlive => true;
   final _templateList = [
     for (int trendImage = 1; trendImage < 9; trendImage++)
       {
@@ -46,7 +49,7 @@ class _TemplateState extends State<Template> {
             Padding(padding: EdgeInsets.all(5.00)),
             Expanded(
               child: GridView.builder(
-                cacheExtent: 10000,
+                cacheExtent: 1000,
                 itemCount: _templateList.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4),
@@ -60,7 +63,21 @@ class _TemplateState extends State<Template> {
                       Image image = Image.asset(_templateList[index]['image']);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => Editor(image)),
+                        PageRouteBuilder(
+                          pageBuilder: (c, a1, a2) => Editor(image),
+                          maintainState: true,
+                          transitionsBuilder: (c, anim, a2, child) =>
+                              SlideTransition(
+                                  position: Tween(
+                                    begin: Offset(1.0, 0.0),
+                                    end: Offset(0.0, 0.0),
+                                  ).animate(
+                                    CurvedAnimation(
+                                        parent: anim, curve: Curves.linear),
+                                  ),
+                                  child: child),
+                          transitionDuration: Duration(milliseconds: 400),
+                        ),
                       );
                     },
                   );

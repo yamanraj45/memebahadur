@@ -5,11 +5,14 @@ class MemeScaffold extends StatefulWidget {
   final Function onBackPress;
   final Function onSavePress;
   final Function onBackKeyPress;
+  final Function onSharePress;
+
   MemeScaffold(
       {@required this.child,
       @required this.onBackPress,
       @required this.onSavePress,
-      @required this.onBackKeyPress});
+      @required this.onBackKeyPress,
+      this.onSharePress});
   @override
   _MemeScaffoldState createState() => _MemeScaffoldState();
 }
@@ -20,7 +23,7 @@ class _MemeScaffoldState extends State<MemeScaffold> {
     return WillPopScope(
       onWillPop: widget.onBackKeyPress,
       child: Scaffold(
-        // resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
@@ -32,6 +35,26 @@ class _MemeScaffoldState extends State<MemeScaffold> {
           ),
           backgroundColor: Colors.transparent,
           actions: [
+            widget.onSharePress == null
+                ? Container()
+                : SizedBox(
+                    height: 80,
+                    child: SafeArea(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          IconButton(
+                            onPressed: widget.onSharePress,
+                            icon: Icon(
+                              Icons.share,
+                              size: 30,
+                              color: Colors.black,
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
             SizedBox(
               height: 80,
               child: SafeArea(
