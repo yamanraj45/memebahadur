@@ -87,55 +87,6 @@ class EditorState extends State<Editor> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                          ),
-                          color: Colors.red[100],
-                          child: Row(
-                            children: [
-                              Icon(Icons.clear),
-                              Text("Clear all"),
-                            ],
-                          ),
-                          onPressed: () {
-                            WidgetsBinding.instance.focusManager.primaryFocus
-                                ?.unfocus();
-                            setState(() {
-                              latestIndex = 0;
-                              upperText = "";
-                              bottomText = "";
-                              _uppercontroller.clear();
-                              _lowercontroller.clear();
-                              currentIndex = null;
-                              isImageEdited = true;
-                            });
-                          },
-                        ),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                          ),
-                          color: Colors.blue[100],
-                          child: Row(
-                            children: [
-                              Icon(Icons.add),
-                              Text("Add new text"),
-                            ],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              latestIndex++;
-                              currentIndex = null;
-                              isImageEdited = true;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
                     Padding(
                       padding: EdgeInsets.all(10),
                     ),
@@ -418,6 +369,55 @@ class EditorState extends State<Editor> {
                     ),
                     Padding(
                       padding: EdgeInsets.all(3.00),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                          color: Colors.red[100],
+                          child: Row(
+                            children: [
+                              Icon(Icons.clear),
+                              Text("Clear all"),
+                            ],
+                          ),
+                          onPressed: () {
+                            WidgetsBinding.instance.focusManager.primaryFocus
+                                ?.unfocus();
+                            setState(() {
+                              latestIndex = 0;
+                              upperText = "";
+                              bottomText = "";
+                              _uppercontroller.clear();
+                              _lowercontroller.clear();
+                              currentIndex = null;
+                              isImageEdited = true;
+                            });
+                          },
+                        ),
+                        RaisedButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
+                          color: Colors.blue[100],
+                          child: Row(
+                            children: [
+                              Icon(Icons.add),
+                              Text("Add new text"),
+                            ],
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              latestIndex++;
+                              currentIndex = null;
+                              isImageEdited = true;
+                            });
+                          },
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: EdgeInsets.all(3.00),
