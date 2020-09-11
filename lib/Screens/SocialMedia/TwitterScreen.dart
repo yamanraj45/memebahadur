@@ -562,20 +562,19 @@ class _TweetState extends State<Tweet> {
                                           ],
                                         ),
                                         onPressed: () => {
-                                              showTimePicker(
+                                              showDatePicker(
                                                 context: context,
-                                                initialTime: TimeOfDay(
-                                                  hour: 12,
-                                                  minute: 00,
-                                                ),
+                                                initialDate: DateTime.now(),
+                                                firstDate: DateTime(1500),
+                                                lastDate: DateTime(3000),
                                               ).then((value) {
                                                 if (value != null) {
                                                   setState(() {
                                                     isTweetEdited = true;
-                                                    time = formatTime(value);
+                                                    date = formatDate(value);
                                                   });
                                                 }
-                                              })
+                                              }),
                                             }),
                                   ),
                                   Spacer(),
@@ -605,6 +604,7 @@ class _TweetState extends State<Tweet> {
                                                   setState(() {
                                                     isTweetEdited = true;
                                                     time = formatTime(value);
+                                                    print(time);
                                                   });
                                                 }
                                               })
