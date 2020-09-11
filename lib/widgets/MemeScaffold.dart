@@ -20,10 +20,11 @@ class MemeScaffold extends StatefulWidget {
 class _MemeScaffoldState extends State<MemeScaffold> {
   @override
   Widget build(BuildContext context) {
+    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
     return WillPopScope(
       onWillPop: widget.onBackKeyPress,
       child: Scaffold(
-        resizeToAvoidBottomPadding: false,
+        // resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           elevation: 0,
           leading: IconButton(
@@ -75,7 +76,12 @@ class _MemeScaffoldState extends State<MemeScaffold> {
             ),
           ],
         ),
-        body: widget.child,
+        body: SingleChildScrollView(
+          child: widget.child,
+          physics: isKeyboardVisible
+              ? AlwaysScrollableScrollPhysics()
+              : NeverScrollableScrollPhysics(),
+        ),
       ),
     );
   }
