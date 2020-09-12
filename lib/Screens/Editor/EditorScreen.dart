@@ -30,7 +30,7 @@ class EditorState extends State<Editor> {
   String upperText = '';
   bool savedbeforeshare = false;
   List<DraggableItem> texts = [];
-
+  bool isScrollable = true;
   String filed;
 
   _onBackPress() {
@@ -40,6 +40,7 @@ class EditorState extends State<Editor> {
   _onSavePress() async {
     setState(() {
       currentIndex = null;
+      isScrollable = true;
     });
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     // Add a little delay to prevent bounding box from being captured in screenshot
@@ -51,6 +52,7 @@ class EditorState extends State<Editor> {
   _onSharePress() async {
     setState(() {
       currentIndex = null;
+      isScrollable = true;
     });
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     Future.delayed(Duration(milliseconds: 100)).then((value) {
@@ -74,9 +76,9 @@ class EditorState extends State<Editor> {
 
     double width = MediaQuery.of(context).size.width;
     Image _image = widget._imageselected;
-
     return GestureDetector(
       child: MemeScaffold(
+        isScrollable: isScrollable,
         onBackPress: _onBackPress,
         onSavePress: _onSavePress,
         onSharePress: _onSharePress,
@@ -147,13 +149,13 @@ class EditorState extends State<Editor> {
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 26,
+                                      fontSize: 20,
                                     ),
                                   ),
                                 ),
                                 Container(
                                   color: Colors.white,
-                                  height: height * 0.25,
+                                  height: height * 0.5 * 0.8,
                                   width: width,
                                   alignment: Alignment.bottomCenter,
                                   child: Stack(
@@ -163,16 +165,20 @@ class EditorState extends State<Editor> {
                                       //   alignment: Alignment.bottomCenter,
                                       //   child: MemeText(bottomText, 20),
                                       // ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5.0, right: 5.0),
-                                        child: _image,
+                                      FittedBox(
+                                        fit: BoxFit.fitHeight,
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5.0, right: 5.0),
+                                          child: _image,
+                                        ),
                                       ),
                                       DraggableItem(
                                         isVisible: 0 < latestIndex,
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 0;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 0,
@@ -186,6 +192,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 1;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 1,
@@ -199,6 +206,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 2;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 2,
@@ -212,6 +220,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 3;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 3,
@@ -225,6 +234,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 4;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 4,
@@ -238,6 +248,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 5;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 5,
@@ -251,6 +262,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 6;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 6,
@@ -264,6 +276,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 7;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 7,
@@ -277,6 +290,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 8;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 8,
@@ -290,6 +304,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 9;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 9,
@@ -303,6 +318,7 @@ class EditorState extends State<Editor> {
                                         onTap: () {
                                           setState(() {
                                             currentIndex = 10;
+                                            isScrollable = false;
                                           });
                                         },
                                         index: 10,
@@ -317,9 +333,6 @@ class EditorState extends State<Editor> {
                                       )
                                     ],
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 20,
                                 ),
                               ],
                             ),
@@ -394,6 +407,7 @@ class EditorState extends State<Editor> {
                               _uppercontroller.clear();
                               _lowercontroller.clear();
                               currentIndex = null;
+                              isScrollable = true;
                               isImageEdited = true;
                             });
                           },
@@ -413,6 +427,7 @@ class EditorState extends State<Editor> {
                             setState(() {
                               latestIndex++;
                               currentIndex = null;
+                              isScrollable = true;
                               isImageEdited = true;
                             });
                           },
@@ -436,6 +451,7 @@ class EditorState extends State<Editor> {
         WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
         setState(() {
           currentIndex = null;
+          isScrollable = true;
         });
       },
     );

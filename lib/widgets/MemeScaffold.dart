@@ -6,13 +6,15 @@ class MemeScaffold extends StatefulWidget {
   final Function onSavePress;
   final Function onBackKeyPress;
   final Function onSharePress;
-
-  MemeScaffold(
-      {@required this.child,
-      @required this.onBackPress,
-      @required this.onSavePress,
-      @required this.onBackKeyPress,
-      this.onSharePress});
+  final bool isScrollable;
+  MemeScaffold({
+    @required this.child,
+    @required this.onBackPress,
+    @required this.onSavePress,
+    @required this.onBackKeyPress,
+    this.onSharePress,
+    this.isScrollable = true,
+  });
   @override
   _MemeScaffoldState createState() => _MemeScaffoldState();
 }
@@ -20,7 +22,6 @@ class MemeScaffold extends StatefulWidget {
 class _MemeScaffoldState extends State<MemeScaffold> {
   @override
   Widget build(BuildContext context) {
-    bool isKeyboardVisible = MediaQuery.of(context).viewInsets.bottom != 0;
     return WillPopScope(
       onWillPop: widget.onBackKeyPress,
       child: Scaffold(
@@ -78,7 +79,7 @@ class _MemeScaffoldState extends State<MemeScaffold> {
         ),
         body: SingleChildScrollView(
           child: widget.child,
-          physics: isKeyboardVisible
+          physics: widget.isScrollable
               ? AlwaysScrollableScrollPhysics()
               : NeverScrollableScrollPhysics(),
         ),
