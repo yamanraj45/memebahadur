@@ -153,185 +153,182 @@ class EditorState extends State<Editor> {
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  color: Colors.white,
-                                  height: height * 0.5 * 0.8,
-                                  width: width,
-                                  alignment: Alignment.bottomCenter,
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: <Widget>[
-                                      // Container(
-                                      //   alignment: Alignment.bottomCenter,
-                                      //   child: MemeText(bottomText, 20),
-                                      // ),
-                                      FittedBox(
-                                        fit: BoxFit.fitHeight,
-                                        child: Padding(
+                                ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    minHeight: 50,
+                                    maxHeight: height,
+                                    // minWidth: 50,
+                                    // maxWidth: width,
+                                  ),
+                                  child: Container(
+                                    child: Stack(
+                                      alignment: Alignment.bottomCenter,
+                                      children: <Widget>[
+                                        Padding(
                                           padding: const EdgeInsets.only(
                                               left: 5.0, right: 5.0),
                                           child: _image,
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 0 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 0;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 0,
-                                        isSelected: currentIndex == 0,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 0,
+                                        DraggableItem(
+                                          isVisible: 0 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 0;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 0,
+                                          isSelected: currentIndex == 0,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 0,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 1 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 1;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 1,
-                                        isSelected: currentIndex == 1,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 1,
+                                        DraggableItem(
+                                          isVisible: 1 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 1;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 1,
+                                          isSelected: currentIndex == 1,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 1,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 2 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 2;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 2,
-                                        isSelected: currentIndex == 2,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 2,
+                                        DraggableItem(
+                                          isVisible: 2 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 2;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 2,
+                                          isSelected: currentIndex == 2,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 2,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 3 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 3;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 3,
-                                        isSelected: currentIndex == 3,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 3,
+                                        DraggableItem(
+                                          isVisible: 3 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 3;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 3,
+                                          isSelected: currentIndex == 3,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 3,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 4 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 4;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 4,
-                                        isSelected: currentIndex == 4,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 4,
+                                        DraggableItem(
+                                          isVisible: 4 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 4;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 4,
+                                          isSelected: currentIndex == 4,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 4,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 5 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 5;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 5,
-                                        isSelected: currentIndex == 5,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 5,
+                                        DraggableItem(
+                                          isVisible: 5 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 5;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 5,
+                                          isSelected: currentIndex == 5,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 5,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 6 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 6;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 6,
-                                        isSelected: currentIndex == 6,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 6,
+                                        DraggableItem(
+                                          isVisible: 6 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 6;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 6,
+                                          isSelected: currentIndex == 6,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 6,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 7 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 7;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 7,
-                                        isSelected: currentIndex == 7,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 7,
+                                        DraggableItem(
+                                          isVisible: 7 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 7;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 7,
+                                          isSelected: currentIndex == 7,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 7,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 8 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 8;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 8,
-                                        isSelected: currentIndex == 8,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 8,
+                                        DraggableItem(
+                                          isVisible: 8 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 8;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 8,
+                                          isSelected: currentIndex == 8,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 8,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 9 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 9;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 9,
-                                        isSelected: currentIndex == 9,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 9,
+                                        DraggableItem(
+                                          isVisible: 9 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 9;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 9,
+                                          isSelected: currentIndex == 9,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 9,
+                                          ),
                                         ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 10 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 10;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 10,
-                                        isSelected: currentIndex == 10,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 10,
+                                        DraggableItem(
+                                          isVisible: 10 < latestIndex,
+                                          onTap: () {
+                                            setState(() {
+                                              currentIndex = 10;
+                                              isScrollable = false;
+                                            });
+                                          },
+                                          index: 10,
+                                          isSelected: currentIndex == 10,
+                                          child: MemeTextInput(
+                                            isEnabled: currentIndex == 10,
+                                          ),
                                         ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.bottomCenter,
-                                        child: MemeText(bottomText, 15),
-                                      )
-                                    ],
+                                        Container(
+                                          alignment: Alignment.bottomCenter,
+                                          child: MemeText(bottomText, 15),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ],
