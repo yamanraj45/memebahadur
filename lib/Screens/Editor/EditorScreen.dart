@@ -12,6 +12,8 @@ import 'DraggableItem.dart';
 
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 
+enum TextLocation { upper, lower }
+
 class Editor extends StatefulWidget {
   final Image _imageselected;
   Editor(this._imageselected);
@@ -67,6 +69,74 @@ class EditorState extends State<Editor> {
             File(filename).readAsBytesSync(), "image/jpg");
       });
     });
+  }
+
+  void colorchange(textLocation) {
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text('Pick A Color'),
+        content: SingleChildScrollView(
+          child: ColorPicker(
+            pickerColor: pickerColor,
+            onColorChanged: (color) {
+              setState(() {
+                pickerColor = color;
+              });
+            },
+            showLabel: true,
+            pickerAreaHeightPercent: 0.8,
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Select'),
+            onPressed: () {
+              setState(() {
+                textLocation == TextLocation.upper
+                    ? uppercurrentColor = pickerColor
+                    : lowercurrentColor = pickerColor;
+
+                Navigator.of(context).pop();
+              });
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  textSizeChanger(location) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      child: AlertDialog(
+        elevation: 8.0,
+        content: SizedBox(
+          height: 50,
+          child: Slider(
+            activeColor: Colors.red,
+            inactiveColor: Colors.blue,
+            min: 0,
+            max: 100,
+            onChanged: (newvalue) {
+              setState(() {
+                location == TextLocation.upper
+                    ? _upperFontSize = newvalue
+                    : lowerFontSize = newvalue;
+              });
+            },
+            value: _upperFontSize,
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Select'),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -144,35 +214,7 @@ class EditorState extends State<Editor> {
                                 ? Container()
                                 : IconButton(
                                     onPressed: () {
-                                      showDialog(
-                                        barrierDismissible: false,
-                                        context: context,
-                                        child: AlertDialog(
-                                          elevation: 8.0,
-                                          content: SizedBox(
-                                            height: 50,
-                                            child: Slider(
-                                              activeColor: Colors.red,
-                                              inactiveColor: Colors.blue,
-                                              min: 0,
-                                              max: 100,
-                                              onChanged: (newvalue) {
-                                                setState(() {
-                                                  _upperFontSize = newvalue;
-                                                });
-                                              },
-                                              value: _upperFontSize,
-                                            ),
-                                          ),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text('Select'),
-                                              onPressed: () =>
-                                                  Navigator.of(context).pop(),
-                                            )
-                                          ],
-                                        ),
-                                      );
+                                      textSizeChanger(TextLocation.upper);
                                     },
                                     icon: Icon(Icons.format_size),
                                   ),
@@ -183,36 +225,7 @@ class EditorState extends State<Editor> {
                                       Icons.color_lens,
                                     ),
                                     onPressed: () {
-                                      showDialog(
-                                        context: context,
-                                        child: AlertDialog(
-                                          title: Text('Pick A Color'),
-                                          content: SingleChildScrollView(
-                                            child: ColorPicker(
-                                              pickerColor: pickerColor,
-                                              onColorChanged: (color) {
-                                                setState(() {
-                                                  pickerColor = color;
-                                                });
-                                              },
-                                              showLabel: true,
-                                              pickerAreaHeightPercent: 0.8,
-                                            ),
-                                          ),
-                                          actions: <Widget>[
-                                            FlatButton(
-                                              child: Text('Select'),
-                                              onPressed: () {
-                                                setState(() {
-                                                  uppercurrentColor =
-                                                      pickerColor;
-                                                  Navigator.of(context).pop();
-                                                });
-                                              },
-                                            )
-                                          ],
-                                        ),
-                                      );
+                                      colorchange(TextLocation.upper);
                                     },
                                   ),
                           ],
@@ -480,32 +493,7 @@ class EditorState extends State<Editor> {
                                   ? Container()
                                   : IconButton(
                                       onPressed: () {
-                                        showDialog(
-                                            barrierDismissible: false,
-                                            context: context,
-                                            child: AlertDialog(
-                                              content: SizedBox(
-                                                height: 50,
-                                                child: Slider(
-                                                  min: 0,
-                                                  max: 100,
-                                                  value: lowerFontSize,
-                                                  onChanged: (value) {
-                                                    setState(() {
-                                                      lowerFontSize = value;
-                                                    });
-                                                  },
-                                                ),
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text('Select'),
-                                                  onPressed: () =>
-                                                      Navigator.of(context)
-                                                          .pop(),
-                                                )
-                                              ],
-                                            ));
+                                        textSizeChanger(TextLocation.lower);
                                       },
                                       icon: Icon(Icons.format_size),
                                     ),
@@ -513,36 +501,7 @@ class EditorState extends State<Editor> {
                                   ? Container()
                                   : IconButton(
                                       onPressed: () {
-                                        showDialog(
-                                          context: context,
-                                          child: AlertDialog(
-                                            title: Text('Pick A Color'),
-                                            content: SingleChildScrollView(
-                                              child: ColorPicker(
-                                                pickerColor: pickerColor,
-                                                onColorChanged: (color) {
-                                                  setState(() {
-                                                    pickerColor = color;
-                                                  });
-                                                },
-                                                showLabel: true,
-                                                pickerAreaHeightPercent: 0.8,
-                                              ),
-                                            ),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text('Select'),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    lowercurrentColor =
-                                                        pickerColor;
-                                                    Navigator.of(context).pop();
-                                                  });
-                                                },
-                                              )
-                                            ],
-                                          ),
-                                        );
+                                        colorchange(TextLocation.lower);
                                       },
                                       icon: Icon(Icons.color_lens),
                                     ),
