@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 import 'package:memebahadur/widgets/MemeText.dart';
@@ -27,11 +28,16 @@ class EditorState extends State<Editor> {
   var _uppercontroller = TextEditingController();
   var _lowercontroller = TextEditingController();
   String bottomText = '';
+  double _upperFontSize = 18;
+  double lowerFontSize = 15;
   String upperText = '';
   bool savedbeforeshare = false;
   List<DraggableItem> texts = [];
   bool isScrollable = true;
   String filed;
+  Color pickerColor = Color(0xff443a49);
+  Color uppercurrentColor = Color(0xff443a49);
+  Color lowercurrentColor = Color(0xf9ff0049);
 
   _onBackPress() {
     onBackPress(context, flag: isImageEdited);
@@ -74,7 +80,7 @@ class EditorState extends State<Editor> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
 
-    double width = MediaQuery.of(context).size.width;
+    // double width = MediaQuery.of(context).size.width;
     Image _image = widget._imageselected;
     return GestureDetector(
       child: MemeScaffold(
@@ -92,40 +98,126 @@ class EditorState extends State<Editor> {
                     Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        textAlign: TextAlign.center,
-                        controller: _uppercontroller,
-                        decoration: InputDecoration(
-                            suffixIcon: _uppercontroller.text.isNotEmpty
-                                ? IconButton(
+                    Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 10, right: 10),
+                                child: TextField(
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  textAlign: TextAlign.center,
+                                  controller: _uppercontroller,
+                                  decoration: InputDecoration(
+                                      suffixIcon:
+                                          _uppercontroller.text.isNotEmpty
+                                              ? IconButton(
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    size: 15,
+                                                  ),
+                                                  onPressed: () {
+                                                    _uppercontroller.clear();
+                                                    setState(() {
+                                                      upperText = '';
+                                                    });
+                                                  },
+                                                )
+                                              : null,
+                                      isDense: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      hintText: 'Enter Upper Text'),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      upperText = val;
+                                      isImageEdited = true;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ),
+                            _uppercontroller.text.isEmpty
+                                ? Container()
+                                : IconButton(
+                                    onPressed: () {
+                                      showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        child: AlertDialog(
+                                          elevation: 8.0,
+                                          content: SizedBox(
+                                            height: 50,
+                                            child: Slider(
+                                              activeColor: Colors.red,
+                                              inactiveColor: Colors.blue,
+                                              min: 0,
+                                              max: 100,
+                                              onChanged: (newvalue) {
+                                                setState(() {
+                                                  _upperFontSize = newvalue;
+                                                });
+                                              },
+                                              value: _upperFontSize,
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text('Select'),
+                                              onPressed: () =>
+                                                  Navigator.of(context).pop(),
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.format_size),
+                                  ),
+                            _uppercontroller.text.isEmpty
+                                ? Container()
+                                : IconButton(
                                     icon: Icon(
-                                      Icons.close,
-                                      size: 15,
+                                      Icons.color_lens,
                                     ),
                                     onPressed: () {
-                                      _uppercontroller.clear();
-                                      setState(() {
-                                        upperText = '';
-                                      });
+                                      showDialog(
+                                        context: context,
+                                        child: AlertDialog(
+                                          title: Text('Pick A Color'),
+                                          content: SingleChildScrollView(
+                                            child: ColorPicker(
+                                              pickerColor: pickerColor,
+                                              onColorChanged: (color) {
+                                                setState(() {
+                                                  pickerColor = color;
+                                                });
+                                              },
+                                              showLabel: true,
+                                              pickerAreaHeightPercent: 0.8,
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            FlatButton(
+                                              child: Text('Select'),
+                                              onPressed: () {
+                                                setState(() {
+                                                  uppercurrentColor =
+                                                      pickerColor;
+                                                  Navigator.of(context).pop();
+                                                });
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                      );
                                     },
-                                  )
-                                : null,
-                            isDense: true,
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            hintText: 'Enter Upper Text'),
-                        onChanged: (val) {
-                          setState(() {
-                            upperText = val;
-                            isImageEdited = true;
-                          });
-                        },
-                      ),
+                                  ),
+                          ],
+                        ),
+                      ],
                     ),
                     SizedBox(
                       height: 20,
@@ -142,21 +234,23 @@ class EditorState extends State<Editor> {
                             color: Colors.white,
                             child: Column(
                               children: <Widget>[
-                                Container(
-                                  color: Colors.white,
-                                  child: Text(
-                                    upperText,
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
+                                _uppercontroller.text != null
+                                    ? Container(
+                                        color: Colors.white,
+                                        child: Text(
+                                          upperText,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                            color: uppercurrentColor,
+                                            fontSize: _upperFontSize,
+                                          ),
+                                        ),
+                                      )
+                                    : Container(),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
                                     minHeight: 50,
-                                    maxHeight: height,
+                                    maxHeight: height * 0.45,
                                     // minWidth: 50,
                                     // maxWidth: width,
                                   ),
@@ -325,7 +419,8 @@ class EditorState extends State<Editor> {
                                         ),
                                         Container(
                                           alignment: Alignment.bottomCenter,
-                                          child: MemeText(bottomText, 15),
+                                          child: MemeText(bottomText,
+                                              lowerFontSize, lowercurrentColor),
                                         )
                                       ],
                                     ),
@@ -342,39 +437,118 @@ class EditorState extends State<Editor> {
                     ),
                     Container(
                       padding: EdgeInsets.all(10),
-                      child: SizedBox(
-                        child: TextField(
-                          controller: _lowercontroller,
-                          keyboardType: TextInputType.multiline,
-                          maxLines: null,
-                          textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                              suffixIcon: _lowercontroller.text.isNotEmpty
-                                  ? IconButton(
-                                      icon: Icon(
-                                        Icons.close,
-                                        size: 15,
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Expanded(
+                                child: TextField(
+                                  controller: _lowercontroller,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  textAlign: TextAlign.center,
+                                  decoration: InputDecoration(
+                                      suffixIcon:
+                                          _lowercontroller.text.isNotEmpty
+                                              ? IconButton(
+                                                  icon: Icon(
+                                                    Icons.close,
+                                                    size: 15,
+                                                  ),
+                                                  onPressed: () {
+                                                    _lowercontroller.clear();
+                                                    setState(() {
+                                                      bottomText = '';
+                                                    });
+                                                  },
+                                                )
+                                              : null,
+                                      isDense: true,
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(5),
                                       ),
-                                      onPressed: () {
-                                        _lowercontroller.clear();
-                                        setState(() {
-                                          bottomText = '';
-                                        });
-                                      },
-                                    )
-                                  : null,
-                              isDense: true,
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(50),
+                                      hintText: 'Enter Bottom Text'),
+                                  onChanged: (val) {
+                                    setState(() {
+                                      bottomText = val;
+                                      isImageEdited = true;
+                                    });
+                                  },
+                                ),
                               ),
-                              hintText: 'Enter Bottom Text'),
-                          onChanged: (val) {
-                            setState(() {
-                              bottomText = val;
-                              isImageEdited = true;
-                            });
-                          },
-                        ),
+                              _lowercontroller.text.isEmpty
+                                  ? Container()
+                                  : IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                            barrierDismissible: false,
+                                            context: context,
+                                            child: AlertDialog(
+                                              content: SizedBox(
+                                                height: 50,
+                                                child: Slider(
+                                                  min: 0,
+                                                  max: 100,
+                                                  value: lowerFontSize,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      lowerFontSize = value;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text('Select'),
+                                                  onPressed: () =>
+                                                      Navigator.of(context)
+                                                          .pop(),
+                                                )
+                                              ],
+                                            ));
+                                      },
+                                      icon: Icon(Icons.format_size),
+                                    ),
+                              _lowercontroller.text.isEmpty
+                                  ? Container()
+                                  : IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          context: context,
+                                          child: AlertDialog(
+                                            title: Text('Pick A Color'),
+                                            content: SingleChildScrollView(
+                                              child: ColorPicker(
+                                                pickerColor: pickerColor,
+                                                onColorChanged: (color) {
+                                                  setState(() {
+                                                    pickerColor = color;
+                                                  });
+                                                },
+                                                showLabel: true,
+                                                pickerAreaHeightPercent: 0.8,
+                                              ),
+                                            ),
+                                            actions: <Widget>[
+                                              FlatButton(
+                                                child: Text('Select'),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    lowercurrentColor =
+                                                        pickerColor;
+                                                    Navigator.of(context).pop();
+                                                  });
+                                                },
+                                              )
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(Icons.color_lens),
+                                    ),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
                     Padding(

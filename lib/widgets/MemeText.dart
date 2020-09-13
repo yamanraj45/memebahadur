@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class MemeText extends StatelessWidget {
   final String _text;
   final double _size;
-  MemeText(this._text, this._size);
+  final Color _color;
+  MemeText(this._text, this._size, this._color);
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class MemeText extends StatelessWidget {
       _text,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: Colors.yellow,
+        color: _color,
         fontWeight: FontWeight.w700,
         fontSize: _size,
         shadows: <Shadow>[
