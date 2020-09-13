@@ -13,7 +13,7 @@ class _TemplateState extends State<Template>
   @override
   bool get wantKeepAlive => true;
   final _templateList = [
-    for (int trendImage = 1; trendImage < 10; trendImage++)
+    for (int trendImage = 1; trendImage < 11; trendImage++)
       {
         'name': 'Trend $trendImage',
         'image': 'assets/images/1/Trend ($trendImage).jpg'
