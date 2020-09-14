@@ -41,6 +41,7 @@ class _TemplateState extends State<Template>
   ];
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(15),

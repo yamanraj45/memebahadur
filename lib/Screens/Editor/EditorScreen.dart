@@ -31,7 +31,7 @@ class EditorState extends State<Editor> {
   var _lowercontroller = TextEditingController();
   String bottomText = '';
   double _upperFontSize = 18;
-  double lowerFontSize = 15;
+  double _lowerFontSize = 15;
   String upperText = '';
   bool savedbeforeshare = false;
   List<DraggableItem> texts = [];
@@ -40,7 +40,7 @@ class EditorState extends State<Editor> {
   Color pickerColor = Color(0xff443a49);
   Color uppercurrentColor = Color(0xff443a49);
   Color lowercurrentColor = Color(0xf9ff0049);
-
+  double _sliderValue = 10;
   _onBackPress() {
     onBackPress(context, flag: isImageEdited);
   }
@@ -93,10 +93,14 @@ class EditorState extends State<Editor> {
             child: Text('Select'),
             onPressed: () {
               setState(() {
-                textLocation == TextLocation.upper
-                    ? uppercurrentColor = pickerColor
-                    : lowercurrentColor = pickerColor;
-
+                switch (textLocation) {
+                  case TextLocation.upper:
+                    uppercurrentColor = pickerColor;
+                    break;
+                  case TextLocation.lower:
+                    lowercurrentColor = pickerColor;
+                    break;
+                }
                 Navigator.of(context).pop();
               });
             },
@@ -106,27 +110,36 @@ class EditorState extends State<Editor> {
     );
   }
 
-  textSizeChanger(location) {
+  void textSizeChanger(BuildContext context, TextLocation location) {
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     showDialog(
-      barrierDismissible: false,
+      // barrierDismissible: false,
       context: context,
       child: AlertDialog(
         elevation: 8.0,
-        content: SizedBox(
-          height: 50,
-          child: Slider(
-            activeColor: Colors.red,
-            inactiveColor: Colors.blue,
-            min: 0,
-            max: 100,
-            onChanged: (newvalue) {
-              setState(() {
-                location == TextLocation.upper
-                    ? _upperFontSize = newvalue
-                    : lowerFontSize = newvalue;
-              });
-            },
-            value: _upperFontSize,
+        content: StatefulBuilder(
+          builder: (context, state) => SizedBox(
+            height: 50,
+            child: Slider(
+              // activeColor: Colors.red,
+              inactiveColor: Colors.blue,
+              min: 10,
+              max: 100,
+              value: _sliderValue,
+              onChanged: (newvalue) {
+                state(() {
+                  switch (location) {
+                    case TextLocation.upper:
+                      _upperFontSize = _sliderValue = newvalue;
+                      break;
+                    case TextLocation.lower:
+                      _lowerFontSize = _sliderValue = newvalue;
+                      break;
+                  }
+                  setState(() {});
+                });
+              },
+            ),
           ),
         ),
         actions: <Widget>[
@@ -210,24 +223,20 @@ class EditorState extends State<Editor> {
                                 ),
                               ),
                             ),
-                            _uppercontroller.text.isEmpty
-                                ? Container()
-                                : IconButton(
-                                    onPressed: () {
-                                      textSizeChanger(TextLocation.upper);
-                                    },
-                                    icon: Icon(Icons.format_size),
-                                  ),
-                            _uppercontroller.text.isEmpty
-                                ? Container()
-                                : IconButton(
-                                    icon: Icon(
-                                      Icons.color_lens,
-                                    ),
-                                    onPressed: () {
-                                      colorchange(TextLocation.upper);
-                                    },
-                                  ),
+                            IconButton(
+                              onPressed: () {
+                                textSizeChanger(context, TextLocation.upper);
+                              },
+                              icon: Icon(Icons.format_size),
+                            ),
+                            IconButton(
+                              icon: Icon(
+                                Icons.color_lens,
+                              ),
+                              onPressed: () {
+                                colorchange(TextLocation.upper);
+                              },
+                            ),
                           ],
                         ),
                       ],
@@ -432,8 +441,10 @@ class EditorState extends State<Editor> {
                                         ),
                                         Container(
                                           alignment: Alignment.bottomCenter,
-                                          child: MemeText(bottomText,
-                                              lowerFontSize, lowercurrentColor),
+                                          child: MemeText(
+                                              bottomText,
+                                              _lowerFontSize,
+                                              lowercurrentColor),
                                         )
                                       ],
                                     ),
@@ -489,22 +500,18 @@ class EditorState extends State<Editor> {
                                   },
                                 ),
                               ),
-                              _lowercontroller.text.isEmpty
-                                  ? Container()
-                                  : IconButton(
-                                      onPressed: () {
-                                        textSizeChanger(TextLocation.lower);
-                                      },
-                                      icon: Icon(Icons.format_size),
-                                    ),
-                              _lowercontroller.text.isEmpty
-                                  ? Container()
-                                  : IconButton(
-                                      onPressed: () {
-                                        colorchange(TextLocation.lower);
-                                      },
-                                      icon: Icon(Icons.color_lens),
-                                    ),
+                              IconButton(
+                                onPressed: () {
+                                  textSizeChanger(context, TextLocation.lower);
+                                },
+                                icon: Icon(Icons.format_size),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  colorchange(TextLocation.lower);
+                                },
+                                icon: Icon(Icons.color_lens),
+                              ),
                             ],
                           ),
                         ],
