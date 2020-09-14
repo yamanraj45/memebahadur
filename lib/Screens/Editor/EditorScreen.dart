@@ -30,6 +30,8 @@ class EditorState extends State<Editor> {
   var _uppercontroller = TextEditingController();
   var _lowercontroller = TextEditingController();
   String bottomText = '';
+  double _upperFontBold = 5;
+  double _lowerFontBold = 8;
   double _upperFontSize = 18;
   double _lowerFontSize = 15;
   String upperText = '';
@@ -37,10 +39,12 @@ class EditorState extends State<Editor> {
   List<DraggableItem> texts = [];
   bool isScrollable = true;
   String filed;
+
   Color pickerColor = Color(0xff443a49);
   Color uppercurrentColor = Color(0xff443a49);
   Color lowercurrentColor = Color(0xf9ff0049);
-  double _sliderValue = 10;
+  double _sliderFontValue = 10;
+  double _sliderBoldValue = 3;
   _onBackPress() {
     onBackPress(context, flag: isImageEdited);
   }
@@ -112,6 +116,7 @@ class EditorState extends State<Editor> {
 
   void textSizeChanger(BuildContext context, TextLocation location) {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+
     showDialog(
       // barrierDismissible: false,
       context: context,
@@ -119,26 +124,56 @@ class EditorState extends State<Editor> {
         elevation: 8.0,
         content: StatefulBuilder(
           builder: (context, state) => SizedBox(
-            height: 50,
-            child: Slider(
-              // activeColor: Colors.red,
-              inactiveColor: Colors.blue,
-              min: 10,
-              max: 100,
-              value: _sliderValue,
-              onChanged: (newvalue) {
-                state(() {
-                  switch (location) {
-                    case TextLocation.upper:
-                      _upperFontSize = _sliderValue = newvalue;
-                      break;
-                    case TextLocation.lower:
-                      _lowerFontSize = _sliderValue = newvalue;
-                      break;
-                  }
-                  setState(() {});
-                });
-              },
+            height: 150,
+            child: Column(
+              children: <Widget>[
+                Text('Text Size'),
+                Slider(
+                  label: 'Text Size',
+                  // activeColor: Colors.red,
+                  inactiveColor: Colors.blue,
+                  min: 10,
+                  max: 100,
+                  value: _sliderFontValue,
+                  onChanged: (newvalue) {
+                    state(() {
+                      switch (location) {
+                        case TextLocation.upper:
+                          _upperFontSize = _sliderFontValue = newvalue;
+                          break;
+                        case TextLocation.lower:
+                          _lowerFontSize = _sliderFontValue = newvalue;
+                          break;
+                      }
+                      setState(() {});
+                    });
+                  },
+                ),
+                Text('Bold'),
+                Slider(
+                  label: 'Bold',
+                  // activeColor: Colors.red,
+                  inactiveColor: Colors.blue,
+                  min: 1,
+                  max: 8,
+                  value: location == TextLocation.upper
+                      ? _upperFontBold
+                      : _lowerFontBold,
+                  onChanged: (newvalue) {
+                    state(() {
+                      switch (location) {
+                        case TextLocation.upper:
+                          _upperFontBold = _sliderBoldValue = newvalue;
+                          break;
+                        case TextLocation.lower:
+                          _lowerFontBold = _sliderBoldValue = newvalue;
+                          break;
+                      }
+                      setState(() {});
+                    });
+                  },
+                ),
+              ],
             ),
           ),
         ),
@@ -181,65 +216,75 @@ class EditorState extends State<Editor> {
                     Padding(
                       padding: EdgeInsets.all(10),
                     ),
-                    Column(
-                      children: <Widget>[
-                        Row(
+                    Container(
+                      height: 55,
+                      child: SingleChildScrollView(
+                        child: Column(
                           children: <Widget>[
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 10, right: 10),
-                                child: TextField(
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                  textAlign: TextAlign.center,
-                                  controller: _uppercontroller,
-                                  decoration: InputDecoration(
-                                      suffixIcon:
-                                          _uppercontroller.text.isNotEmpty
-                                              ? IconButton(
-                                                  icon: Icon(
-                                                    Icons.close,
-                                                    size: 15,
-                                                  ),
-                                                  onPressed: () {
-                                                    _uppercontroller.clear();
-                                                    setState(() {
-                                                      upperText = '';
-                                                    });
-                                                  },
-                                                )
-                                              : null,
-                                      isDense: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    child: Container(
+                                      child: TextField(
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        textAlign: TextAlign.center,
+                                        controller: _uppercontroller,
+                                        decoration: InputDecoration(
+                                            suffixIcon: _uppercontroller
+                                                    .text.isNotEmpty
+                                                ? IconButton(
+                                                    icon: Icon(
+                                                      Icons.close,
+                                                      size: 15,
+                                                    ),
+                                                    onPressed: () {
+                                                      _uppercontroller.clear();
+                                                      setState(() {
+                                                        upperText = '';
+                                                      });
+                                                    },
+                                                  )
+                                                : null,
+                                            isDense: true,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            hintText: 'Enter Upper Text'),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            upperText = val;
+                                            isImageEdited = true;
+                                          });
+                                        },
                                       ),
-                                      hintText: 'Enter Upper Text'),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      upperText = val;
-                                      isImageEdited = true;
-                                    });
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    textSizeChanger(
+                                        context, TextLocation.upper);
+                                  },
+                                  icon: Icon(Icons.format_size),
+                                ),
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.color_lens,
+                                  ),
+                                  onPressed: () {
+                                    colorchange(TextLocation.upper);
                                   },
                                 ),
-                              ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                textSizeChanger(context, TextLocation.upper);
-                              },
-                              icon: Icon(Icons.format_size),
-                            ),
-                            IconButton(
-                              icon: Icon(
-                                Icons.color_lens,
-                              ),
-                              onPressed: () {
-                                colorchange(TextLocation.upper);
-                              },
+                              ],
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -263,16 +308,17 @@ class EditorState extends State<Editor> {
                                           upperText,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
-                                            color: uppercurrentColor,
-                                            fontSize: _upperFontSize,
-                                          ),
+                                              color: uppercurrentColor,
+                                              fontSize: _upperFontSize,
+                                              fontWeight: FontWeight.values[
+                                                  _upperFontBold.toInt()]),
                                         ),
                                       )
                                     : Container(),
                                 ConstrainedBox(
                                   constraints: BoxConstraints(
                                     minHeight: 50,
-                                    maxHeight: height * 0.45,
+                                    maxHeight: height * 0.4,
                                     // minWidth: 50,
                                     // maxWidth: width,
                                   ),
@@ -444,7 +490,8 @@ class EditorState extends State<Editor> {
                                           child: MemeText(
                                               bottomText,
                                               _lowerFontSize,
-                                              lowercurrentColor),
+                                              lowercurrentColor,
+                                              _lowerFontBold),
                                         )
                                       ],
                                     ),
@@ -460,61 +507,66 @@ class EditorState extends State<Editor> {
                       padding: EdgeInsets.only(top: 20.00),
                     ),
                     Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
-                                  controller: _lowercontroller,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                      suffixIcon:
-                                          _lowercontroller.text.isNotEmpty
-                                              ? IconButton(
-                                                  icon: Icon(
-                                                    Icons.close,
-                                                    size: 15,
-                                                  ),
-                                                  onPressed: () {
-                                                    _lowercontroller.clear();
-                                                    setState(() {
-                                                      bottomText = '';
-                                                    });
-                                                  },
-                                                )
-                                              : null,
-                                      isDense: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      hintText: 'Enter Bottom Text'),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      bottomText = val;
-                                      isImageEdited = true;
-                                    });
-                                  },
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      height: 55,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: TextField(
+                                    controller: _lowercontroller,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                    textAlign: TextAlign.center,
+                                    decoration: InputDecoration(
+                                        suffixIcon:
+                                            _lowercontroller.text.isNotEmpty
+                                                ? IconButton(
+                                                    icon: Icon(
+                                                      Icons.close,
+                                                      size: 15,
+                                                    ),
+                                                    onPressed: () {
+                                                      _lowercontroller.clear();
+                                                      setState(() {
+                                                        bottomText = '';
+                                                      });
+                                                    },
+                                                  )
+                                                : null,
+                                        isDense: true,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        hintText: 'Enter Bottom Text'),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        bottomText = val;
+                                        isImageEdited = true;
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  textSizeChanger(context, TextLocation.lower);
-                                },
-                                icon: Icon(Icons.format_size),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  colorchange(TextLocation.lower);
-                                },
-                                icon: Icon(Icons.color_lens),
-                              ),
-                            ],
-                          ),
-                        ],
+                                IconButton(
+                                  onPressed: () {
+                                    textSizeChanger(
+                                        context, TextLocation.lower);
+                                  },
+                                  icon: Icon(Icons.format_size),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    colorchange(TextLocation.lower);
+                                  },
+                                  icon: Icon(Icons.color_lens),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     Padding(

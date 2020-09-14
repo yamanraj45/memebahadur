@@ -4,7 +4,8 @@ class MemeText extends StatelessWidget {
   final String _text;
   final double _size;
   final Color _color;
-  MemeText(this._text, this._size, this._color);
+  final double _bold;
+  MemeText(this._text, this._size, this._color, this._bold);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class MemeText extends StatelessWidget {
       textAlign: TextAlign.center,
       style: TextStyle(
         color: _color,
-        fontWeight: FontWeight.w700,
+        fontWeight: FontWeight.values[_bold.toInt()],
         fontSize: _size,
         shadows: <Shadow>[
           Shadow(
