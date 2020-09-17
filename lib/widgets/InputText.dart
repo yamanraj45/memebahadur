@@ -5,11 +5,13 @@ class InputText extends StatefulWidget {
   final Function onChanged;
   final int maxLength;
   final bool multiline;
+  final TextEditingController controller;
   final String counterText;
   InputText(
       {@required this.label,
       @required this.onChanged,
       this.maxLength = 4,
+      this.controller,
       this.multiline = false,
       this.counterText = ""});
   @override
@@ -31,7 +33,7 @@ class _InputTextState extends State<InputText> {
       child: TextField(
         keyboardType: widget.multiline ? TextInputType.multiline : null,
         maxLines: widget.multiline ? null : 1,
-        controller: _controller,
+        controller: widget.controller,
         onChanged: widget.onChanged,
         maxLength: widget.maxLength,
         decoration: InputDecoration(

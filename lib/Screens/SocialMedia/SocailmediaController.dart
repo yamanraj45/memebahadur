@@ -10,100 +10,75 @@ class SocialMediaHomepage extends StatelessWidget {
           child: Center(
             child: Column(
               children: <Widget>[
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    shadowColor: Colors.grey[600],
-                    elevation: 4,
-                    color: Colors.grey[200],
-                    child: InkWell(
-                      onTap: () =>
-                          Navigator.pushNamed(context, '/youtubescreen'),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          ListTile(
-                            title: Center(
-                              child: Text(
-                                'Youtube',
-                                style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.18,
-                              child: Image.asset(
-                                  'assets/images/youtube_logo.png')),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(16.0),
-                          //   child: Center(
-                          //     child: Text(
-                          //       'Create a fake Youtube Page that look like a real one',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(
-                          //         color: Colors.black.withOpacity(0.6),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+                SocialMediaNavigatorCard('Youtube', '/youtubescreen',
+                    'assets/images/youtube_logo.png'),
                 Padding(
                   padding: EdgeInsets.all(5.0),
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.35,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    shadowColor: Colors.grey[600],
-                    elevation: 4,
-                    color: Colors.grey[200],
-                    child: InkWell(
-                      onTap: () => Navigator.pushNamed(context, '/tweet'),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          ListTile(
-                            title: Center(
-                              child: Text(
-                                'Twitter',
-                                style: TextStyle(
-                                    fontSize: 30, fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                              height: MediaQuery.of(context).size.height * 0.25,
-                              child: Image.asset(
-                                  'assets/images/twitter_logo.png')),
-                          // Padding(
-                          //   padding: const EdgeInsets.all(16.0),
-                          //   child: Center(
-                          //     child: Text(
-                          //       'Create a fake Tweet Page that look like a real one',
-                          //       textAlign: TextAlign.center,
-                          //       style: TextStyle(
-                          //         color: Colors.black.withOpacity(0.6),
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                        ],
-                      ),
-                    ),
-                  ),
+                SocialMediaNavigatorCard(
+                    'Twitter', '/tweet', 'assets/images/twitter_logo.png'),
+                Padding(
+                  padding: EdgeInsets.all(5.0),
                 ),
+                SocialMediaNavigatorCard('Google Translator',
+                    '/googletranslator', 'assets/images/logo.png'),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SocialMediaNavigatorCard extends StatelessWidget {
+  final String _title;
+  final String _navigationPath;
+  final String _imageLocation;
+
+  SocialMediaNavigatorCard(
+      this._title, this._navigationPath, this._imageLocation);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.35,
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        shadowColor: Colors.grey[600],
+        elevation: 4,
+        color: Colors.grey[200],
+        child: InkWell(
+          onTap: () => Navigator.pushNamed(context, _navigationPath),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              ListTile(
+                title: Center(
+                  child: Text(
+                    _title,
+                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.18,
+                  child: Image.asset(_imageLocation)),
+              // Padding(
+              //   padding: const EdgeInsets.all(16.0),
+              //   child: Center(
+              //     child: Text(
+              //       'Create a fake Youtube Page that look like a real one',
+              //       textAlign: TextAlign.center,
+              //       style: TextStyle(
+              //         color: Colors.black.withOpacity(0.6),
+              //       ),
+              //     ),
+              //   ),
+              // ),
+            ],
           ),
         ),
       ),
