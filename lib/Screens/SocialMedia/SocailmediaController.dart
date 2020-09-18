@@ -5,23 +5,44 @@ class SocialMediaHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(50.0),
+        padding: EdgeInsets.only(top: 30.0, left: 5, right: 5),
         child: Container(
           child: Center(
             child: Column(
               children: <Widget>[
-                SocialMediaNavigatorCard('Youtube', '/youtubescreen',
-                    'assets/images/youtube_logo.png'),
                 Padding(
                   padding: EdgeInsets.all(5.0),
                 ),
-                SocialMediaNavigatorCard(
-                    'Twitter', '/tweet', 'assets/images/twitter_logo.png'),
-                Padding(
-                  padding: EdgeInsets.all(5.0),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SocialMediaNavigatorCard('Youtube',
+                          '/youtubescreen', 'assets/images/youtube_logo.png'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    Expanded(
+                      child: SocialMediaNavigatorCard('Twitter', '/tweet',
+                          'assets/images/twitter_logo.png'),
+                    ),
+                  ],
                 ),
-                SocialMediaNavigatorCard('Google Translator',
-                    '/googletranslator', 'assets/images/logo.png'),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SocialMediaNavigatorCard('Google Translator',
+                          '/googletranslator', 'assets/images/logo.png'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    Expanded(
+                      child: SocialMediaNavigatorCard(
+                          'Google', '/didyoumean', 'assets/images/logo.png'),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -42,7 +63,7 @@ class SocialMediaNavigatorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.35,
+      height: MediaQuery.of(context).size.height * 0.30,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -66,18 +87,6 @@ class SocialMediaNavigatorCard extends StatelessWidget {
               SizedBox(
                   height: MediaQuery.of(context).size.height * 0.18,
                   child: Image.asset(_imageLocation)),
-              // Padding(
-              //   padding: const EdgeInsets.all(16.0),
-              //   child: Center(
-              //     child: Text(
-              //       'Create a fake Youtube Page that look like a real one',
-              //       textAlign: TextAlign.center,
-              //       style: TextStyle(
-              //         color: Colors.black.withOpacity(0.6),
-              //       ),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
