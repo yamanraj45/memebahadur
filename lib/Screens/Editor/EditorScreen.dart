@@ -12,7 +12,12 @@ import 'DraggableItem.dart';
 
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 
-enum TextLocation { upper, lower }
+enum ScreenLocation {
+  uppertext,
+  lowertext,
+  backgroundScreenColor,
+  screenborderColor
+}
 
 class Editor extends StatefulWidget {
   final Image _imageselected;
@@ -42,6 +47,8 @@ class EditorState extends State<Editor> {
 
   Color pickerColor = Color(0xff443a49);
   Color uppercurrentColor = Color(0xff443a49);
+  Color backgroundScreenColor = Color(0xffffffff);
+  Color screenBorderColor = Color(0xffffffff);
   Color lowercurrentColor = Color(0xf9ff0049);
   double _sliderFontValue = 10;
   double _sliderBoldValue = 3;
@@ -75,7 +82,7 @@ class EditorState extends State<Editor> {
     });
   }
 
-  void colorchange(textLocation) {
+  void colorchange(location) {
     showDialog(
       context: context,
       child: AlertDialog(
@@ -97,12 +104,18 @@ class EditorState extends State<Editor> {
             child: Text('Select'),
             onPressed: () {
               setState(() {
-                switch (textLocation) {
-                  case TextLocation.upper:
+                switch (location) {
+                  case ScreenLocation.uppertext:
                     uppercurrentColor = pickerColor;
                     break;
-                  case TextLocation.lower:
+                  case ScreenLocation.lowertext:
                     lowercurrentColor = pickerColor;
+                    break;
+                  case ScreenLocation.backgroundScreenColor:
+                    backgroundScreenColor = pickerColor;
+                    break;
+                  case ScreenLocation.screenborderColor:
+                    screenBorderColor = pickerColor;
                     break;
                 }
                 Navigator.of(context).pop();
@@ -114,7 +127,7 @@ class EditorState extends State<Editor> {
     );
   }
 
-  void textSizeChanger(BuildContext context, TextLocation location) {
+  void textSizeChanger(BuildContext context, ScreenLocation location) {
     WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
 
     showDialog(
@@ -138,11 +151,19 @@ class EditorState extends State<Editor> {
                   onChanged: (newvalue) {
                     state(() {
                       switch (location) {
-                        case TextLocation.upper:
+                        case ScreenLocation.uppertext:
                           _upperFontSize = _sliderFontValue = newvalue;
                           break;
-                        case TextLocation.lower:
+                        case ScreenLocation.lowertext:
                           _lowerFontSize = _sliderFontValue = newvalue;
+                          break;
+                        case ScreenLocation.backgroundScreenColor:
+                          // ignore: todo
+                          // TODO: Handle this case.
+                          break;
+                        case ScreenLocation.screenborderColor:
+                          // ignore: todo
+                          // TODO: Handle this case.
                           break;
                       }
                       setState(() {});
@@ -156,17 +177,26 @@ class EditorState extends State<Editor> {
                   inactiveColor: Colors.blue,
                   min: 1,
                   max: 8,
-                  value: location == TextLocation.upper
+                  value: location == ScreenLocation.uppertext
                       ? _upperFontBold
                       : _lowerFontBold,
                   onChanged: (newvalue) {
                     state(() {
                       switch (location) {
-                        case TextLocation.upper:
+                        case ScreenLocation.uppertext:
                           _upperFontBold = _sliderBoldValue = newvalue;
                           break;
-                        case TextLocation.lower:
+                        case ScreenLocation.lowertext:
                           _lowerFontBold = _sliderBoldValue = newvalue;
+                          break;
+
+                        case ScreenLocation.backgroundScreenColor:
+                          // ignore: todo
+                          // TODO: Handle this case.
+                          break;
+                        case ScreenLocation.screenborderColor:
+                          // ignore: todo
+                          // TODO: Handle this case.
                           break;
                       }
                       setState(() {});
@@ -187,6 +217,57 @@ class EditorState extends State<Editor> {
     );
   }
 
+  editScreen() {
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        title: Text("Edit Screen"),
+        content: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text('Background'),
+                    ],
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.color_lens),
+                    onPressed: () =>
+                        colorchange(ScreenLocation.backgroundScreenColor),
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text('Border'),
+                    ],
+                  ),
+                  IconButton(
+                    onPressed: () =>
+                        colorchange(ScreenLocation.screenborderColor),
+                    icon: Icon(Icons.color_lens),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          FlatButton(
+            child: Text("Ok"),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -200,435 +281,462 @@ class EditorState extends State<Editor> {
 
     double width = MediaQuery.of(context).size.width;
     Image _image = widget._imageselected;
-    return GestureDetector(
-      child: MemeScaffold(
-        isScrollable: isScrollable,
-        onBackPress: _onBackPress,
-        onSavePress: _onSavePress,
-        onSharePress: _onSharePress,
-        child: Builder(
-          builder: (context) {
-            return Container(
-              child: Container(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20),
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                    ),
-                    Container(
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 10, right: 10),
-                                  child: Container(
-                                    child: TextField(
-                                      keyboardType: TextInputType.multiline,
-                                      maxLines: null,
-                                      textAlign: TextAlign.center,
-                                      controller: _uppercontroller,
-                                      decoration: InputDecoration(
-                                          suffixIcon: _uppercontroller
-                                                  .text.isNotEmpty
-                                              ? IconButton(
-                                                  icon: Icon(
-                                                    Icons.close,
-                                                    size: 15,
-                                                  ),
-                                                  onPressed: () {
-                                                    _uppercontroller.clear();
-                                                    setState(() {
-                                                      upperText = '';
-                                                    });
-                                                  },
-                                                )
-                                              : null,
-                                          isDense: true,
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          hintText: 'Enter Upper Text'),
-                                      onChanged: (val) {
-                                        setState(() {
-                                          upperText = val;
-                                          isImageEdited = true;
-                                        });
-                                      },
+    bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
+    return Scaffold(
+      floatingActionButton: Visibility(
+        visible: !keyboardIsOpen,
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            editScreen();
+          },
+          icon: Icon(Icons.edit),
+          label: Text('Edit Screen'),
+        ),
+      ),
+      body: GestureDetector(
+        child: MemeScaffold(
+          isScrollable: isScrollable,
+          onBackPress: _onBackPress,
+          onSavePress: _onSavePress,
+          onSharePress: _onSharePress,
+          child: Builder(
+            builder: (context) {
+              return Container(
+                child: Container(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                      ),
+                      Container(
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 10, right: 10),
+                                    child: Container(
+                                      child: TextField(
+                                        keyboardType: TextInputType.multiline,
+                                        maxLines: null,
+                                        textAlign: TextAlign.center,
+                                        controller: _uppercontroller,
+                                        decoration: InputDecoration(
+                                            suffixIcon: _uppercontroller
+                                                    .text.isNotEmpty
+                                                ? IconButton(
+                                                    icon: Icon(
+                                                      Icons.close,
+                                                      size: 15,
+                                                    ),
+                                                    onPressed: () {
+                                                      _uppercontroller.clear();
+                                                      setState(() {
+                                                        upperText = '';
+                                                      });
+                                                    },
+                                                  )
+                                                : null,
+                                            isDense: true,
+                                            border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            hintText: 'Enter Upper Text'),
+                                        onChanged: (val) {
+                                          setState(() {
+                                            upperText = val;
+                                            isImageEdited = true;
+                                          });
+                                        },
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  textSizeChanger(context, TextLocation.upper);
-                                },
-                                icon: Icon(Icons.format_size),
-                              ),
-                              IconButton(
-                                icon: Icon(
-                                  Icons.color_lens,
+                                IconButton(
+                                  onPressed: () {
+                                    textSizeChanger(
+                                        context, ScreenLocation.uppertext);
+                                  },
+                                  icon: Icon(Icons.format_size),
                                 ),
-                                onPressed: () {
-                                  colorchange(TextLocation.upper);
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 0.5),
-                        ),
-                        child: RepaintBoundary(
-                          key: previewContainer,
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: <Widget>[
-                                _uppercontroller.text.isNotEmpty
-                                    ? Container(
-                                        color: Colors.white,
-                                        child: Text(
-                                          upperText,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              color: uppercurrentColor,
-                                              fontSize: _upperFontSize,
-                                              fontWeight: FontWeight.values[
-                                                  _upperFontBold.toInt()]),
-                                        ),
-                                      )
-                                    : Container(),
-                                Container(
-                                  color: Colors.white,
-                                  height: height * 0.40,
-                                  width: width,
-                                  alignment: Alignment.bottomCenter,
-                                  child: Stack(
-                                    alignment: Alignment.bottomCenter,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5.0, right: 5.0),
-                                        child: _image,
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 0 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 0;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 0,
-                                        isSelected: currentIndex == 0,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 0,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 1 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 1;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 1,
-                                        isSelected: currentIndex == 1,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 1,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 2 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 2;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 2,
-                                        isSelected: currentIndex == 2,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 2,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 3 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 3;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 3,
-                                        isSelected: currentIndex == 3,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 3,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 4 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 4;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 4,
-                                        isSelected: currentIndex == 4,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 4,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 5 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 5;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 5,
-                                        isSelected: currentIndex == 5,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 5,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 6 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 6;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 6,
-                                        isSelected: currentIndex == 6,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 6,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 7 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 7;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 7,
-                                        isSelected: currentIndex == 7,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 7,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 8 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 8;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 8,
-                                        isSelected: currentIndex == 8,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 8,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 9 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 9;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 9,
-                                        isSelected: currentIndex == 9,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 9,
-                                        ),
-                                      ),
-                                      DraggableItem(
-                                        isVisible: 10 < latestIndex,
-                                        onTap: () {
-                                          setState(() {
-                                            currentIndex = 10;
-                                            isScrollable = false;
-                                          });
-                                        },
-                                        index: 10,
-                                        isSelected: currentIndex == 10,
-                                        child: MemeTextInput(
-                                          isEnabled: currentIndex == 10,
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: Alignment.bottomCenter,
-                                        child: MemeText(
-                                            bottomText,
-                                            _lowerFontSize,
-                                            lowercurrentColor,
-                                            _lowerFontBold),
-                                      )
-                                    ],
+                                IconButton(
+                                  icon: Icon(
+                                    Icons.color_lens,
                                   ),
+                                  onPressed: () {
+                                    colorchange(ScreenLocation.uppertext);
+                                  },
                                 ),
                               ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 0.5,
+                            ),
+                          ),
+                          child: RepaintBoundary(
+                            key: previewContainer,
+                            child: Container(
+                              color: backgroundScreenColor,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2,
+                                    color: screenBorderColor,
+                                  ),
+                                ),
+                                child: Column(
+                                  children: <Widget>[
+                                    _uppercontroller.text.isNotEmpty
+                                        ? Container(
+                                            color: backgroundScreenColor,
+                                            child: Text(
+                                              upperText,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  color: uppercurrentColor,
+                                                  fontSize: _upperFontSize,
+                                                  fontWeight: FontWeight.values[
+                                                      _upperFontBold.toInt()]),
+                                            ),
+                                          )
+                                        : Container(),
+                                    Container(
+                                      color: backgroundScreenColor,
+                                      height: height * 0.40,
+                                      width: width,
+                                      alignment: Alignment.bottomCenter,
+                                      child: Stack(
+                                        alignment: Alignment.bottomCenter,
+                                        children: <Widget>[
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0, right: 5.0),
+                                            child: _image,
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 0 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 0;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 0,
+                                            isSelected: currentIndex == 0,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 0,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 1 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 1;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 1,
+                                            isSelected: currentIndex == 1,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 1,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 2 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 2;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 2,
+                                            isSelected: currentIndex == 2,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 2,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 3 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 3;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 3,
+                                            isSelected: currentIndex == 3,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 3,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 4 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 4;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 4,
+                                            isSelected: currentIndex == 4,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 4,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 5 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 5;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 5,
+                                            isSelected: currentIndex == 5,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 5,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 6 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 6;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 6,
+                                            isSelected: currentIndex == 6,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 6,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 7 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 7;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 7,
+                                            isSelected: currentIndex == 7,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 7,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 8 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 8;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 8,
+                                            isSelected: currentIndex == 8,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 8,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 9 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 9;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 9,
+                                            isSelected: currentIndex == 9,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 9,
+                                            ),
+                                          ),
+                                          DraggableItem(
+                                            isVisible: 10 < latestIndex,
+                                            onTap: () {
+                                              setState(() {
+                                                currentIndex = 10;
+                                                isScrollable = false;
+                                              });
+                                            },
+                                            index: 10,
+                                            isSelected: currentIndex == 10,
+                                            child: MemeTextInput(
+                                              isEnabled: currentIndex == 10,
+                                            ),
+                                          ),
+                                          Container(
+                                            alignment: Alignment.bottomCenter,
+                                            child: MemeText(
+                                                bottomText,
+                                                _lowerFontSize,
+                                                lowercurrentColor,
+                                                _lowerFontBold),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 20.00),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: TextField(
-                                  controller: _lowercontroller,
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                  textAlign: TextAlign.center,
-                                  decoration: InputDecoration(
-                                      suffixIcon:
-                                          _lowercontroller.text.isNotEmpty
-                                              ? IconButton(
-                                                  icon: Icon(
-                                                    Icons.close,
-                                                    size: 15,
-                                                  ),
-                                                  onPressed: () {
-                                                    _lowercontroller.clear();
-                                                    setState(() {
-                                                      bottomText = '';
-                                                    });
-                                                  },
-                                                )
-                                              : null,
-                                      isDense: true,
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      hintText: 'Enter Bottom Text'),
-                                  onChanged: (val) {
-                                    setState(() {
-                                      bottomText = val;
-                                      isImageEdited = true;
-                                    });
-                                  },
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.00),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: TextField(
+                                    controller: _lowercontroller,
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                    textAlign: TextAlign.center,
+                                    decoration: InputDecoration(
+                                        suffixIcon:
+                                            _lowercontroller.text.isNotEmpty
+                                                ? IconButton(
+                                                    icon: Icon(
+                                                      Icons.close,
+                                                      size: 15,
+                                                    ),
+                                                    onPressed: () {
+                                                      _lowercontroller.clear();
+                                                      setState(() {
+                                                        bottomText = '';
+                                                      });
+                                                    },
+                                                  )
+                                                : null,
+                                        isDense: true,
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        hintText: 'Enter Bottom Text'),
+                                    onChanged: (val) {
+                                      setState(() {
+                                        bottomText = val;
+                                        isImageEdited = true;
+                                      });
+                                    },
+                                  ),
                                 ),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  textSizeChanger(context, TextLocation.lower);
-                                },
-                                icon: Icon(Icons.format_size),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  colorchange(TextLocation.lower);
-                                },
-                                icon: Icon(Icons.color_lens),
-                              ),
-                            ],
+                                IconButton(
+                                  onPressed: () {
+                                    textSizeChanger(
+                                        context, ScreenLocation.lowertext);
+                                  },
+                                  icon: Icon(Icons.format_size),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    colorchange(ScreenLocation.lowertext);
+                                  },
+                                  icon: Icon(Icons.color_lens),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(3.00),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            color: Colors.red[100],
+                            child: Row(
+                              children: [
+                                Icon(Icons.clear),
+                                Text("Clear all"),
+                              ],
+                            ),
+                            onPressed: () {
+                              WidgetsBinding.instance.focusManager.primaryFocus
+                                  ?.unfocus();
+                              setState(() {
+                                latestIndex = 0;
+                                upperText = "";
+                                bottomText = "";
+                                _uppercontroller.clear();
+                                _lowercontroller.clear();
+                                currentIndex = null;
+                                isScrollable = true;
+                                isImageEdited = true;
+                              });
+                            },
+                          ),
+                          RaisedButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50.0),
+                            ),
+                            color: Colors.blue[100],
+                            child: Row(
+                              children: [
+                                Icon(Icons.add),
+                                Text("Add new text"),
+                              ],
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                latestIndex++;
+                                currentIndex = null;
+                                isScrollable = true;
+                                isImageEdited = true;
+                              });
+                            },
                           ),
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(3.00),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                          ),
-                          color: Colors.red[100],
-                          child: Row(
-                            children: [
-                              Icon(Icons.clear),
-                              Text("Clear all"),
-                            ],
-                          ),
-                          onPressed: () {
-                            WidgetsBinding.instance.focusManager.primaryFocus
-                                ?.unfocus();
-                            setState(() {
-                              latestIndex = 0;
-                              upperText = "";
-                              bottomText = "";
-                              _uppercontroller.clear();
-                              _lowercontroller.clear();
-                              currentIndex = null;
-                              isScrollable = true;
-                              isImageEdited = true;
-                            });
-                          },
-                        ),
-                        RaisedButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                          ),
-                          color: Colors.blue[100],
-                          child: Row(
-                            children: [
-                              Icon(Icons.add),
-                              Text("Add new text"),
-                            ],
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              latestIndex++;
-                              currentIndex = null;
-                              isScrollable = true;
-                              isImageEdited = true;
-                            });
-                          },
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(3.00),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.all(3.00),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
+              );
+            },
+          ),
+          onBackKeyPress: () {
+            _onBackPress();
           },
         ),
-        onBackKeyPress: () {
-          _onBackPress();
+        onTap: () {
+          WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
+          setState(() {
+            currentIndex = null;
+            isScrollable = true;
+          });
         },
       ),
-      onTap: () {
-        WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
-        setState(() {
-          currentIndex = null;
-          isScrollable = true;
-        });
-      },
     );
   }
 }
