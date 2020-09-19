@@ -49,7 +49,7 @@ class EditorState extends State<Editor> {
   Color uppercurrentColor = Color(0xff443a49);
   Color backgroundScreenColor = Color(0xffffffff);
   Color screenBorderColor = Color(0xffffffff);
-  Color lowercurrentColor = Color(0xf9ff0049);
+  Color lowercurrentColor = Color(0xf9ff00ff);
   double _sliderFontValue = 10;
   double _sliderBoldValue = 3;
   _onBackPress() {
@@ -135,75 +135,99 @@ class EditorState extends State<Editor> {
       context: context,
       child: AlertDialog(
         elevation: 8.0,
-        content: StatefulBuilder(
-          builder: (context, state) => SizedBox(
-            height: 150,
-            child: Column(
-              children: <Widget>[
-                Text('Text Size'),
-                Slider(
-                  label: 'Text Size',
-                  // activeColor: Colors.red,
-                  inactiveColor: Colors.blue,
-                  min: 10,
-                  max: 100,
-                  value: _sliderFontValue,
-                  onChanged: (newvalue) {
-                    state(() {
-                      switch (location) {
-                        case ScreenLocation.uppertext:
-                          _upperFontSize = _sliderFontValue = newvalue;
-                          break;
-                        case ScreenLocation.lowertext:
-                          _lowerFontSize = _sliderFontValue = newvalue;
-                          break;
-                        case ScreenLocation.backgroundScreenColor:
-                          // ignore: todo
-                          // TODO: Handle this case.
-                          break;
-                        case ScreenLocation.screenborderColor:
-                          // ignore: todo
-                          // TODO: Handle this case.
-                          break;
-                      }
-                      setState(() {});
-                    });
-                  },
-                ),
-                Text('Bold'),
-                Slider(
-                  label: 'Bold',
-                  // activeColor: Colors.red,
-                  inactiveColor: Colors.blue,
-                  min: 1,
-                  max: 8,
-                  value: location == ScreenLocation.uppertext
-                      ? _upperFontBold
-                      : _lowerFontBold,
-                  onChanged: (newvalue) {
-                    state(() {
-                      switch (location) {
-                        case ScreenLocation.uppertext:
-                          _upperFontBold = _sliderBoldValue = newvalue;
-                          break;
-                        case ScreenLocation.lowertext:
-                          _lowerFontBold = _sliderBoldValue = newvalue;
-                          break;
+        content: SingleChildScrollView(
+          child: StatefulBuilder(
+            builder: (context, state) => SizedBox(
+              child: Column(
+                children: <Widget>[
+                  Text('Text Size'),
+                  Slider(
+                    label: 'Text Size',
+                    // activeColor: Colors.red,
+                    inactiveColor: Colors.blue,
+                    min: 10,
+                    max: 100,
+                    value: _sliderFontValue,
+                    onChanged: (newvalue) {
+                      state(() {
+                        switch (location) {
+                          case ScreenLocation.uppertext:
+                            _upperFontSize = _sliderFontValue = newvalue;
+                            break;
+                          case ScreenLocation.lowertext:
+                            _lowerFontSize = _sliderFontValue = newvalue;
+                            break;
+                          case ScreenLocation.backgroundScreenColor:
+                            // ignore: todo
+                            // TODO: Handle this case.
+                            break;
+                          case ScreenLocation.screenborderColor:
+                            // ignore: todo
+                            // TODO: Handle this case.
+                            break;
+                        }
+                        setState(() {});
+                      });
+                    },
+                  ),
+                  Text('Bold'),
+                  Slider(
+                    label: 'Bold',
+                    // activeColor: Colors.red,
+                    inactiveColor: Colors.blue,
+                    min: 1,
+                    max: 8,
+                    value: location == ScreenLocation.uppertext
+                        ? _upperFontBold
+                        : _lowerFontBold,
+                    onChanged: (newvalue) {
+                      state(() {
+                        switch (location) {
+                          case ScreenLocation.uppertext:
+                            _upperFontBold = _sliderBoldValue = newvalue;
+                            break;
+                          case ScreenLocation.lowertext:
+                            _lowerFontBold = _sliderBoldValue = newvalue;
+                            break;
 
-                        case ScreenLocation.backgroundScreenColor:
-                          // ignore: todo
-                          // TODO: Handle this case.
-                          break;
-                        case ScreenLocation.screenborderColor:
-                          // ignore: todo
-                          // TODO: Handle this case.
-                          break;
-                      }
-                      setState(() {});
-                    });
-                  },
-                ),
-              ],
+                          case ScreenLocation.backgroundScreenColor:
+                            // ignore: todo
+                            // TODO: Handle this case.
+                            break;
+                          case ScreenLocation.screenborderColor:
+                            // ignore: todo
+                            // TODO: Handle this case.
+                            break;
+                        }
+                        setState(() {});
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: <Widget>[
+                      Text('Color Changer'),
+                      SizedBox(
+                        width: 30,
+                        height: 25,
+                        child: FlatButton(
+                            child: Text(''),
+                            onPressed: () => colorchange(location),
+                            color: location == ScreenLocation.uppertext
+                                ? uppercurrentColor
+                                : lowercurrentColor),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  DropdownButton(onChanged: null)
+                ],
+              ),
             ),
           ),
         ),
@@ -363,14 +387,14 @@ class EditorState extends State<Editor> {
                                   },
                                   icon: Icon(Icons.format_size),
                                 ),
-                                IconButton(
-                                  icon: Icon(
-                                    Icons.color_lens,
-                                  ),
-                                  onPressed: () {
-                                    colorchange(ScreenLocation.uppertext);
-                                  },
-                                ),
+                                // IconButton(
+                                //   icon: Icon(
+                                //     Icons.color_lens,
+                                //   ),
+                                //   onPressed: () {
+                                //     colorchange(ScreenLocation.uppertext);
+                                //   },
+                                // ),
                               ],
                             ),
                           ],
@@ -651,12 +675,12 @@ class EditorState extends State<Editor> {
                                   },
                                   icon: Icon(Icons.format_size),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    colorchange(ScreenLocation.lowertext);
-                                  },
-                                  icon: Icon(Icons.color_lens),
-                                ),
+                                // IconButton(
+                                //   onPressed: () {
+                                //     colorchange(ScreenLocation.lowertext);
+                                //   },
+                                //   icon: Icon(Icons.color_lens),
+                                // ),
                               ],
                             ),
                           ],
