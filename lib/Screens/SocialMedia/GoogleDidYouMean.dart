@@ -37,6 +37,7 @@ class DidYouMeanState extends State<DidYouMean>
       File path = File(pickedFile.path);
       setState(() {
         _avatarImage = path;
+        _isPageEdited = true;
       });
     }
   }
@@ -148,6 +149,7 @@ class DidYouMeanState extends State<DidYouMean>
                                               setState(() {
                                                 didyoumeantext =
                                                     _googlesearchtext.text;
+                                                _isPageEdited = true;
                                               });
                                             },
                                             decoration: InputDecoration(
@@ -249,6 +251,7 @@ class DidYouMeanState extends State<DidYouMean>
                         onChanged: (value) {
                           setState(() {
                             _isImage = value;
+                            _isPageEdited = true;
                           });
                         },
                       ),
@@ -256,6 +259,11 @@ class DidYouMeanState extends State<DidYouMean>
                     Container(
                       child: TextField(
                         controller: _googlesearchtext,
+                        onChanged: (value) {
+                          setState(() {
+                            _isPageEdited = true;
+                          });
+                        },
                         decoration: InputDecoration(
                           hintText: 'Enter The Search Item',
                           border: OutlineInputBorder(
@@ -272,6 +280,7 @@ class DidYouMeanState extends State<DidYouMean>
                         onChanged: (value) {
                           setState(() {
                             didyoumeantext = value;
+                            _isPageEdited = true;
                           });
                         },
                         decoration: InputDecoration(
