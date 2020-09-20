@@ -27,6 +27,7 @@ class _GoogleTranslatorState extends State<GoogleTranslator> {
   }
 
   _onSavePress() {
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     onSavePress(context, previewContainer);
   }
 
