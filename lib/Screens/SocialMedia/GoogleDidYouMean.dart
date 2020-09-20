@@ -54,6 +54,7 @@ class DidYouMeanState extends State<DidYouMean>
   }
 
   _onSavePress() {
+    WidgetsBinding.instance.focusManager.primaryFocus?.unfocus();
     onSavePress(context, previewContainer);
   }
 
