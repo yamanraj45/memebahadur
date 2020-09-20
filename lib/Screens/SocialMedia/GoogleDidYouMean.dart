@@ -99,7 +99,11 @@ class DidYouMeanState extends State<DidYouMean>
                                       MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     Icon(Icons.menu),
-                                    Text('Google'),
+                                    SizedBox(
+                                        height: 90,
+                                        width: 90,
+                                        child: Image.asset(
+                                            'assets/images/google.png')),
                                     _isImage
                                         ? GestureDetector(
                                             onTap: () => getImage(),
@@ -133,9 +137,6 @@ class DidYouMeanState extends State<DidYouMean>
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 10,
                         ),
                         Container(
                           child: Column(

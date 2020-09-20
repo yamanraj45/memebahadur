@@ -28,20 +28,44 @@ class SocialMediaHomepage extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 15,
+                ),
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: SocialMediaNavigatorCard('Google Translator',
-                          '/googletranslator', 'assets/images/logo.png'),
+                      child: SocialMediaNavigatorCard('Translator',
+                          '/googletranslator', 'assets/images/translate.png'),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.0),
                     ),
                     Expanded(
                       child: SocialMediaNavigatorCard(
-                          'Google', '/didyoumean', 'assets/images/logo.png'),
+                          'Google', '/didyoumean', 'assets/images/google.png'),
                     ),
                   ],
+                ),
+                SizedBox(
+                  height: 15,
+                ),
+                Opacity(
+                  opacity: 0.4,
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: SocialMediaNavigatorCard(
+                            'Coming Soon', '', 'assets/images/logo.png'),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                      ),
+                      Expanded(
+                        child: SocialMediaNavigatorCard(
+                            'Coming Soon', '', 'assets/images/logo.png'),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -80,7 +104,7 @@ class SocialMediaNavigatorCard extends StatelessWidget {
                 title: Center(
                   child: Text(
                     _title,
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
