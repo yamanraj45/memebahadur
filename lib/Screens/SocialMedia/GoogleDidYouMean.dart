@@ -31,6 +31,13 @@ class DidYouMeanState extends State<DidYouMean>
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+    _googlesearchtext.dispose();
+  }
+
   Future getImage() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
