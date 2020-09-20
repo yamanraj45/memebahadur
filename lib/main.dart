@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
-import 'package:memebahadur/Screens/SocialMedia/GoogleDidiYouMean.dart';
+import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslator.dart';
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
