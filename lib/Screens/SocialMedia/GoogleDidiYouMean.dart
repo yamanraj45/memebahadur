@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DidYouMean extends StatefulWidget {
   @override
@@ -14,146 +17,280 @@ class DidYouMeanState extends State<DidYouMean>
     super.initState();
   }
 
+  bool _isImage = false;
+
+  File _avatarImage;
+  final picker = ImagePicker();
+
+  Future getImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      File path = File(pickedFile.path);
+      setState(() {
+        _avatarImage = path;
+      });
+    }
+  }
+
   String didyoumeantext;
-  TextStyle category = TextStyle(color: Colors.grey, fontSize: 12);
+
+  TextStyle category = TextStyle(fontSize: 12);
   var _googlesearchtext = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                child: Column(
+        child: Center(
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
                   children: <Widget>[
                     Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
                         children: <Widget>[
-                          Icon(Icons.menu),
-                          Text('Google'),
-                          CircleAvatar(
-                            backgroundColor: Colors.red,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                child: Column(
-                  children: <Widget>[
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Expanded(
-                            child: Container(
-                              height: 45.0,
-                              child: TextField(
-                                  controller: _googlesearchtext,
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.grey,
-                                    focusColor: Colors.grey,
-                                    hoverColor: Colors.grey,
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30.0),
-                                    ),
-                                    prefixIcon: Icon(Icons.search),
-                                    suffixIcon: _googlesearchtext.text.isEmpty
-                                        ? Icon(Icons.mic)
-                                        : IconButton(
-                                            icon: Icon(Icons.close),
-                                            onPressed: () =>
-                                                _googlesearchtext.clear(),
-                                          ),
-                                  )),
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Icon(Icons.menu),
+                                Text('Google'),
+                                _isImage
+                                    ? GestureDetector(
+                                        onTap: () => getImage(),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(70.0),
+                                          child: Container(
+                                              height: 40,
+                                              width: 40,
+                                              child: _avatarImage != null
+                                                  ? CircleAvatar(
+                                                      radius: 30.0,
+                                                      backgroundImage:
+                                                          FileImage(
+                                                              _avatarImage),
+                                                    )
+                                                  : CircleAvatar(
+                                                      radius: 30.0,
+                                                      backgroundColor:
+                                                          Colors.black,
+                                                      child: Icon(Icons.add),
+                                                    )),
+                                        ),
+                                      )
+                                    : CircleAvatar(
+                                        backgroundColor: Colors.transparent,
+                                      )
+                              ],
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ],
-                ),
-              ),
-              TabBar(
-                unselectedLabelColor: Colors.black,
-                labelColor: Colors.red,
-                tabs: [
-                  Tab(
-                    child: Text(
-                      'ALL',
-                      style: category,
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'IMAGES',
-                      style: TextStyle(fontSize: 11, color: Colors.grey),
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'VIDEOS',
-                      style: category,
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'BOOKS',
-                      style: category,
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'MAPS',
-                      style: category,
-                    ),
-                  ),
-                ],
-                controller: _tabController,
-                indicatorSize: TabBarIndicatorSize.tab,
-              ),
-              Expanded(
-                child: TabBarView(
-                  children: [
-                    Text('people'),
-                    Text('Person'),
-                    Text('Person'),
-                    Text('Person'),
-                    Text('Person'),
-                  ],
-                  controller: _tabController,
-                ),
-              ),
-              Container(
-                child: Column(
-                  children: <Widget>[
                     Container(
-                      padding: EdgeInsets.all(10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Column(
                         children: <Widget>[
-                          Text(
-                            'Did You mean: $didyoumeantext',
-                            style: TextStyle(fontSize: 16),
-                          )
+                          Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.92,
+                                  child: Container(
+                                    height: 50,
+                                    child: TextField(
+                                        readOnly: true,
+                                        controller: _googlesearchtext,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            didyoumeantext =
+                                                _googlesearchtext.text;
+                                          });
+                                        },
+                                        decoration: InputDecoration(
+                                          fillColor: Colors.grey,
+                                          focusColor: Colors.grey,
+                                          hoverColor: Colors.grey,
+                                          border: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30.0),
+                                          ),
+                                          prefixIcon: Icon(Icons.search),
+                                          suffixIcon: _googlesearchtext
+                                                  .text.isEmpty
+                                              ? Icon(Icons.mic)
+                                              : IconButton(
+                                                  icon: Icon(Icons.close),
+                                                  onPressed: () =>
+                                                      _googlesearchtext.clear(),
+                                                ),
+                                        )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
+                      ),
+                    ),
+                    TabBar(
+                      indicatorColor: Colors.lightBlue[900],
+                      unselectedLabelColor: Colors.grey,
+                      labelColor: Colors.lightBlue[900],
+                      labelStyle: TextStyle(
+                          color: Colors.blue, fontWeight: FontWeight.w500),
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            'ALL',
+                            style: category,
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'IMAGES',
+                            style: TextStyle(fontSize: 11),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'VIDEOS',
+                            style: category,
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'BOOKS',
+                            style: category,
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'MAPS',
+                            style: category,
+                          ),
+                        ),
+                      ],
+                      controller: _tabController,
+                      indicatorSize: TabBarIndicatorSize.tab,
+                    ),
+                    SizedBox(
+                      height: 80,
+                      child: TabBarView(
+                        children: [
+                          DidYouMeanSection(didyoumeantext),
+                          DidYouMeanSection(didyoumeantext),
+                          DidYouMeanSection(didyoumeantext),
+                          DidYouMeanSection(didyoumeantext),
+                          DidYouMeanSection(didyoumeantext),
+                        ],
+                        controller: _tabController,
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
+                Column(
+                  children: <Widget>[
+                    Text(
+                      'Edit The Field Below For CHanging Screen',
+                      style:
+                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                    ),
+                    Container(
+                      child: SwitchListTile(
+                        title: Text('Avatar'),
+                        value: _isImage,
+                        onChanged: (value) {
+                          setState(() {
+                            _isImage = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Container(
+                      child: TextField(
+                        controller: _googlesearchtext,
+                        decoration: InputDecoration(
+                          hintText: 'Enter The Search Item',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      child: TextField(
+                        onChanged: (value) {
+                          setState(() {
+                            didyoumeantext = value;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            hintText: 'Enter Did You Mean Text'),
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class DidYouMeanSection extends StatefulWidget {
+  final String _text;
+  DidYouMeanSection(this._text);
+
+  @override
+  _DidYouMeanSectionState createState() => _DidYouMeanSectionState();
+}
+
+class _DidYouMeanSectionState extends State<DidYouMeanSection> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.85,
+                  child: RichText(
+                    text: TextSpan(
+                        text: 'Did You Mean: ',
+                        style: TextStyle(fontSize: 16, color: Colors.black),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: widget._text,
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.lightBlue[900]),
+                          ),
+                        ]),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
