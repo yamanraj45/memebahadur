@@ -308,15 +308,11 @@ class DidYouMeanState extends State<DidYouMean>
   }
 }
 
-class DidYouMeanSection extends StatefulWidget {
-  final String _text;
-  DidYouMeanSection(this._text);
+class DidYouMeanSection extends StatelessWidget {
+  final String text;
 
-  @override
-  _DidYouMeanSectionState createState() => _DidYouMeanSectionState();
-}
+  DidYouMeanSection(this.text);
 
-class _DidYouMeanSectionState extends State<DidYouMeanSection> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -335,7 +331,7 @@ class _DidYouMeanSectionState extends State<DidYouMeanSection> {
                         style: TextStyle(fontSize: 16, color: Colors.black),
                         children: <TextSpan>[
                           TextSpan(
-                            text: widget._text,
+                            text: text,
                             style: TextStyle(
                                 fontSize: 16, color: Colors.lightBlue[900]),
                           ),
