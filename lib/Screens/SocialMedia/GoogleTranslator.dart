@@ -116,6 +116,7 @@ class _GoogleTranslatorState extends State<GoogleTranslator> {
                                         setState(() {
                                           _translatedto.clear();
                                           translatedfrom = 'Enter Text';
+                                          _isPageEdited = true;
                                         });
                                       },
                                       icon: Icon(Icons.close),
@@ -205,6 +206,7 @@ class _GoogleTranslatorState extends State<GoogleTranslator> {
                           onChanged: (value) {
                             setState(() {
                               langTranslatedFrom = value;
+                              _isPageEdited = true;
                             });
                           },
                         ),
@@ -219,6 +221,7 @@ class _GoogleTranslatorState extends State<GoogleTranslator> {
                           onChanged: (value) {
                             setState(() {
                               langTranslatedTo = value;
+                              _isPageEdited = true;
                             });
                           },
                         ),
@@ -234,6 +237,7 @@ class _GoogleTranslatorState extends State<GoogleTranslator> {
                           onChanged: (value) {
                             setState(() {
                               translatedfrom = value;
+                              _isPageEdited = true;
                             });
                           },
                         ),
@@ -249,6 +253,7 @@ class _GoogleTranslatorState extends State<GoogleTranslator> {
                           onChanged: (value) {
                             setState(() {
                               translatedto = value;
+                              _isPageEdited = true;
                             });
                           },
                         ),
