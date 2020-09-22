@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
@@ -12,10 +14,16 @@ class _FacebookPostState extends State<FacebookPost> {
   String _likes = '45';
   String _comment = '45';
   String _share = '45';
+  bool _tag = true;
+  String _firstPersononTagList = '45developers';
+  String _nooftag = '45';
   String _status = 'Edit Status From Table Below';
   String _name = 'MemeBahadur';
+  File _avatar;
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width * 0.9;
     return MemeScaffold(
       child: Container(
         child: SingleChildScrollView(
@@ -23,11 +31,13 @@ class _FacebookPostState extends State<FacebookPost> {
             child: Container(
               child: Column(
                 children: <Widget>[
+                  SizedBox(
+                    height: 10,
+                  ),
                   Card(
                     child: new Column(
-                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
-                        new ListTile(
+                        ListTile(
                           leading: CircleAvatar(
                             radius: 20.0,
                             child: new Container(
@@ -37,9 +47,40 @@ class _FacebookPostState extends State<FacebookPost> {
                               child: Image.asset('assets/images/logo.png'),
                             ),
                           ),
-                          title: new Text(
-                            _name,
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          title: RichText(
+                            text: TextSpan(
+                                text: _name,
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                                children: _tag
+                                    ? <TextSpan>[
+                                        TextSpan(
+                                          text: ' is with',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                        TextSpan(
+                                          text: ' $_firstPersononTagList',
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' and',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                        TextSpan(
+                                          text: ' $_nooftag others',
+                                        ),
+                                      ]
+                                    : <TextSpan>[
+                                        TextSpan(
+                                          text: '',
+                                        ),
+                                      ]),
                           ),
                           subtitle: new Row(
                             children: [
@@ -90,7 +131,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                 ),
                               ),
                               new Text(
-                                '1 comments · 8 share',
+                                '$_comment comments · $_share share',
                                 style: TextStyle(fontSize: 13),
                               ),
                             ],
@@ -209,15 +250,65 @@ class _FacebookPostState extends State<FacebookPost> {
                         SizedBox(
                           height: 10,
                         ),
-                        SwitchListTile(
-                          title: Text('Image'),
-                          value: _image,
-                          onChanged: (value) {
-                            setState(() {
-                              _image = value;
-                            });
-                          },
+                        Row(
+                          children: <Widget>[
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: SwitchListTile(
+                                title: Text('Image'),
+                                value: _image,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _image = value;
+                                  });
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.45,
+                              child: SwitchListTile(
+                                title: Text('Tag'),
+                                value: _tag,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _tag = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
                         ),
+                        _tag
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
+                                    child: InputText(
+                                      label: 'First Person Tag',
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _firstPersononTagList = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.3,
+                                      child: InputText(
+                                        label: 'No of tag',
+                                        onChanged: (value) {
+                                          setState(() {
+                                            _nooftag = value;
+                                          });
+                                        },
+                                      )),
+                                ],
+                              )
+                            : Container(),
                       ],
                     ),
                   )
