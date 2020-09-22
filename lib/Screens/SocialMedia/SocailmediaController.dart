@@ -62,7 +62,7 @@ class SocialMediaHomepage extends StatelessWidget {
                       ),
                       Expanded(
                         child: SocialMediaNavigatorCard(
-                            'Coming Soon', '', 'assets/images/logo.png'),
+                            'Instagram', '/insta', 'assets/images/logo.png'),
                       ),
                     ],
                   ),

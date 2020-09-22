@@ -44,6 +44,7 @@ dependencies:
   provider:
   dotted_border: ^1.0.6
   intl:
+  font_awesome_flutter:
   flutter_colorpicker:
 
 dev_dependencies:
