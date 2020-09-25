@@ -15,7 +15,7 @@ enum ImageType { avatar, insta }
 
 class _InstaScreenState extends State<InstaScreen> {
   String _username = 'MemeBahadur';
-  bool _like = false;
+  bool _like = true;
   String _firstLiker = '45developers';
   String _totalLiker = '45';
   File _avatar;
@@ -84,6 +84,8 @@ class _InstaScreenState extends State<InstaScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -211,9 +213,8 @@ class _InstaScreenState extends State<InstaScreen> {
                       ),
                     ),
                     _like
-                        ? Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                        ? Container(
+                            padding: EdgeInsets.only(left: 10),
                             child: Text(
                               "Liked by $_firstLiker and $_totalLiker others",
                               style: TextStyle(fontWeight: FontWeight.bold),
