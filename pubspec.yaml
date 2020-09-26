@@ -112,6 +112,9 @@ flutter:
     - family: TwitterIcon
       fonts:
         - asset: assets/font/twittericon.ttf
+    - family: FbIcon
+      fonts:
+        - asset: assets/font/fb.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

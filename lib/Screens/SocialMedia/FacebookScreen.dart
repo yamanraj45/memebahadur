@@ -1,8 +1,26 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
+import 'package:flutter/widgets.dart';
+
+enum ImageType { avatar, photo }
+
+class FbIcons {
+  FbIcons._();
+
+  static const _kFontFam = 'FbIcon';
+  static const _kFontPkg = null;
+
+  static const IconData comment =
+      IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData thumb =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData share =
+      IconData(0xf064, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+}
 
 class FacebookPost extends StatefulWidget {
   @override
@@ -20,6 +38,60 @@ class _FacebookPostState extends State<FacebookPost> {
   String _status = 'Edit Status From Table Below';
   String _name = 'MemeBahadur';
   File _avatar;
+  File _fbImage;
+  final picker = ImagePicker();
+
+  Future getImage(imageType, {source = ImageSource.gallery}) async {
+    final pickedFile = await picker.getImage(source: source);
+    if (pickedFile != null) {
+      File path = File(pickedFile.path);
+      setState(() {
+        switch (imageType) {
+          case ImageType.avatar:
+            _avatar = path;
+            break;
+          case ImageType.photo:
+            _fbImage = path;
+            break;
+          default:
+            break;
+        }
+      });
+    }
+  }
+
+  _showImagePicker() {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text("Choose:"),
+            content: SingleChildScrollView(
+              child: ListBody(
+                children: <Widget>[
+                  Divider(),
+                  ListTile(
+                    title: Text("Gallery"),
+                    onTap: () {
+                      Navigator.pop(context);
+                      getImage(ImageType.photo, source: ImageSource.gallery);
+                    },
+                  ),
+                  Divider(),
+                  ListTile(
+                    title: Text("Camera"),
+                    onTap: () {
+                      Navigator.pop(context);
+                      getImage(ImageType.photo, source: ImageSource.camera);
+                    },
+                  ),
+                  Divider(),
+                ],
+              ),
+            ),
+          );
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +110,17 @@ class _FacebookPostState extends State<FacebookPost> {
                     child: new Column(
                       children: <Widget>[
                         ListTile(
-                          leading: CircleAvatar(
-                            radius: 20.0,
-                            child: new Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.asset('assets/images/logo.png'),
-                            ),
+                          leading: GestureDetector(
+                            onTap: () => getImage(ImageType.avatar),
+                            child: _avatar != null
+                                ? CircleAvatar(
+                                    radius: 30.0,
+                                    backgroundImage: FileImage(_avatar),
+                                  )
+                                : CircleAvatar(
+                                    foregroundColor: Colors.black,
+                                    child: Icon(Icons.add),
+                                  ),
                           ),
                           title: RichText(
                             text: TextSpan(
@@ -97,7 +172,67 @@ class _FacebookPostState extends State<FacebookPost> {
                           title: Text(_status),
                         ),
                         _image
-                            ? Image.asset('assets/images/logo.png')
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: _fbImage != null
+                                    ? GestureDetector(
+                                        onTap: () => _showImagePicker(),
+                                        child: Image.file(_fbImage),
+                                      )
+                                    : Stack(
+                                        children: <Widget>[
+                                          Opacity(
+                                            opacity: 0,
+                                            child: Container(
+                                              child: Image.asset(
+                                                'assets/images/logo.png',
+                                              ),
+                                            ),
+                                          ),
+                                          Positioned.fill(
+                                            bottom: 30.0,
+                                            child: Container(
+                                              child: CircleAvatar(
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                minRadius: 50.00,
+                                                maxRadius: 80.00,
+                                                child: ClipRect(
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.transparent,
+                                                    radius: 60.0,
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        RaisedButton(
+                                                          shape:
+                                                              RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0),
+                                                          ),
+                                                          color:
+                                                              Colors.blue[300],
+                                                          onPressed: () {
+                                                            _showImagePicker();
+                                                          },
+                                                          child: Icon(
+                                                            Icons.add,
+                                                            color: Colors.black,
+                                                            size: 50.0,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                              )
                             : Container(),
                         Container(
                           width: MediaQuery.of(context).size.width,
@@ -110,22 +245,17 @@ class _FacebookPostState extends State<FacebookPost> {
                                   children: <Widget>[
                                     new CircleAvatar(
                                       radius: 10.0,
-                                      backgroundColor: Color(0xff3b5998),
+                                      backgroundColor: Colors.blue[700],
                                       child: new Icon(
                                         Icons.thumb_up,
                                         size: 12.0,
                                         color: Colors.white,
                                       ),
                                     ),
-                                    new CircleAvatar(
-                                      radius: 10.0,
-                                      backgroundColor: Colors.red,
-                                      child: new Icon(Icons.highlight_off),
-                                    ),
                                     new Padding(
                                       padding: const EdgeInsets.symmetric(
                                           vertical: 0.0, horizontal: 8.0),
-                                      child: new Text('10'),
+                                      child: new Text(_likes),
                                     ),
                                   ],
                                 ),
@@ -148,7 +278,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                   Container(
                                     child: Row(
                                       children: <Widget>[
-                                        Icon(Icons.add),
+                                        Icon(FbIcons.thumb, color: Colors.grey),
                                         Text('Like'),
                                       ],
                                     ),
@@ -160,7 +290,8 @@ class _FacebookPostState extends State<FacebookPost> {
                                   Container(
                                     child: Row(
                                       children: <Widget>[
-                                        Icon(Icons.add),
+                                        Icon(FbIcons.comment,
+                                            color: Colors.grey),
                                         Text('Comment'),
                                       ],
                                     ),
@@ -172,7 +303,10 @@ class _FacebookPostState extends State<FacebookPost> {
                                   Container(
                                     child: Row(
                                       children: <Widget>[
-                                        Icon(Icons.add),
+                                        Icon(
+                                          FbIcons.share,
+                                          color: Colors.grey,
+                                        ),
                                         Text('Share'),
                                       ],
                                     ),
@@ -226,7 +360,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                     label: 'Like',
                                     onChanged: (value) {
                                       setState(() {
-                                        _name = value;
+                                        _likes = value;
                                       });
                                     }),
                               ),
@@ -235,14 +369,24 @@ class _FacebookPostState extends State<FacebookPost> {
                               width: MediaQuery.of(context).size.width * 0.25,
                               child: Container(
                                 child: InputText(
-                                    label: 'Comment', onChanged: null),
+                                    label: 'Comment',
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _comment = value;
+                                      });
+                                    }),
                               ),
                             ),
                             SizedBox(
                               width: MediaQuery.of(context).size.width * 0.25,
                               child: Container(
-                                child:
-                                    InputText(label: 'Share', onChanged: null),
+                                child: InputText(
+                                    label: 'Share',
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _share = value;
+                                      });
+                                    }),
                               ),
                             ),
                           ],
@@ -288,6 +432,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                         MediaQuery.of(context).size.width * 0.6,
                                     child: InputText(
                                       label: 'First Person Tag',
+                                      maxLength: 30,
                                       onChanged: (value) {
                                         setState(() {
                                           _firstPersononTagList = value;
