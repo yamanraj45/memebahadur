@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 import 'package:flutter/widgets.dart';
@@ -32,7 +33,7 @@ class _FacebookPostState extends State<FacebookPost> {
   String _likes = '45';
   String _comment = '45';
   String _share = '45';
-  bool _tag = true;
+  bool _tag = false;
   String _firstPersononTagList = '45developers';
   String _nooftag = '45';
   String _status = 'Edit Status From Table Below';
@@ -93,10 +94,26 @@ class _FacebookPostState extends State<FacebookPost> {
         });
   }
 
+  bool isFbEdited = false;
+
+  _onBackPress() {
+    onBackPress(context, flag: isFbEdited);
+  }
+
+  final previewContainer = new GlobalKey();
+
+  _onSavePress() {
+    onSavePress(context, previewContainer);
+  }
+
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width * 0.9;
     return MemeScaffold(
+      onBackKeyPress: () {
+        _onBackPress();
+      },
+      onBackPress: _onBackPress,
+      onSavePress: _onSavePress,
       child: Container(
         child: SingleChildScrollView(
           child: SafeArea(
@@ -106,217 +123,222 @@ class _FacebookPostState extends State<FacebookPost> {
                   SizedBox(
                     height: 10,
                   ),
-                  Card(
-                    child: new Column(
-                      children: <Widget>[
-                        ListTile(
-                          leading: GestureDetector(
-                            onTap: () => getImage(ImageType.avatar),
-                            child: _avatar != null
-                                ? CircleAvatar(
-                                    radius: 30.0,
-                                    backgroundImage: FileImage(_avatar),
-                                  )
-                                : CircleAvatar(
-                                    foregroundColor: Colors.black,
-                                    child: Icon(Icons.add),
-                                  ),
-                          ),
-                          title: RichText(
-                            text: TextSpan(
-                                text: _name,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
-                                children: _tag
-                                    ? <TextSpan>[
-                                        TextSpan(
-                                          text: ' is with',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        TextSpan(
-                                          text: ' $_firstPersononTagList',
-                                          style: TextStyle(
-                                            fontSize: 16,
+                  RepaintBoundary(
+                    key: previewContainer,
+                    child: Card(
+                      child: new Column(
+                        children: <Widget>[
+                          ListTile(
+                            leading: GestureDetector(
+                              onTap: () => getImage(ImageType.avatar),
+                              child: _avatar != null
+                                  ? CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundImage: FileImage(_avatar),
+                                    )
+                                  : CircleAvatar(
+                                      foregroundColor: Colors.black,
+                                      child: Icon(Icons.add),
+                                    ),
+                            ),
+                            title: RichText(
+                              text: TextSpan(
+                                  text: _name,
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
+                                  children: _tag
+                                      ? <TextSpan>[
+                                          TextSpan(
+                                            text: ' is with',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w300),
                                           ),
-                                        ),
-                                        TextSpan(
-                                          text: ' and',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        TextSpan(
-                                          text: ' $_nooftag others',
-                                        ),
-                                      ]
-                                    : <TextSpan>[
-                                        TextSpan(
-                                          text: '',
-                                        ),
-                                      ]),
-                          ),
-                          subtitle: new Row(
-                            children: [
-                              new Text('time'),
-                              new Icon(
-                                Icons.public,
-                                size: 15.0,
-                              )
-                            ],
-                          ),
-                          trailing: new Icon(Icons.more_horiz),
-                        ),
-                        ListTile(
-                          title: Text(_status),
-                        ),
-                        _image
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(20.0),
-                                child: _fbImage != null
-                                    ? GestureDetector(
-                                        onTap: () => _showImagePicker(),
-                                        child: Image.file(_fbImage),
-                                      )
-                                    : Stack(
-                                        children: <Widget>[
-                                          Opacity(
-                                            opacity: 0,
-                                            child: Container(
-                                              child: Image.asset(
-                                                'assets/images/logo.png',
-                                              ),
+                                          TextSpan(
+                                            text: ' $_firstPersononTagList',
+                                            style: TextStyle(
+                                              fontSize: 16,
                                             ),
                                           ),
-                                          Positioned.fill(
-                                            bottom: 30.0,
-                                            child: Container(
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                minRadius: 50.00,
-                                                maxRadius: 80.00,
-                                                child: ClipRect(
-                                                  child: CircleAvatar(
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    radius: 60.0,
-                                                    child: Column(
-                                                      children: <Widget>[
-                                                        RaisedButton(
-                                                          shape:
-                                                              RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        50.0),
+                                          TextSpan(
+                                            text: ' and',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w300),
+                                          ),
+                                          TextSpan(
+                                            text: ' $_nooftag others',
+                                          ),
+                                        ]
+                                      : <TextSpan>[
+                                          TextSpan(
+                                            text: '',
+                                          ),
+                                        ]),
+                            ),
+                            subtitle: new Row(
+                              children: [
+                                new Text('time'),
+                                new Icon(
+                                  Icons.public,
+                                  size: 15.0,
+                                )
+                              ],
+                            ),
+                            trailing: new Icon(Icons.more_horiz),
+                          ),
+                          ListTile(
+                            title: Text(_status),
+                          ),
+                          _image
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  child: _fbImage != null
+                                      ? GestureDetector(
+                                          onTap: () => _showImagePicker(),
+                                          child: Image.file(_fbImage),
+                                        )
+                                      : Stack(
+                                          children: <Widget>[
+                                            Opacity(
+                                              opacity: 0,
+                                              child: Container(
+                                                child: Image.asset(
+                                                  'assets/images/logo.png',
+                                                ),
+                                              ),
+                                            ),
+                                            Positioned.fill(
+                                              bottom: 30.0,
+                                              child: Container(
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  minRadius: 50.00,
+                                                  maxRadius: 80.00,
+                                                  child: ClipRect(
+                                                    child: CircleAvatar(
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      radius: 60.0,
+                                                      child: Column(
+                                                        children: <Widget>[
+                                                          RaisedButton(
+                                                            shape:
+                                                                RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50.0),
+                                                            ),
+                                                            color: Colors
+                                                                .blue[300],
+                                                            onPressed: () {
+                                                              _showImagePicker();
+                                                            },
+                                                            child: Icon(
+                                                              Icons.add,
+                                                              color:
+                                                                  Colors.black,
+                                                              size: 50.0,
+                                                            ),
                                                           ),
-                                                          color:
-                                                              Colors.blue[300],
-                                                          onPressed: () {
-                                                            _showImagePicker();
-                                                          },
-                                                          child: Icon(
-                                                            Icons.add,
-                                                            color: Colors.black,
-                                                            size: 50.0,
-                                                          ),
-                                                        ),
-                                                      ],
+                                                        ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
                                             ),
-                                          ),
+                                          ],
+                                        ),
+                                )
+                              : Container(),
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: new EdgeInsets.all(18.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SizedBox(
+                                  child: Row(
+                                    children: <Widget>[
+                                      new CircleAvatar(
+                                        radius: 10.0,
+                                        backgroundColor: Colors.blue[700],
+                                        child: new Icon(
+                                          Icons.thumb_up,
+                                          size: 12.0,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      new Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 0.0, horizontal: 8.0),
+                                        child: new Text(_likes),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                new Text(
+                                  '$_comment comments · $_share share',
+                                  style: TextStyle(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Divider(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(FbIcons.thumb,
+                                              color: Colors.grey),
+                                          Text('Like'),
                                         ],
                                       ),
-                              )
-                            : Container(),
-                        Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: new EdgeInsets.all(18.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              SizedBox(
-                                child: Row(
-                                  children: <Widget>[
-                                    new CircleAvatar(
-                                      radius: 10.0,
-                                      backgroundColor: Colors.blue[700],
-                                      child: new Icon(
-                                        Icons.thumb_up,
-                                        size: 12.0,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    new Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 0.0, horizontal: 8.0),
-                                      child: new Text(_likes),
                                     ),
                                   ],
                                 ),
-                              ),
-                              new Text(
-                                '$_comment comments · $_share share',
-                                style: TextStyle(fontSize: 13),
-                              ),
-                            ],
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(FbIcons.comment,
+                                              color: Colors.grey),
+                                          Text('Comment'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Container(
+                                      child: Row(
+                                        children: <Widget>[
+                                          Icon(
+                                            FbIcons.share,
+                                            color: Colors.grey,
+                                          ),
+                                          Text('Share'),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Divider(),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(FbIcons.thumb, color: Colors.grey),
-                                        Text('Like'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(FbIcons.comment,
-                                            color: Colors.grey),
-                                        Text('Comment'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: Row(
-                                      children: <Widget>[
-                                        Icon(
-                                          FbIcons.share,
-                                          color: Colors.grey,
-                                        ),
-                                        Text('Share'),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Card(
