@@ -34,13 +34,16 @@ class _FacebookPostState extends State<FacebookPost> {
   String _comment = '45';
   String _share = '45';
   bool _tag = false;
+  String time = 'weeks';
   String _firstPersononTagList = '45developers';
   String _nooftag = '45';
   String _status = 'Edit Status From Table Below';
   String _name = 'MemeBahadur';
   File _avatar;
   File _fbImage;
+  String date = '';
   final picker = ImagePicker();
+  var dateCleared = TextEditingController();
 
   Future getImage(imageType, {source = ImageSource.gallery}) async {
     final pickedFile = await picker.getImage(source: source);
@@ -178,7 +181,9 @@ class _FacebookPostState extends State<FacebookPost> {
                             ),
                             subtitle: new Row(
                               children: [
-                                new Text('time'),
+                                time != 'few seconds'
+                                    ? Text('$date $time ago')
+                                    : Text('$time ago'),
                                 new Icon(
                                   Icons.public,
                                   size: 15.0,
@@ -349,6 +354,7 @@ class _FacebookPostState extends State<FacebookPost> {
                         InputText(
                           onChanged: (value) {
                             setState(() {
+                              isFbEdited = true;
                               _name = value;
                             });
                           },
@@ -362,6 +368,7 @@ class _FacebookPostState extends State<FacebookPost> {
                         InputText(
                           onChanged: (value) {
                             setState(() {
+                              isFbEdited = true;
                               _status = value;
                             });
                           },
@@ -382,6 +389,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                     label: 'Like',
                                     onChanged: (value) {
                                       setState(() {
+                                        isFbEdited = true;
                                         _likes = value;
                                       });
                                     }),
@@ -394,6 +402,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                     label: 'Comment',
                                     onChanged: (value) {
                                       setState(() {
+                                        isFbEdited = true;
                                         _comment = value;
                                       });
                                     }),
@@ -406,6 +415,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                     label: 'Share',
                                     onChanged: (value) {
                                       setState(() {
+                                        isFbEdited = true;
                                         _share = value;
                                       });
                                     }),
@@ -425,6 +435,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                 value: _image,
                                 onChanged: (value) {
                                   setState(() {
+                                    isFbEdited = true;
                                     _image = value;
                                   });
                                 },
@@ -437,6 +448,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                 value: _tag,
                                 onChanged: (value) {
                                   setState(() {
+                                    isFbEdited = true;
                                     _tag = value;
                                   });
                                 },
@@ -457,6 +469,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                       maxLength: 30,
                                       onChanged: (value) {
                                         setState(() {
+                                          isFbEdited = true;
                                           _firstPersononTagList = value;
                                         });
                                       },
@@ -469,6 +482,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                         label: 'No of tag',
                                         onChanged: (value) {
                                           setState(() {
+                                            isFbEdited = true;
                                             _nooftag = value;
                                           });
                                         },
@@ -476,6 +490,67 @@ class _FacebookPostState extends State<FacebookPost> {
                                 ],
                               )
                             : Container(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: <Widget>[
+                            time != 'few seconds'
+                                ? SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: InputText(
+                                      onChanged: (value) {
+                                        setState(() {
+                                          date = value;
+                                        });
+                                      },
+                                      label: "Time",
+                                    ),
+                                  )
+                                : Container(),
+                            Container(
+                              child: DropdownButton(
+                                hint: Text('Time'),
+                                value: time,
+                                items: [
+                                  DropdownMenuItem(
+                                    child: Text('few seconds'),
+                                    value: 'few seconds',
+                                    onTap: () {
+                                      setState(() {
+                                        print(dateCleared.text);
+                                      });
+                                    },
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('hours'),
+                                    value: 'hour',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('days'),
+                                    value: 'days',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('weeks'),
+                                    value: 'weeks',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('months'),
+                                    value: 'months',
+                                  ),
+                                  DropdownMenuItem(
+                                    child: Text('years'),
+                                    value: 'years',
+                                  )
+                                ],
+                                onChanged: (value) {
+                                  setState(() {
+                                    time = value;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   )
