@@ -596,6 +596,7 @@ class EditorState extends State<Editor> {
                                 _screenOptions.latestIndex = 0;
                                 _upper.clear();
                                 _lower.clear();
+                                _screenOptions.clear();
                                 _screenOptions.currentIndex = null;
                                 _screenOptions.isScrollable = true;
                                 _screenOptions.isImageEdited = true;
