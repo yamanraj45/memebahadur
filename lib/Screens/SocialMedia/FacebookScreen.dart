@@ -37,7 +37,7 @@ class _FacebookPostState extends State<FacebookPost> {
   String time = 'weeks';
   String _firstPersononTagList = '45developers';
   String _nooftag = '45';
-  String _status = 'Edit Status From Table Below';
+  String _status = "What's on your mind?";
   String _name = 'MemeBahadur';
   File _avatar;
   File _fbImage;
@@ -286,7 +286,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                   ),
                                 ),
                                 new Text(
-                                  '$_comment comments · $_share share',
+                                  '$_comment comments · $_share shares',
                                   style: TextStyle(fontSize: 13),
                                 ),
                               ],
@@ -305,7 +305,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                         children: <Widget>[
                                           Icon(FbIcons.thumb,
                                               color: Colors.grey),
-                                          Text('Like'),
+                                          Text(' Like'),
                                         ],
                                       ),
                                     ),
@@ -318,7 +318,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                         children: <Widget>[
                                           Icon(FbIcons.comment,
                                               color: Colors.grey),
-                                          Text('Comment'),
+                                          Text(' Comment'),
                                         ],
                                       ),
                                     ),
@@ -333,7 +333,7 @@ class _FacebookPostState extends State<FacebookPost> {
                                             FbIcons.share,
                                             color: Colors.grey,
                                           ),
-                                          Text('Share'),
+                                          Text(' Share'),
                                         ],
                                       ),
                                     ),
@@ -347,211 +347,232 @@ class _FacebookPostState extends State<FacebookPost> {
                     ),
                   ),
                   Card(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Text('Use Form Below To Edit'),
-                        InputText(
-                          onChanged: (value) {
-                            setState(() {
-                              isFbEdited = true;
-                              _name = value;
-                            });
-                          },
-                          multiline: true,
-                          label: "Name",
-                          maxLength: 75,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        InputText(
-                          onChanged: (value) {
-                            setState(() {
-                              isFbEdited = true;
-                              _status = value;
-                            });
-                          },
-                          multiline: true,
-                          label: "Status",
-                          maxLength: 230,
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: Container(
-                                child: InputText(
-                                    label: 'Like',
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isFbEdited = true;
-                                        _likes = value;
-                                      });
-                                    }),
-                              ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'Edit Status',
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: Container(
-                                child: InputText(
-                                    label: 'Comment',
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isFbEdited = true;
-                                        _comment = value;
-                                      });
-                                    }),
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.25,
-                              child: Container(
-                                child: InputText(
-                                    label: 'Share',
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isFbEdited = true;
-                                        _share = value;
-                                      });
-                                    }),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              child: SwitchListTile(
-                                title: Text('Image'),
-                                value: _image,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isFbEdited = true;
-                                    _image = value;
-                                  });
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.45,
-                              child: SwitchListTile(
-                                title: Text('Tag'),
-                                value: _tag,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isFbEdited = true;
-                                    _tag = value;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        _tag
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.6,
-                                    child: InputText(
-                                      label: 'First Person Tag',
-                                      maxLength: 30,
+                          ),
+                          SizedBox(height: 15),
+                          InputText(
+                            onChanged: (value) {
+                              setState(() {
+                                isFbEdited = true;
+                                _name = value;
+                              });
+                            },
+                            multiline: true,
+                            label: "Name",
+                            maxLength: 75,
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          InputText(
+                            onChanged: (value) {
+                              setState(() {
+                                isFbEdited = true;
+                                _status = value;
+                              });
+                            },
+                            multiline: true,
+                            label: "Status",
+                            maxLength: 230,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.30,
+                                child: Container(
+                                  child: InputText(
+                                      label: 'Likes',
                                       onChanged: (value) {
                                         setState(() {
                                           isFbEdited = true;
-                                          _firstPersononTagList = value;
+                                          _likes = value;
+                                        });
+                                      }),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.30,
+                                child: Container(
+                                  child: InputText(
+                                      label: 'Comments',
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isFbEdited = true;
+                                          _comment = value;
+                                        });
+                                      }),
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.30,
+                                child: Container(
+                                  child: InputText(
+                                      label: 'Share',
+                                      onChanged: (value) {
+                                        setState(() {
+                                          isFbEdited = true;
+                                          _share = value;
+                                        });
+                                      }),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: <Widget>[
+                              time != 'a few seconds'
+                                  ? SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.5,
+                                      child: InputText(
+                                        onChanged: (value) {
+                                          setState(() {
+                                            date = value;
+                                          });
+                                        },
+                                        label: "Time Posted",
+                                      ),
+                                    )
+                                  : Container(),
+                              Container(
+                                child: DropdownButton(
+                                  hint: Text('Time'),
+                                  value: time,
+                                  items: [
+                                    DropdownMenuItem(
+                                      child: Text('a few seconds'),
+                                      value: 'a few seconds',
+                                      onTap: () {
+                                        setState(() {
+                                          print(dateCleared.text);
                                         });
                                       },
                                     ),
-                                  ),
-                                  SizedBox(
+                                    DropdownMenuItem(
+                                      child: Text('hours'),
+                                      value: 'hour',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('days'),
+                                      value: 'days',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('weeks'),
+                                      value: 'weeks',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('months'),
+                                      value: 'months',
+                                    ),
+                                    DropdownMenuItem(
+                                      child: Text('years'),
+                                      value: 'years',
+                                    )
+                                  ],
+                                  onChanged: (value) {
+                                    setState(() {
+                                      time = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                child: SwitchListTile(
+                                  title: Text('Enable Image'),
+                                  value: _image,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isFbEdited = true;
+                                      _image = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.45,
+                                child: SwitchListTile(
+                                  title: Text('Tag People'),
+                                  value: _tag,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isFbEdited = true;
+                                      _tag = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          _tag
+                              ? Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    SizedBox(
                                       width: MediaQuery.of(context).size.width *
-                                          0.3,
+                                          0.6,
                                       child: InputText(
-                                        label: 'No of tag',
+                                        label: 'Tagged person name',
+                                        maxLength: 30,
                                         onChanged: (value) {
                                           setState(() {
                                             isFbEdited = true;
-                                            _nooftag = value;
+                                            _firstPersononTagList = value;
                                           });
                                         },
-                                      )),
-                                ],
-                              )
-                            : Container(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: <Widget>[
-                            time != 'few seconds'
-                                ? SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.5,
-                                    child: InputText(
-                                      onChanged: (value) {
-                                        setState(() {
-                                          date = value;
-                                        });
-                                      },
-                                      label: "Time",
+                                      ),
                                     ),
-                                  )
-                                : Container(),
-                            Container(
-                              child: DropdownButton(
-                                hint: Text('Time'),
-                                value: time,
-                                items: [
-                                  DropdownMenuItem(
-                                    child: Text('few seconds'),
-                                    value: 'few seconds',
-                                    onTap: () {
-                                      setState(() {
-                                        print(dateCleared.text);
-                                      });
-                                    },
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('hours'),
-                                    value: 'hour',
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('days'),
-                                    value: 'days',
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('weeks'),
-                                    value: 'weeks',
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('months'),
-                                    value: 'months',
-                                  ),
-                                  DropdownMenuItem(
-                                    child: Text('years'),
-                                    value: 'years',
-                                  )
-                                ],
-                                onChanged: (value) {
-                                  setState(() {
-                                    time = value;
-                                  });
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                                    SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.3,
+                                        child: InputText(
+                                          label: '# Tags',
+                                          onChanged: (value) {
+                                            setState(() {
+                                              isFbEdited = true;
+                                              _nooftag = value;
+                                            });
+                                          },
+                                        )),
+                                  ],
+                                )
+                              : Container(),
+                        ],
+                      ),
                     ),
                   )
                 ],
