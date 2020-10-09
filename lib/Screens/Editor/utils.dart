@@ -14,6 +14,11 @@ class EditorScreenOption {
   bool isScrollable = true;
   Color backgroundColor = Colors.white;
   Color borderColor = Colors.white;
+
+  void clear() {
+    backgroundColor = Colors.white;
+    borderColor = Colors.white;
+  }
 }
 
 class FontOption {
