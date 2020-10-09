@@ -45,6 +45,7 @@ dependencies:
   dotted_border: ^1.0.6
   intl:
   flutter_colorpicker:
+  image_size_getter:
 
 dev_dependencies:
   flutter_test:
@@ -55,7 +56,6 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/icon/icon.png"
-
 
   # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

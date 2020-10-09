@@ -5,8 +5,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_size_getter/image_size_getter.dart';
+import 'package:image_size_getter/file_input.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
-
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
@@ -27,9 +28,10 @@ class NavigationBarState extends State<NavigationBar> {
       _imagePath = File(pickedFile.path);
     });
     Image image = Image.file(_imagePath);
+    final Size imageSize = ImageSizeGetter.getSize(FileInput(_imagePath));
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => Editor(image)),
+      MaterialPageRoute(builder: (context) => Editor(image, imageSize)),
     );
   }
 

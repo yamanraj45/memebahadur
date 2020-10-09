@@ -1,7 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:image/image.dart' as image;
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 
 import 'TemplateListItem.dart';
+
+Future<Size> getUiImage(String imageAssetPath) async {
+  final ByteData assetImageByteData = await rootBundle.load(imageAssetPath);
+  image.Image baseSizeImage =
+      image.decodeImage(assetImageByteData.buffer.asUint8List());
+  return Size(baseSizeImage.width, baseSizeImage.height);
+}
 
 class Template extends StatefulWidget {
   @override
@@ -60,12 +70,14 @@ class _TemplateState extends State<Template>
                       templateImage: _templateList[index]['image'],
                       templateName: _templateList[index]['name'],
                     ),
-                    onTap: () {
-                      Image image = Image.asset(_templateList[index]['image']);
+                    onTap: () async {
+                      final path = _templateList[index]['image'];
+                      Image image = Image.asset(path);
+                      final imageSize = await getUiImage(path);
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => Editor(image),
+                          pageBuilder: (c, a1, a2) => Editor(image, imageSize),
                           maintainState: true,
                           transitionsBuilder: (c, anim, a2, child) =>
                               SlideTransition(
