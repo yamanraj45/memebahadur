@@ -480,7 +480,6 @@ class _TweetState extends State<Tweet> {
                                           onChanged: (value) {
                                             setState(() {
                                               isVerified = value;
-                                              print(value);
                                             });
                                           },
                                           value: isVerified,
@@ -604,7 +603,6 @@ class _TweetState extends State<Tweet> {
                                                   setState(() {
                                                     isTweetEdited = true;
                                                     time = formatTime(value);
-                                                    print(time);
                                                   });
                                                 }
                                               })

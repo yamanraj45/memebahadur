@@ -19,7 +19,6 @@ takeScreenshot(GlobalKey previewContainer) async {
   Uint8List pngBytes = byteData.buffer.asUint8List();
   return await ImageGallerySaver.saveImage(pngBytes, name: "$filename")
       .then((value) {
-    print("Saved");
     return filename = "${rootDir.path}/$filename.jpg";
   });
 }

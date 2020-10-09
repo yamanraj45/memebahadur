@@ -14,6 +14,9 @@ import 'DraggableItem.dart';
 
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 
+final minScale = 0.2;
+final maxScale = 0.6;
+
 class Editor extends StatefulWidget {
   final Image image;
   final Size imageSize;
@@ -114,22 +117,34 @@ class EditorState extends State<Editor> {
     _lower.controller.dispose();
   }
 
+  double calculateFactor(height,
+      {lower = 200, upper = 1000, minScale = 0.15, maxScale = 0.45}) {
+    double factor = 1;
+    if (height < lower) {
+      factor = minScale;
+    } else if (height > upper) {
+      factor = maxScale;
+    } else {
+      factor =
+          minScale + (maxScale - minScale) / (upper - lower) * (height - lower);
+    }
+    return factor;
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    double heightFactor = 0.6;
-    if (widget.imageSize.height < 300) {
-      heightFactor = 0.2;
-    } else if (widget.imageSize.height < 500) {
-      heightFactor = 0.25;
-    } else if (widget.imageSize.height < 700) {
-      heightFactor = 0.4;
-    }
-
+    double heightFactor = calculateFactor(widget.imageSize.height);
+    int h = widget.imageSize.height;
+    int w = widget.imageSize.width;
+    double aspect = h / w;
     Image _image = widget.image;
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-    print("*" * 20 + widget.imageSize.toString());
+    // print("*" * 20 + "Height" + h.toString());
+    // print("*" * 20 + "Width" + w.toString());
+    // print(aspect);
+    // print(heightFactor);
     return Scaffold(
       floatingActionButton: Visibility(
         visible: !keyboardIsOpen,
