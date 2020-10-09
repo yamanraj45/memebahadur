@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart' as img;
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/image_size_getter.dart';
@@ -29,8 +28,7 @@ class NavigationBarState extends State<NavigationBar> {
       _imagePath = File(pickedFile.path);
     });
     Image image = Image.file(_imagePath);
-    img.Image imageBytes = img.decodeImage(_imagePath.readAsBytesSync());
-    Size imageSize = Size(imageBytes.width, imageBytes.height);
+    final Size imageSize = ImageSizeGetter.getSize(FileInput(_imagePath));
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Editor(image, imageSize)),
