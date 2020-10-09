@@ -34,10 +34,12 @@ enum ImageType { avatar, insta }
 class _InstaScreenState extends State<InstaScreen> {
   String _username = 'MemeBahadur';
   bool _like = true;
+  String _caption;
   String _firstLiker = '45developers';
   String _totalLiker = '45';
   File _avatar;
   File _instaImage;
+  var _captionController = TextEditingController();
   bool isInstaEdited = false;
   final picker = ImagePicker();
   final previewContainer = GlobalKey();
@@ -262,6 +264,29 @@ class _InstaScreenState extends State<InstaScreen> {
                         ),
                       ),
                       SizedBox(
+                        height: 10,
+                      ),
+                      _captionController.text.isNotEmpty
+                          ? Container(
+                              padding: EdgeInsets.only(left: 10),
+                              child: RichText(
+                                text: TextSpan(
+                                    text: _username,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: " " + _captionController.text,
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                    ]),
+                              ),
+                            )
+                          : Container(),
+                      SizedBox(
                         height: 5,
                       ),
                       _like
@@ -295,6 +320,19 @@ class _InstaScreenState extends State<InstaScreen> {
                             setState(() {
                               isInstaEdited = true;
                               _username = value;
+                            });
+                          }),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      child: InputText(
+                          controller: _captionController,
+                          label: 'Caption',
+                          maxLength: 250,
+                          onChanged: (value) {
+                            setState(() {
+                              isInstaEdited = true;
+                              _caption = value;
                             });
                           }),
                     ),
