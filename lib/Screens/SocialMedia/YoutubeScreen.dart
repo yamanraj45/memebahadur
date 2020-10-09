@@ -189,7 +189,6 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
                         children: <Widget>[
                           Row(
                             children: <Widget>[
-                              SizedBox(),
                               SizedBox(
                                 width: screenWidth * 0.9,
                                 child: Padding(

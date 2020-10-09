@@ -55,7 +55,7 @@ class SocialMediaHomepage extends StatelessWidget {
                     children: <Widget>[
                       Expanded(
                         child: SocialMediaNavigatorCard(
-                            'Coming Soon', '', 'assets/images/logo.png'),
+                            'Facebook', '/facebook', 'assets/images/logo.png'),
                       ),
                       Padding(
                         padding: EdgeInsets.all(5.0),
