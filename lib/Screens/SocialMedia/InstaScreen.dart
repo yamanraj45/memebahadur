@@ -133,25 +133,26 @@ class _InstaScreenState extends State<InstaScreen> {
                           children: <Widget>[
                             Row(
                               children: <Widget>[
-                                new Container(
-                                  padding: EdgeInsets.only(left: 10),
-                                  height: 40.0,
-                                  width: 40.0,
-                                  decoration: new BoxDecoration(
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () => getImage(ImageType.avatar),
-                                    child: _avatar != null
-                                        ? CircleAvatar(
-                                            radius: 50.0,
-                                            backgroundImage: FileImage(_avatar),
-                                          )
-                                        : CircleAvatar(
-                                            foregroundColor: Colors.black,
-                                            child: Icon(Icons.add),
+                                GestureDetector(
+                                  onTap: () => getImage(ImageType.avatar),
+                                  child: _avatar != null
+                                      ? Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 8.0),
+                                          child: Container(
+                                            height: 35,
+                                            width: 35,
+                                            child: CircleAvatar(
+                                              radius: 30.0,
+                                              backgroundImage:
+                                                  FileImage(_avatar),
+                                            ),
                                           ),
-                                  ),
+                                        )
+                                      : CircleAvatar(
+                                          foregroundColor: Colors.black,
+                                          child: Icon(Icons.add),
+                                        ),
                                 ),
                                 new SizedBox(
                                   width: 10.0,
@@ -242,27 +243,27 @@ class _InstaScreenState extends State<InstaScreen> {
                                 children: <Widget>[
                                   Icon(
                                     InstaIcon.like,
-                                    size: 15,
+                                    size: 13,
                                   ),
                                   new SizedBox(
                                     width: 20,
                                   ),
                                   new Icon(
                                     InstaIcon.comment,
-                                    size: 15,
+                                    size: 13,
                                   ),
                                   new SizedBox(
                                     width: 20,
                                   ),
                                   new Icon(
                                     InstaIcon.direct,
-                                    size: 15,
+                                    size: 13,
                                   ),
                                 ],
                               ),
                               new Icon(
                                 InstaIcon.save,
-                                size: 15,
+                                size: 13,
                               )
                             ],
                           ),
@@ -335,6 +336,9 @@ class _InstaScreenState extends State<InstaScreen> {
                               });
                             }),
                       ),
+                      SizedBox(
+                        height: 15,
+                      ),
                       Container(
                         child: InputText(
                             label: 'Caption',
@@ -346,19 +350,6 @@ class _InstaScreenState extends State<InstaScreen> {
                                 _caption = value;
                               });
                             }),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                      SwitchListTile(
-                        title: Text('Show Likes on image'),
-                        value: _like,
-                        onChanged: (value) {
-                          setState(() {
-                            isInstaEdited = true;
-                            _like = value;
-                          });
-                        },
                       ),
                       SizedBox(
                         height: 15,
@@ -395,9 +386,19 @@ class _InstaScreenState extends State<InstaScreen> {
                               ],
                             )
                           : Container(),
+                      SwitchListTile(
+                        title: Text('Show Likes on image'),
+                        value: _like,
+                        onChanged: (value) {
+                          setState(() {
+                            isInstaEdited = true;
+                            _like = value;
+                          });
+                        },
+                      ),
                       SizedBox(
                         height: 15,
-                      )
+                      ),
                     ],
                   ),
                 ),
