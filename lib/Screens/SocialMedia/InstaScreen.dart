@@ -33,7 +33,6 @@ enum ImageType { avatar, insta }
 class _InstaScreenState extends State<InstaScreen> {
   String _username = 'MemeBahadur';
   bool _like = true;
-  String _caption;
   String _firstLiker = '45developers';
   String _totalLiker = '45';
   File _avatar;
@@ -60,6 +59,12 @@ class _InstaScreenState extends State<InstaScreen> {
         }
       });
     }
+  }
+
+  @override
+  dispose() {
+    super.dispose();
+    _captionController.dispose();
   }
 
   _showImagePicker(type) {
@@ -250,14 +255,14 @@ class _InstaScreenState extends State<InstaScreen> {
                                   ),
                                   new Icon(
                                     InstaIcon.comment,
-                                    size: 13,
+                                    size: 12,
                                   ),
                                   new SizedBox(
                                     width: 20,
                                   ),
                                   new Icon(
                                     InstaIcon.direct,
-                                    size: 13,
+                                    size: 12,
                                   ),
                                 ],
                               ),
@@ -267,6 +272,9 @@ class _InstaScreenState extends State<InstaScreen> {
                               )
                             ],
                           ),
+                        ),
+                        SizedBox(
+                          height: 5,
                         ),
                         _captionController.text.isNotEmpty
                             ? Padding(
@@ -343,11 +351,11 @@ class _InstaScreenState extends State<InstaScreen> {
                         child: InputText(
                             label: 'Caption',
                             controller: _captionController,
-                            maxLength: 25,
+                            maxLength: 250,
                             onChanged: (value) {
                               setState(() {
                                 isInstaEdited = true;
-                                _caption = value;
+                                // _caption = value;
                               });
                             }),
                       ),
