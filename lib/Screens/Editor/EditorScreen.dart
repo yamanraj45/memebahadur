@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:image_size_getter/image_size_getter.dart';
 import 'package:memebahadur/Screens/Editor/EditorDialogs.dart';
 import 'package:memebahadur/Screens/Editor/utils.dart';
 import 'package:memebahadur/utils/screenshot.dart';
@@ -15,7 +16,9 @@ import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 class Editor extends StatefulWidget {
   final Image image;
-  Editor(this.image);
+  final Size imageSize;
+
+  Editor(this.image, this.imageSize);
 
   @override
   EditorState createState() => EditorState();
@@ -115,9 +118,18 @@ class EditorState extends State<Editor> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
+    double heightFactor = 0.6;
+    if (widget.imageSize.height < 300) {
+      heightFactor = 0.2;
+    } else if (widget.imageSize.height < 500) {
+      heightFactor = 0.25;
+    } else if (widget.imageSize.height < 700) {
+      heightFactor = 0.4;
+    }
+
     Image _image = widget.image;
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-
+    print("*" * 20 + widget.imageSize.toString());
     return Scaffold(
       floatingActionButton: Visibility(
         visible: !keyboardIsOpen,
@@ -257,9 +269,9 @@ class EditorState extends State<Editor> {
                                         : Container(),
                                     Container(
                                       color: _screenOptions.backgroundColor,
-                                      height: height * 0.40,
+                                      height: height * heightFactor,
                                       width: width,
-                                      alignment: Alignment.bottomCenter,
+                                      alignment: Alignment.topLeft,
                                       child: Stack(
                                         alignment: Alignment.bottomCenter,
                                         children: <Widget>[
