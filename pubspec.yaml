@@ -116,6 +116,9 @@ flutter:
     - family: InstaIcon
       fonts:
         - asset: assets/font/insta.ttf
+    - family: FbIcon
+      fonts:
+        - asset: assets/font/fb.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
