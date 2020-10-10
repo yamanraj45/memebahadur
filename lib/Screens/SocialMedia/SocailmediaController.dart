@@ -52,15 +52,15 @@ class SocialMediaHomepage extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: SocialMediaNavigatorCard(
-                          'Facebook', '/facebook', 'assets/images/logo.png'),
+                      child: SocialMediaNavigatorCard('Facebook', '/facebook',
+                          'assets/images/facebook_logo.png'),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.0),
                     ),
                     Expanded(
-                      child: SocialMediaNavigatorCard(
-                          'Instagram', '/insta', 'assets/images/logo.png'),
+                      child: SocialMediaNavigatorCard('Instagram', '/insta',
+                          'assets/images/instagram_logo.png'),
                     ),
                   ],
                 ),

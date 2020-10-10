@@ -112,6 +112,14 @@ class _FacebookPostState extends State<FacebookPost> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _shareController.text = '0';
+    _commentController.text = '0';
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MemeScaffold(
       onBackKeyPress: () {
@@ -268,24 +276,28 @@ class _FacebookPostState extends State<FacebookPost> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
                                 SizedBox(
-                                  child: Row(
-                                    children: <Widget>[
-                                      new CircleAvatar(
-                                        radius: 10.0,
-                                        backgroundColor: Colors.blue[700],
-                                        child: new Icon(
-                                          Icons.thumb_up,
-                                          size: 12.0,
-                                          color: Colors.white,
+                                  child: _likes == '0'
+                                      ? Text('')
+                                      : Row(
+                                          children: <Widget>[
+                                            new CircleAvatar(
+                                              radius: 10.0,
+                                              backgroundColor: Colors.blue[700],
+                                              child: new Icon(
+                                                Icons.thumb_up,
+                                                size: 12.0,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            new Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 0.0,
+                                                      horizontal: 8.0),
+                                              child: new Text(_likes),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      new Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 0.0, horizontal: 8.0),
-                                        child: new Text(_likes),
-                                      ),
-                                    ],
-                                  ),
                                 ),
                                 RichText(
                                   text: TextSpan(
