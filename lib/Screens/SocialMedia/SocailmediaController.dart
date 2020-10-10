@@ -49,23 +49,20 @@ class SocialMediaHomepage extends StatelessWidget {
                 SizedBox(
                   height: 15,
                 ),
-                Opacity(
-                  opacity: 0.4,
-                  child: Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: SocialMediaNavigatorCard(
-                            'Facebook', '/facebook', 'assets/images/logo.png'),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                      ),
-                      Expanded(
-                        child: SocialMediaNavigatorCard(
-                            'Instagram', '/insta', 'assets/images/logo.png'),
-                      ),
-                    ],
-                  ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SocialMediaNavigatorCard(
+                          'Facebook', '/facebook', 'assets/images/logo.png'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    Expanded(
+                      child: SocialMediaNavigatorCard(
+                          'Instagram', '/insta', 'assets/images/logo.png'),
+                    ),
+                  ],
                 ),
               ],
             ),
