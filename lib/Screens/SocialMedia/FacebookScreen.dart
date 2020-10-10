@@ -44,6 +44,8 @@ class _FacebookPostState extends State<FacebookPost> {
   String date = '';
   final picker = ImagePicker();
   var dateCleared = TextEditingController();
+  var _commentController = TextEditingController();
+  var _shareController = TextEditingController();
 
   Future getImage(imageType, {source = ImageSource.gallery}) async {
     final pickedFile = await picker.getImage(source: source);
@@ -196,12 +198,12 @@ class _FacebookPostState extends State<FacebookPost> {
                             title: Text(_status),
                           ),
                           _image
-                              ? ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
+                              ? Container(
                                   child: _fbImage != null
                                       ? GestureDetector(
                                           onTap: () => _showImagePicker(),
-                                          child: Image.file(_fbImage),
+                                          child: Container(
+                                              child: Image.file(_fbImage)),
                                         )
                                       : Stack(
                                           children: <Widget>[
@@ -285,9 +287,29 @@ class _FacebookPostState extends State<FacebookPost> {
                                     ],
                                   ),
                                 ),
-                                new Text(
-                                  '$_comment comments · $_share share',
-                                  style: TextStyle(fontSize: 13),
+                                RichText(
+                                  text: TextSpan(
+                                      text: _commentController.text != '0'
+                                          ? _commentController.text +
+                                              ' comments'
+                                          : '',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Colors.black),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: _shareController.text != '0'
+                                              ? ' . ' +
+                                                  _shareController.text +
+                                                  ' shares'
+                                              : '',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                              color: Colors.black),
+                                        ),
+                                      ]),
                                 ),
                               ],
                             ),
@@ -399,6 +421,7 @@ class _FacebookPostState extends State<FacebookPost> {
                               width: MediaQuery.of(context).size.width * 0.25,
                               child: Container(
                                 child: InputText(
+                                    controller: _commentController,
                                     label: 'Comment',
                                     onChanged: (value) {
                                       setState(() {
@@ -412,6 +435,7 @@ class _FacebookPostState extends State<FacebookPost> {
                               width: MediaQuery.of(context).size.width * 0.25,
                               child: Container(
                                 child: InputText(
+                                    controller: _shareController,
                                     label: 'Share',
                                     onChanged: (value) {
                                       setState(() {
