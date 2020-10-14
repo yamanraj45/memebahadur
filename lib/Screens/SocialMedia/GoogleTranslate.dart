@@ -6,12 +6,12 @@ import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 
-class GoogleTranslator extends StatefulWidget {
+class GoogleTranslate extends StatefulWidget {
   @override
-  _GoogleTranslatorState createState() => _GoogleTranslatorState();
+  _GoogleTranslateState createState() => _GoogleTranslateState();
 }
 
-class _GoogleTranslatorState extends State<GoogleTranslator> {
+class _GoogleTranslateState extends State<GoogleTranslate> {
   bool _isPageEdited = false;
   String langTranslatedFrom = 'Nepali';
   String langTranslatedTo = 'English';

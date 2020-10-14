@@ -3,7 +3,7 @@ import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
-import 'package:memebahadur/Screens/SocialMedia/GoogleTranslator.dart';
+import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
 
 import 'package:memebahadur/Screens/SocialMedia/InstaScreen.dart';
 
@@ -53,7 +53,7 @@ class _MyAppState extends State<MyApp> {
         '/aboutus': (BuildContext context) => AboutUs(),
         '/tweet': (BuildContext context) => Tweet(),
         '/youtubescreen': (BuildContext context) => YoutubeScreen(),
-        '/googletranslator': (BuildContext context) => GoogleTranslator(),
+        '/googletranslate': (BuildContext context) => GoogleTranslate(),
         '/didyoumean': (BuildContext context) => DidYouMean(),
         '/insta': (BuildContext context) => InstaScreen(),
         '/facebook': (BuildContext context) => FacebookPost(),

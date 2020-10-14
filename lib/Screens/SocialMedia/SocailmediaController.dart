@@ -34,8 +34,8 @@ class SocialMediaHomepage extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: SocialMediaNavigatorCard('Translator',
-                          '/googletranslator', 'assets/images/translate.png'),
+                      child: SocialMediaNavigatorCard('Translate',
+                          '/googletranslate', 'assets/images/translate.png'),
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.0),
