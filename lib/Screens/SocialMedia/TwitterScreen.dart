@@ -138,6 +138,9 @@ class _TweetState extends State<Tweet> {
       },
       onBackPress: _onBackPress,
       onSavePress: _onSavePress,
+      onSharePress: () {
+        onSharePress(previewContainer);
+      },
       child: SafeArea(
         child: SingleChildScrollView(
           child: Center(

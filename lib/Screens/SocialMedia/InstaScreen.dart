@@ -118,6 +118,9 @@ class _InstaScreenState extends State<InstaScreen> {
       },
       onBackPress: _onBackPress,
       onSavePress: _onSavePress,
+      onSharePress: () {
+        onSharePress(previewContainer);
+      },
       child: SingleChildScrollView(
         child: SafeArea(
           child: Container(
@@ -127,193 +130,201 @@ class _InstaScreenState extends State<InstaScreen> {
               children: <Widget>[
                 RepaintBoundary(
                   key: previewContainer,
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                GestureDetector(
-                                  onTap: () => getImage(ImageType.avatar),
-                                  child: _avatar != null
-                                      ? Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onTap: () => getImage(ImageType.avatar),
+                                    child: _avatar != null
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8.0),
+                                            child: Container(
+                                              height: 35,
+                                              width: 35,
+                                              child: CircleAvatar(
+                                                radius: 30.0,
+                                                backgroundImage:
+                                                    FileImage(_avatar),
+                                              ),
+                                            ),
+                                          )
+                                        : CircleAvatar(
+                                            foregroundColor: Colors.black,
+                                            child: Icon(Icons.add),
+                                          ),
+                                  ),
+                                  new SizedBox(
+                                    width: 10.0,
+                                  ),
+                                  new Text(
+                                    _username,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  )
+                                ],
+                              ),
+                              new IconButton(
+                                icon: Icon(Icons.more_vert),
+                                onPressed: null,
+                              )
+                            ],
+                          ),
+                          Container(
+                            child: ClipRRect(
+                              child: _instaImage != null
+                                  ? GestureDetector(
+                                      onTap: () =>
+                                          _showImagePicker(ImageType.insta),
+                                      child: Image.file(
+                                        _instaImage,
+                                      ),
+                                    )
+                                  : Stack(
+                                      children: <Widget>[
+                                        Opacity(
+                                          opacity: 0,
                                           child: Container(
-                                            height: 35,
-                                            width: 35,
-                                            child: CircleAvatar(
-                                              radius: 30.0,
-                                              backgroundImage:
-                                                  FileImage(_avatar),
+                                            child: Image.asset(
+                                              'assets/images/logo.png',
                                             ),
                                           ),
-                                        )
-                                      : CircleAvatar(
-                                          foregroundColor: Colors.black,
-                                          child: Icon(Icons.add),
                                         ),
-                                ),
-                                new SizedBox(
-                                  width: 10.0,
-                                ),
-                                new Text(
-                                  _username,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                              ],
-                            ),
-                            new IconButton(
-                              icon: Icon(Icons.more_vert),
-                              onPressed: null,
-                            )
-                          ],
-                        ),
-                        Container(
-                          child: ClipRRect(
-                            child: _instaImage != null
-                                ? GestureDetector(
-                                    onTap: () =>
-                                        _showImagePicker(ImageType.insta),
-                                    child: Image.file(
-                                      _instaImage,
-                                    ),
-                                  )
-                                : Stack(
-                                    children: <Widget>[
-                                      Opacity(
-                                        opacity: 0,
-                                        child: Container(
-                                          child: Image.asset(
-                                            'assets/images/logo.png',
-                                          ),
-                                        ),
-                                      ),
-                                      Positioned.fill(
-                                        bottom: 30.0,
-                                        child: Container(
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.transparent,
-                                            minRadius: 50.00,
-                                            maxRadius: 80.00,
-                                            child: ClipRect(
-                                              child: CircleAvatar(
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                radius: 60.0,
-                                                child: Column(
-                                                  children: <Widget>[
-                                                    RaisedButton(
-                                                      shape:
-                                                          RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50.0),
+                                        Positioned.fill(
+                                          bottom: 30.0,
+                                          child: Container(
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              minRadius: 50.00,
+                                              maxRadius: 80.00,
+                                              child: ClipRect(
+                                                child: CircleAvatar(
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  radius: 60.0,
+                                                  child: Column(
+                                                    children: <Widget>[
+                                                      RaisedButton(
+                                                        shape:
+                                                            RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      50.0),
+                                                        ),
+                                                        color: Colors.blue[300],
+                                                        onPressed: () {
+                                                          _showImagePicker(
+                                                              ImageType.insta);
+                                                        },
+                                                        child: Icon(
+                                                          Icons.add,
+                                                          color: Colors.black,
+                                                          size: 50.0,
+                                                        ),
                                                       ),
-                                                      color: Colors.blue[300],
-                                                      onPressed: () {
-                                                        _showImagePicker(
-                                                            ImageType.insta);
-                                                      },
-                                                      child: Icon(
-                                                        Icons.add,
-                                                        color: Colors.black,
-                                                        size: 50.0,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
-                                  ),
+                                      ],
+                                    ),
+                            ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              new Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Icon(
-                                    InstaIcon.like,
-                                    size: 13,
-                                  ),
-                                  new SizedBox(
-                                    width: 20,
-                                  ),
-                                  new Icon(
-                                    InstaIcon.comment,
-                                    size: 12,
-                                  ),
-                                  new SizedBox(
-                                    width: 20,
-                                  ),
-                                  new Icon(
-                                    InstaIcon.direct,
-                                    size: 12,
-                                  ),
-                                ],
-                              ),
-                              new Icon(
-                                InstaIcon.save,
-                                size: 13,
-                              )
-                            ],
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                new Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Icon(
+                                      InstaIcon.like,
+                                      size: 13,
+                                    ),
+                                    new SizedBox(
+                                      width: 20,
+                                    ),
+                                    new Icon(
+                                      InstaIcon.comment,
+                                      size: 12,
+                                    ),
+                                    new SizedBox(
+                                      width: 20,
+                                    ),
+                                    new Icon(
+                                      InstaIcon.direct,
+                                      size: 12,
+                                    ),
+                                  ],
+                                ),
+                                new Icon(
+                                  InstaIcon.save,
+                                  size: 13,
+                                )
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        _captionController.text.isNotEmpty
-                            ? Padding(
-                                padding: const EdgeInsets.only(left: 15.0),
-                                child: RichText(
-                                  text: TextSpan(
-                                      text: _username,
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text: '  ' + _captionController.text,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14,
-                                              color: Colors.black),
-                                        ),
-                                      ]),
-                                ),
-                              )
-                            : Container(),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        _like
-                            ? Container(
-                                padding: EdgeInsets.only(left: 15),
-                                child: Text(
-                                  "Liked by $_firstLiker and $_totalLiker others",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                ),
-                              )
-                            : Container(),
-                        SizedBox(
-                          height: 10,
-                        )
-                      ],
+                          SizedBox(
+                            height: 5,
+                          ),
+                          _captionController.text.isNotEmpty
+                              ? Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: RichText(
+                                    text: TextSpan(
+                                        text: _username,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text:
+                                                '  ' + _captionController.text,
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14,
+                                                color: Colors.black),
+                                          ),
+                                        ]),
+                                  ),
+                                )
+                              : Container(),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          _like
+                              ? Container(
+                                  padding: EdgeInsets.only(left: 15),
+                                  child: Text(
+                                    "Liked by $_firstLiker and $_totalLiker others",
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                )
+                              : Container(),
+                          SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),

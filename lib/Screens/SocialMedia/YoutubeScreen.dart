@@ -116,6 +116,9 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
       },
       onBackPress: _onBackPress,
       onSavePress: _onSavePress,
+      onSharePress: () {
+        onSharePress(previewContainer);
+      },
       child: SingleChildScrollView(
         child: Center(
           child: Column(

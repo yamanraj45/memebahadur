@@ -113,7 +113,6 @@ class _FacebookPostState extends State<FacebookPost> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _shareController.text = '0';
     _commentController.text = '0';
@@ -127,6 +126,9 @@ class _FacebookPostState extends State<FacebookPost> {
       },
       onBackPress: _onBackPress,
       onSavePress: _onSavePress,
+      onSharePress: () {
+        onSharePress(previewContainer);
+      },
       child: Container(
         child: SingleChildScrollView(
           child: SafeArea(

@@ -136,15 +136,8 @@ class EditorState extends State<Editor> {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double heightFactor = calculateFactor(widget.imageSize.height);
-    int h = widget.imageSize.height;
-    int w = widget.imageSize.width;
-    double aspect = h / w;
     Image _image = widget.image;
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
-    // print("*" * 20 + "Height" + h.toString());
-    // print("*" * 20 + "Width" + w.toString());
-    // print(aspect);
-    // print(heightFactor);
     return Scaffold(
       floatingActionButton: Visibility(
         visible: !keyboardIsOpen,
