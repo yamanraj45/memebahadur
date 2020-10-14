@@ -44,6 +44,7 @@ dependencies:
   provider:
   dotted_border: ^1.0.6
   intl:
+  font_awesome_flutter:
   flutter_colorpicker:
   image_size_getter:
 
@@ -112,6 +113,12 @@ flutter:
     - family: TwitterIcon
       fonts:
         - asset: assets/font/twittericon.ttf
+    - family: InstaIcon
+      fonts:
+        - asset: assets/font/insta.ttf
+    - family: FbIcon
+      fonts:
+        - asset: assets/font/fb.ttf
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

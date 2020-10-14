@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
+import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslator.dart';
+
+import 'package:memebahadur/Screens/SocialMedia/InstaScreen.dart';
+
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
 import 'package:memebahadur/utils/path.dart';
@@ -51,6 +55,8 @@ class _MyAppState extends State<MyApp> {
         '/youtubescreen': (BuildContext context) => YoutubeScreen(),
         '/googletranslator': (BuildContext context) => GoogleTranslator(),
         '/didyoumean': (BuildContext context) => DidYouMean(),
+        '/insta': (BuildContext context) => InstaScreen(),
+        '/facebook': (BuildContext context) => FacebookPost(),
       },
     );
   }
