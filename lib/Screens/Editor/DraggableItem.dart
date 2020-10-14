@@ -60,8 +60,8 @@ class DraggableItemBase extends StatefulWidget {
 }
 
 class _DraggableItemBaseState extends State<DraggableItemBase> {
-  double top = 100;
-  double left = 110;
+  double top = 0;
+  double left = 0;
   double scale = 1.0;
   double angle = 0;
 
