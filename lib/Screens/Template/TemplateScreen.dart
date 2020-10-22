@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' as image;
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:memebahadur/Terminal/terminalPage.dart';
 
 import 'TemplateListItem.dart';
 
@@ -77,7 +78,8 @@ class _TemplateState extends State<Template>
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => Editor(image, imageSize),
+                          pageBuilder: (c, a1, a2) =>
+                              TerminalPage(image, imageSize),
                           maintainState: true,
                           transitionsBuilder: (c, anim, a2, child) =>
                               SlideTransition(
