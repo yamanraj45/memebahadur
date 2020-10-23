@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
+import 'package:memebahadur/Screens/IntroScreen/intro.dart';
 import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
@@ -34,7 +35,7 @@ class _MyAppState extends State<MyApp> {
       title: 'MemeBahadur',
       home: SplashScreen(
         seconds: 1,
-        navigateAfterSeconds: NavigationBar(),
+        navigateAfterSeconds: OnBoardingPage(),
         image: Image.asset('assets/images/logo.png'),
         photoSize: 200,
         backgroundColor: Colors.black,
