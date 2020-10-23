@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
+import 'package:memebahadur/Screens/MyFavorites/myFavorite.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
@@ -36,13 +37,39 @@ class NavigationBarState extends State<NavigationBar> {
   }
 
   int _currentIndex = 0;
-  final navigationScreens = [Template(), SocialMediaHomepage()];
+  final navigationScreens = [Template(), SocialMediaHomepage(), MyFavorites()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.only(top: 30, bottom: 30),
+            children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                  child: ClipRRect(
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text('About Us'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           leading: null,
-          elevation: 0,
+          elevation: 1,
           backgroundColor: Colors.transparent,
           actions: <Widget>[
             IconButton(
@@ -64,13 +91,19 @@ class NavigationBarState extends State<NavigationBar> {
         body: DoubleBackToCloseApp(
           child: IndexedStack(
             index: _currentIndex,
-            children: <Widget>[Template(), SocialMediaHomepage()],
+            children: <Widget>[
+              Template(),
+              SocialMediaHomepage(),
+              MyFavorites()
+            ],
           ),
           snackBar: const SnackBar(
             content: Text('Tap back again to Exit The App'),
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
+            elevation: 1,
+            unselectedItemColor: Colors.black45,
             currentIndex: _currentIndex,
             selectedItemColor: Colors.black,
             onTap: (index) {
@@ -82,8 +115,13 @@ class NavigationBarState extends State<NavigationBar> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.add_circle_outline),
-                  title: Text('Social Medias'))
+                icon: Icon(Icons.add_circle_outline),
+                title: Text('Social Medias'),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.star),
+                title: Text('My Favorites'),
+              ),
             ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
