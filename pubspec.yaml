@@ -47,6 +47,7 @@ dependencies:
   font_awesome_flutter:
   flutter_colorpicker:
   image_size_getter:
+  status_alert:
 
 dev_dependencies:
   flutter_test:

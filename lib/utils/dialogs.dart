@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:status_alert/status_alert.dart';
 
 showExitDialog(BuildContext context) {
   showDialog(
@@ -46,10 +47,20 @@ void showAlertDialog(BuildContext context,
 }
 
 void showSavingDialog(BuildContext context) {
-  showAlertDialog(
+  // showAlertDialog(
+  //   context,
+  //   title: "Saving",
+  //   content: "Please wait...",
+  // );
+  StatusAlert.show(
     context,
-    title: "Saving",
-    content: "Please wait...",
+    duration: Duration(seconds: 20),
+    titleOptions: StatusAlertTextConfiguration(
+      style: TextStyle(fontWeight: FontWeight.bold),
+    ),
+    title: 'Saved',
+    blurPower: 100,
+    configuration: IconConfiguration(icon: Icons.done),
   );
 }
 
