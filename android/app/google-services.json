@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "843171670371",
+    "firebase_url": "https://meme-bahadur.firebaseio.com",
+    "project_id": "meme-bahadur",
+    "storage_bucket": "meme-bahadur.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:843171670371:android:65334d042ad66fb6cecb56",
+        "android_client_info": {
+          "package_name": "com.developer45.memebahadur"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "843171670371-7ru5cegcse5ss8ru8594c3ehefqcg4qk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developer45.memebahadur",
+            "certificate_hash": "a81b78b2c9faf1311ec706b8b7c2444e018f4396"
+          }
+        },
+        {
+          "client_id": "843171670371-a91gklvf0hib689aga5mrrv08m246405.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVuN_GGgNuMYpR-6qhep4RGBZoofaZdpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "843171670371-a91gklvf0hib689aga5mrrv08m246405.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

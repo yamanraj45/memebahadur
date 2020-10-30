@@ -100,15 +100,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: SignUpFields(),
                     ),
                   );
-
-                  // Navigator.pushReplacement(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) {
-                  //       return HomeScreen();
-                  //     },
-                  //   ),
-                  // );
                 },
                 child: Container(
                   height: 50.0,
@@ -161,22 +152,6 @@ class _LoginScreenState extends State<LoginScreen> {
               width: 10.0,
             ),
             InkWell(
-              // onTap: () async {
-              //   final user = await AuthService.signInWithGoogle();
-              //   if (user != null) {
-              //     print('SUcess');
-              //     Navigator.pushReplacement(
-              //       context,
-              //       MaterialPageRoute(
-              //         builder: (context) {
-              //           return HomeScreen(user: user);
-              //         },
-              //       ),
-              //     );
-              //   } else {
-              //     print('failed');
-              //   }
-              // },
               child: Container(
                 height: 32.0,
                 width: 32.0,
@@ -184,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     BoxDecoration(color: Colors.white, shape: BoxShape.circle),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('Facebook'),
+                  child: Text('G'),
                 ),
               ),
             )

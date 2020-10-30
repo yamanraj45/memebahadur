@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memebahadur/NavigationBar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,6 +9,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Navigator();
+    return NavigationBar();
   }
 }

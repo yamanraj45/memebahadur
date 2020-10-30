@@ -41,32 +41,7 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.only(top: 30, bottom: 30),
-            children: <Widget>[
-              DrawerHeader(
-                child: Center(
-                  child: ClipRRect(
-                    child: Image.asset('assets/images/logo.png'),
-                  ),
-                ),
-              ),
-              ListTile(
-                title: Text('About Us'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Settings'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: drawer(context),
         appBar: AppBar(
           leading: null,
           elevation: 1,
@@ -143,4 +118,33 @@ class NavigationBarState extends State<NavigationBar> {
           ],
         ));
   }
+}
+
+Widget drawer(BuildContext context) {
+  return Drawer(
+    child: ListView(
+      padding: EdgeInsets.only(top: 30, bottom: 30),
+      children: <Widget>[
+        DrawerHeader(
+          child: Center(
+            child: ClipRRect(
+              child: Image.asset('assets/images/logo.png'),
+            ),
+          ),
+        ),
+        ListTile(
+          title: Text('About Us'),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          title: Text('Settings'),
+          onTap: () {
+            Navigator.pop(context);
+          },
+        ),
+      ],
+    ),
+  );
 }

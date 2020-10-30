@@ -48,10 +48,10 @@ dependencies:
   flutter_colorpicker:
   image_size_getter:
   firebase_core: "0.5.0"
-  cloud_firestore: ^0.14.0+2
-  firebase_auth:
-  google_sign_in:
-  flutter_riverpod:
+  # cloud_firestore: ^0.14.0+2
+  # firebase_auth:
+  # google_sign_in:
+  # flutter_riverpod:
 
 dev_dependencies:
   flutter_test:
