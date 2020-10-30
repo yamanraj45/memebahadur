@@ -6,6 +6,7 @@ import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
 
 import 'package:memebahadur/Screens/SocialMedia/InstaScreen.dart';
+import 'package:memebahadur/Screens/SocialMedia/NewsScreen.dart';
 
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
@@ -57,6 +58,7 @@ class _MyAppState extends State<MyApp> {
         '/didyoumean': (BuildContext context) => DidYouMean(),
         '/insta': (BuildContext context) => InstaScreen(),
         '/facebook': (BuildContext context) => FacebookPost(),
+        '/news': (BuildContext context) => NewsScreen()
       },
     );
   }

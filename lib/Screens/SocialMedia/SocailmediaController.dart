@@ -64,6 +64,20 @@ class SocialMediaHomepage extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SocialMediaNavigatorCard(
+                          'News', '/news', 'assets/images/facebook_logo.png'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
