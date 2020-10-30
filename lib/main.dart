@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
+import 'package:memebahadur/Screens/Login/loginscreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
@@ -33,11 +34,10 @@ class _MyAppState extends State<MyApp> {
       themeMode: ThemeMode.light,
       title: 'MemeBahadur',
       home: SplashScreen(
-        seconds: 1,
-        navigateAfterSeconds: NavigationBar(),
+        seconds: 3,
+        navigateAfterSeconds: LoginScreen(),
         image: Image.asset('assets/images/logo.png'),
         photoSize: 200,
-        backgroundColor: Colors.black,
         loaderColor: Colors.grey,
         styleTextUnderTheLoader: TextStyle(
           backgroundColor: Colors.black,
