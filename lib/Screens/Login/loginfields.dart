@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:memebahadur/NavigationBar.dart';
+import 'package:memebahadur/utils/login_authentication.dart';
 
 class LoginFields extends StatelessWidget {
   TextEditingController loginEmail = TextEditingController();
@@ -45,10 +47,19 @@ class LoginFields extends StatelessWidget {
                 ),
               ),
               RaisedButton(
-                onPressed: () {
+                onPressed: () async {
                   final email = loginEmail.text;
                   final password = loginpassword.text;
                   print('Email: $email   password: $password');
+                  final user = await AuthenticationService.loginWithEmail(
+                      email: email, password: password);
+
+                  if (user != null) {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) {
+                      return NavigationBar();
+                    }));
+                  }
                 },
                 child: Text('Login'),
               )

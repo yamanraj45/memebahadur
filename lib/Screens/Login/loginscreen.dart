@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/Login/loginfields.dart';
 import 'package:memebahadur/Screens/Login/signupform.dart';
+import 'package:memebahadur/utils/login_authentication.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -136,22 +137,15 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             InkWell(
-              onTap: () {},
-              child: Container(
-                height: 32.0,
-                width: 32.0,
-                decoration:
-                    BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Facebook'),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 10.0,
-            ),
-            InkWell(
+              onTap: () async {
+                final user = await AuthenticationService.signinWithGoogle();
+                if (user != null) {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return NavigationBar();
+                  }));
+                }
+              },
               child: Container(
                 height: 32.0,
                 width: 32.0,

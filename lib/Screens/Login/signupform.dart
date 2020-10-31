@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memebahadur/utils/login_authentication.dart';
 
 class SignUpFields extends StatelessWidget {
   TextEditingController signUpEmail = TextEditingController();
@@ -51,6 +52,13 @@ class SignUpFields extends StatelessWidget {
               ),
               TextFormField(
                 obscureText: true,
+                validator: (value) {
+                  if (value == signUppassword.text) {
+                    return null;
+                  } else {
+                    return 'Not Matching';
+                  }
+                },
                 controller: confirmsignuppassword,
                 decoration: InputDecoration(
                   hintText: 'Confirm Password',
@@ -68,7 +76,41 @@ class SignUpFields extends StatelessWidget {
                 height: 5,
               ),
               RaisedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final email = signUpEmail.text;
+                  final password = confirmsignuppassword.text;
+                  if (confirmsignuppassword.text == signUppassword.text) {
+                    print('Same');
+                    print('$email $password');
+
+                    final user = await AuthenticationService.signInWithEmail(
+                        email: email, password: password);
+                    if (user != null) {
+                      return Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) {
+                        return AlertDialog(
+                          title: Text('Success'),
+                          content: Text('Verify Your Account And Login'),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text('Ok'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        );
+                      }));
+                    }
+                  } else if (confirmsignuppassword.text !=
+                      signUppassword.text) {
+                    print('Differnet');
+                    return 'Enter Same Passowrd';
+                  } else {
+                    print('empty');
+                    return null;
+                  }
+                },
                 child: Text('Signup'),
               )
             ],
