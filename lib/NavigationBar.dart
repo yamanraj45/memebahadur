@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -10,6 +11,9 @@ import 'package:image_size_getter/file_input.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:memebahadur/Screens/MyFavorites/myFavorite.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
+import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
+import 'package:memebahadur/utils/login_authentication.dart';
+import 'package:provider/provider.dart';
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
 
@@ -41,7 +45,35 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: drawer(context),
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.only(top: 30, bottom: 30),
+            children: <Widget>[
+              Consumer<User>(
+                builder: (context, watch, child) => Text('Hello'),
+              ),
+              DrawerHeader(
+                child: Center(
+                  child: ClipRRect(
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                ),
+              ),
+              ListTile(
+                title: Text('About Us'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Settings'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         appBar: AppBar(
           leading: null,
           elevation: 1,
@@ -51,6 +83,13 @@ class NavigationBarState extends State<NavigationBar> {
               icon: Icon(Icons.info),
               color: Colors.black,
               onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
+            ),
+            IconButton(
+              icon: Icon(Icons.info),
+              color: Colors.red,
+              onPressed: () async {
+                await AuthenticationService.logout();
+              },
             )
           ],
           title: Text(
@@ -118,33 +157,4 @@ class NavigationBarState extends State<NavigationBar> {
           ],
         ));
   }
-}
-
-Widget drawer(BuildContext context) {
-  return Drawer(
-    child: ListView(
-      padding: EdgeInsets.only(top: 30, bottom: 30),
-      children: <Widget>[
-        DrawerHeader(
-          child: Center(
-            child: ClipRRect(
-              child: Image.asset('assets/images/logo.png'),
-            ),
-          ),
-        ),
-        ListTile(
-          title: Text('About Us'),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-        ListTile(
-          title: Text('Settings'),
-          onTap: () {
-            Navigator.pop(context);
-          },
-        ),
-      ],
-    ),
-  );
 }

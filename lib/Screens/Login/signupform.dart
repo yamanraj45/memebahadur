@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:memebahadur/utils/login_authentication.dart';
 
-class SignUpFields extends StatelessWidget {
+class SignUpFields extends StatefulWidget {
+  @override
+  _SignUpFieldsState createState() => _SignUpFieldsState();
+}
+
+class _SignUpFieldsState extends State<SignUpFields> {
   TextEditingController signUpEmail = TextEditingController();
+
   TextEditingController signUppassword = TextEditingController();
+
   TextEditingController confirmsignuppassword = TextEditingController();
 
   @override

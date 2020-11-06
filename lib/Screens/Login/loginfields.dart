@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/utils/login_authentication.dart';
 
-class LoginFields extends StatelessWidget {
+class LoginFields extends StatefulWidget {
+  @override
+  _LoginFieldsState createState() => _LoginFieldsState();
+}
+
+class _LoginFieldsState extends State<LoginFields> {
   TextEditingController loginEmail = TextEditingController();
+
   TextEditingController loginpassword = TextEditingController();
 
   @override

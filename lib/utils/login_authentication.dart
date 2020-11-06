@@ -1,8 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:provider/provider.dart';
 
 class AuthenticationService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  static Future<bool> logout() async {
+    try {
+      await _auth.signOut();
+
+      return true;
+    } catch (e) {
+      print(e.message);
+      return false;
+    }
+  }
 
   static Future<User> loginWithEmail({String email, String password}) async {
     try {

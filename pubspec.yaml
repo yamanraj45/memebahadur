@@ -51,7 +51,7 @@ dependencies:
   # cloud_firestore: ^0.14.0+2
   firebase_auth:
   google_sign_in:
-  # flutter_riverpod:
+  flutter_riverpod:
 
 dev_dependencies:
   flutter_test:
