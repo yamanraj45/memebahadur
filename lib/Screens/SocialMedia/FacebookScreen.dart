@@ -7,7 +7,7 @@ import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
 import 'package:flutter/widgets.dart';
 
-enum ImageType { avatar, photo }
+enum ImageType { avatar, photo, comment }
 
 class FbIcons {
   FbIcons._();
@@ -30,6 +30,9 @@ class FacebookPost extends StatefulWidget {
 
 class _FacebookPostState extends State<FacebookPost> {
   bool _image = false;
+  bool _commenters = false;
+  String _commentorName = '45 developers';
+  String _commentorComment = 'Enter Comment From Table Below';
   String _likes = '45';
   String _comment = '45';
   String _share = '45';
@@ -41,6 +44,7 @@ class _FacebookPostState extends State<FacebookPost> {
   String _name = 'MemeBahadur';
   File _avatar;
   File _fbImage;
+  File _fbComment;
   String date = '';
   final picker = ImagePicker();
   var dateCleared = TextEditingController();
@@ -58,6 +62,9 @@ class _FacebookPostState extends State<FacebookPost> {
             break;
           case ImageType.photo:
             _fbImage = path;
+            break;
+          case ImageType.comment:
+            _fbComment = path;
             break;
           default:
             break;
@@ -378,6 +385,55 @@ class _FacebookPostState extends State<FacebookPost> {
                               ],
                             ),
                           ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          // This is for  Commentors
+                          _commenters
+                              ? Padding(
+                                  padding: const EdgeInsets.only(left: 15.0),
+                                  child: Card(
+                                    elevation: 15,
+                                    child: ListTile(
+                                      leading: GestureDetector(
+                                          onTap: () =>
+                                              getImage(ImageType.comment),
+                                          child: Container(
+                                            height: 40,
+                                            width: 40,
+                                            child: _fbComment != null
+                                                ? CircleAvatar(
+                                                    radius: 30.0,
+                                                    backgroundImage:
+                                                        FileImage(_fbComment),
+                                                  )
+                                                : CircleAvatar(
+                                                    foregroundColor:
+                                                        Colors.black,
+                                                    child: Icon(Icons.add),
+                                                  ),
+                                          )),
+                                      title: Text(
+                                        _commentorName,
+                                        style: TextStyle(
+                                            fontSize: 15,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      subtitle: new Row(
+                                        children: [
+                                          Text(
+                                            _commentorComment,
+                                            style: TextStyle(fontSize: 14),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Container(),
+                          SizedBox(
+                            height: 10,
+                          )
                         ],
                       ),
                     ),
@@ -595,6 +651,53 @@ class _FacebookPostState extends State<FacebookPost> {
                               ),
                             ],
                           ),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.9,
+                                child: SwitchListTile(
+                                  title: Text('Commentors'),
+                                  value: _commenters,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      isFbEdited = true;
+                                      _commenters = value;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          _commenters
+                              ? Column(
+                                  children: <Widget>[
+                                    InputText(
+                                      maxLength: 100,
+                                      label: 'Commentor Name',
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _commentorName = value;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                    InputText(
+                                      label: 'Comment',
+                                      maxLength: 1000,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          _commentorComment = value;
+                                        });
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                         ],
                       ),
                     ),
