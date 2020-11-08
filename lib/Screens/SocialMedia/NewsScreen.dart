@@ -14,6 +14,10 @@ class _NewsScreenState extends State<NewsScreen> {
   String subheading = 'Enter Subheading Here';
   File _newsImage;
   final picker = ImagePicker();
+  final url1 =
+      'https://drive.google.com/uc?export=view&id=1lNQr9zEh9DxcnEAVswgeecFm8oD-nJxt';
+  final url2 =
+      'https://drive.google.com/uc?export=view&id=10yEupKbm2VEWQiLEZgLgcwWVQK-_hl7l';
   final url =
       'https://drive.google.com/uc?export=view&id=112jcK61HSBZ6Jc8pMf6qWVk7nT9Ld4Xv';
   @override
@@ -40,7 +44,34 @@ class _NewsScreenState extends State<NewsScreen> {
                 children: <Widget>[
                   _newsImage != null
                       ? Image.file(_newsImage)
-                      : Image.network(url),
+                      : Image.network(
+                          url2,
+                          height: MediaQuery.of(context).size.height * 0.3,
+                          width: screenWidth,
+                          fit: BoxFit.cover,
+                          loadingBuilder: (BuildContext context, Widget child,
+                              ImageChunkEvent loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(
+                              child: Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                width: screenWidth,
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    backgroundColor: Colors.red,
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes
+                                        : null,
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                   Positioned(
                     width: screenWidth,
                     bottom: 15,
