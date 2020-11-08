@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:memebahadur/widgets/InputText.dart';
@@ -44,33 +45,18 @@ class _NewsScreenState extends State<NewsScreen> {
                 children: <Widget>[
                   _newsImage != null
                       ? Image.file(_newsImage)
-                      : Image.network(
-                          url2,
-                          height: MediaQuery.of(context).size.height * 0.3,
+                      : Container(
                           width: screenWidth,
-                          fit: BoxFit.cover,
-                          loadingBuilder: (BuildContext context, Widget child,
-                              ImageChunkEvent loadingProgress) {
-                            if (loadingProgress == null) return child;
-                            return Center(
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
-                                width: screenWidth,
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    backgroundColor: Colors.red,
-                                    value: loadingProgress.expectedTotalBytes !=
-                                            null
-                                        ? loadingProgress
-                                                .cumulativeBytesLoaded /
-                                            loadingProgress.expectedTotalBytes
-                                        : null,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
+                          height: MediaQuery.of(context).size.height * 0.35,
+                          child: CachedNetworkImage(
+                            imageUrl: url2,
+                            placeholder: (context, url2) => Center(
+                              child: CircularProgressIndicator(
+                                  backgroundColor: Colors.red),
+                            ),
+                            errorWidget: (context, url, error) =>
+                                new Icon(Icons.error),
+                          ),
                         ),
                   Positioned(
                     width: screenWidth,
