@@ -83,7 +83,7 @@ class NavigationBarState extends State<NavigationBar> {
                   icon: Icon(Icons.home), title: Text('Home')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.add_circle_outline),
-                  title: Text('Social Medias'))
+                  title: Text('Social Media'))
             ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
