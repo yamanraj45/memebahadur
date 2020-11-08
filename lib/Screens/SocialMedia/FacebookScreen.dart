@@ -444,7 +444,7 @@ class _FacebookPostState extends State<FacebookPost> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Use Form Below To Edit'),
+                          Text('Edit Image'),
                           InputText(
                             onChanged: (value) {
                               setState(() {
@@ -656,7 +656,7 @@ class _FacebookPostState extends State<FacebookPost> {
                               SizedBox(
                                 width: MediaQuery.of(context).size.width * 0.9,
                                 child: SwitchListTile(
-                                  title: Text('Commentors'),
+                                  title: Text('Enable Comment'),
                                   value: _commenters,
                                   onChanged: (value) {
                                     setState(() {
