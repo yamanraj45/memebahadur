@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:flutter/widgets.dart';
+import 'package:memebahadur/utils/Theme.dart';
 import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
+import 'package:provider/provider.dart';
 
 enum ImageType { avatar, youtube }
 
@@ -127,235 +129,241 @@ class _YoutubeScreenState extends State<YoutubeScreen> {
             children: <Widget>[
               RepaintBoundary(
                 key: previewContainer,
-                child: Container(
-                  color: Colors.white,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        child: _image != null
-                            ? GestureDetector(
-                                onTap: () => _showImagePicker(),
-                                child: Center(child: Image.file(_image)),
-                              )
-                            : Stack(
-                                children: <Widget>[
-                                  Opacity(
-                                    opacity: 0,
-                                    child: Container(
-                                      child: Image.asset(
-                                        'assets/images/logo.png',
+                child: Consumer<ThemeNotifier>(
+                  builder: (context, value, child) => Container(
+                    color: value.darkTheme ? Colors.grey[850] : Colors.white,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          child: _image != null
+                              ? GestureDetector(
+                                  onTap: () => _showImagePicker(),
+                                  child: Center(child: Image.file(_image)),
+                                )
+                              : Stack(
+                                  children: <Widget>[
+                                    Opacity(
+                                      opacity: 0,
+                                      child: Container(
+                                        child: Image.asset(
+                                          'assets/images/logo.png',
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Positioned.fill(
-                                    bottom: 30.0,
-                                    child: Container(
-                                      child: Center(
-                                        child: ClipRect(
-                                          child: CircleAvatar(
-                                            backgroundColor: Colors.transparent,
-                                            radius: 60.0,
-                                            child: Column(
-                                              children: <Widget>[
-                                                RaisedButton(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              50.0)),
-                                                  color: Colors.blue[300],
-                                                  onPressed: () {
-                                                    _showImagePicker();
-                                                  },
-                                                  child: Icon(
-                                                    Icons.add,
-                                                    color: Colors.black,
-                                                    size: 50.0,
+                                    Positioned.fill(
+                                      bottom: 30.0,
+                                      child: Container(
+                                        child: Center(
+                                          child: ClipRect(
+                                            child: CircleAvatar(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              radius: 60.0,
+                                              child: Column(
+                                                children: <Widget>[
+                                                  RaisedButton(
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        50.0)),
+                                                    color: Colors.blue[300],
+                                                    onPressed: () {
+                                                      _showImagePicker();
+                                                    },
+                                                    child: Icon(
+                                                      Icons.add,
+                                                      color: Colors.black,
+                                                      size: 50.0,
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(8.00),
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              SizedBox(
-                                width: screenWidth * 0.9,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 10.0, bottom: 10),
-                                  child: Text(
-                                    '$title',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w500),
+                                  ],
+                                ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.00),
+                        ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                SizedBox(
+                                  width: screenWidth * 0.9,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 10.0, bottom: 10),
+                                    child: Text(
+                                      '$title',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w500),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          Icon(Icons.arrow_drop_down)
-                        ],
-                      ),
-                      Text(
-                        "   $views views \t $date $time ago",
-                        style: TextStyle(fontSize: 13),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(5.00),
-                      ),
-                      SizedBox(
-                          height: 50.00,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  Icon(YoutubeIcon.dislikes,
-                                      color: Colors.grey[600]),
-                                  Text(
-                                    '$likes',
-                                    style: TextStyle(color: Colors.grey[600]),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(YoutubeIcon.likes,
-                                      color: Colors.grey[600]),
-                                  Text(
-                                    '$dislikes',
-                                    style: TextStyle(color: Colors.grey[600]),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    YoutubeIcon.share,
-                                    color: Colors.grey[600],
-                                  ),
-                                  Text(
-                                    'Share',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.file_download,
-                                    color: Colors.grey[600],
-                                  ),
-                                  Text(
-                                    'Download',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.add_to_photos,
-                                    color: Colors.grey[600],
-                                  ),
-                                  Text(
-                                    'Save',
-                                    style: TextStyle(
-                                      color: Colors.grey[600],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          )),
-                      Padding(
-                        padding: EdgeInsets.all(5.00),
-                      ),
-                      Divider(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Container(
+                              ],
+                            ),
+                            Icon(Icons.arrow_drop_down)
+                          ],
+                        ),
+                        Text(
+                          "   $views views \t $date $time ago",
+                          style: TextStyle(fontSize: 13),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5.00),
+                        ),
+                        SizedBox(
+                            height: 50.00,
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
-                                GestureDetector(
-                                  onTap: () => getImage(ImageType.avatar),
-                                  child: _avatar != null
-                                      ? CircleAvatar(
-                                          backgroundColor: Colors.transparent,
-                                          radius: 20.0,
-                                          backgroundImage: FileImage(_avatar),
-                                        )
-                                      : Opacity(
-                                          opacity: 0.5,
-                                          child: CircleAvatar(
-                                            radius: 20.0,
-                                            child: Icon(Icons.add),
-                                          ),
-                                        ),
+                                Column(
+                                  children: <Widget>[
+                                    Icon(YoutubeIcon.dislikes,
+                                        color: Colors.grey[600]),
+                                    Text(
+                                      '$likes',
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    )
+                                  ],
                                 ),
                                 Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    SizedBox(
-                                      child: Text(
-                                        '  $channel',
-                                      ),
+                                    Icon(YoutubeIcon.likes,
+                                        color: Colors.grey[600]),
+                                    Text(
+                                      '$dislikes',
+                                      style: TextStyle(color: Colors.grey[600]),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Icon(
+                                      YoutubeIcon.share,
+                                      color: Colors.grey[600],
                                     ),
-                                    Container(
-                                      child: Text(
-                                        '  $subscribers suscribers',
-                                        style: TextStyle(
-                                          fontFamily: 'light',
-                                        ),
+                                    Text(
+                                      'Share',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.file_download,
+                                      color: Colors.grey[600],
+                                    ),
+                                    Text(
+                                      'Download',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Column(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.add_to_photos,
+                                      color: Colors.grey[600],
+                                    ),
+                                    Text(
+                                      'Save',
+                                      style: TextStyle(
+                                        color: Colors.grey[600],
                                       ),
                                     )
                                   ],
                                 ),
                               ],
+                            )),
+                        Padding(
+                          padding: EdgeInsets.all(5.00),
+                        ),
+                        Divider(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Container(
+                              child: Row(
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onTap: () => getImage(ImageType.avatar),
+                                    child: _avatar != null
+                                        ? CircleAvatar(
+                                            backgroundColor: Colors.transparent,
+                                            radius: 20.0,
+                                            backgroundImage: FileImage(_avatar),
+                                          )
+                                        : Opacity(
+                                            opacity: 0.5,
+                                            child: CircleAvatar(
+                                              radius: 20.0,
+                                              child: Icon(Icons.add),
+                                            ),
+                                          ),
+                                  ),
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      SizedBox(
+                                        child: Text(
+                                          '  $channel',
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Text(
+                                          '  $subscribers suscribers',
+                                          style: TextStyle(
+                                            fontFamily: 'light',
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
-                          SizedBox(),
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                'SUBSCRIBE',
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      Divider(),
-                    ],
+                            SizedBox(),
+                            SizedBox(),
+                            SizedBox(),
+                            SizedBox(),
+                            SizedBox(),
+                            SizedBox(),
+                            SizedBox(),
+                            SizedBox(),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  'SUBSCRIBE',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                        Divider(),
+                      ],
+                    ),
                   ),
                 ),
               ),

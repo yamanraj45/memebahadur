@@ -9,6 +9,8 @@ import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
+import 'package:memebahadur/utils/Theme.dart';
+import 'package:provider/provider.dart';
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
 
@@ -40,14 +42,32 @@ class NavigationBarState extends State<NavigationBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              ListTile(
+                title: Text('Dark Mode'),
+                trailing: Consumer<ThemeNotifier>(
+                  builder: (context, ThemeNotifier value, child) {
+                    return Switch(
+                      value: value.darkTheme,
+                      onChanged: (theme) {
+                        value.toggleTheme();
+                      },
+                    );
+                  },
+                ),
+              )
+            ],
+          ),
+        ),
         appBar: AppBar(
           leading: null,
-          elevation: 0,
+          elevation: 1,
           backgroundColor: Colors.transparent,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.info),
-              color: Colors.black,
               onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
             )
           ],

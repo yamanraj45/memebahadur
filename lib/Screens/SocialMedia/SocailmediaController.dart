@@ -91,7 +91,6 @@ class SocialMediaNavigatorCard extends StatelessWidget {
         ),
         shadowColor: Colors.grey[600],
         elevation: 4,
-        color: Colors.grey[200],
         child: InkWell(
           onTap: () => Navigator.pushNamed(context, _navigationPath),
           child: Column(

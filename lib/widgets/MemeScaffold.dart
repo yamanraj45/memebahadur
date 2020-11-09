@@ -27,11 +27,10 @@ class _MemeScaffoldState extends State<MemeScaffold> {
       child: Scaffold(
         // resizeToAvoidBottomPadding: false,
         appBar: AppBar(
-          elevation: 0,
+          elevation: 1,
           leading: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.black,
             ),
             onPressed: widget.onBackPress,
           ),
