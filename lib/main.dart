@@ -5,6 +5,8 @@ import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
 import 'package:memebahadur/Screens/SocialMedia/InstaScreen.dart';
+import 'package:memebahadur/Screens/SocialMedia/NewsScreen.dart';
+
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
 import 'package:memebahadur/utils/Theme.dart';
@@ -36,11 +38,10 @@ class _MyAppState extends State<MyApp> {
             theme: value.darkTheme ? dark : light,
             title: 'MemeBahadur',
             home: SplashScreen(
-              seconds: 10,
+              seconds: 1,
               navigateAfterSeconds: NavigationBar(),
               image: Image.asset('assets/images/logo.png'),
               photoSize: 200,
-              
               loaderColor: Colors.red,
               styleTextUnderTheLoader: TextStyle(
                 backgroundColor: Colors.blue[800],
@@ -61,6 +62,7 @@ class _MyAppState extends State<MyApp> {
               '/didyoumean': (BuildContext context) => DidYouMean(),
               '/insta': (BuildContext context) => InstaScreen(),
               '/facebook': (BuildContext context) => FacebookPost(),
+              '/news': (BuildContext context) => NewsScreen(),
             },
           );
         },
