@@ -161,39 +161,46 @@ class _FacebookPostState extends State<FacebookPost> {
                                         child: Icon(Icons.add),
                                       ),
                               ),
-                              title: RichText(
-                                text: TextSpan(
-                                    text: _name,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                    children: _tag
-                                        ? <TextSpan>[
-                                            TextSpan(
-                                              text: ' is with',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                            TextSpan(
-                                              text: ' $_firstPersononTagList',
-                                              style: TextStyle(
-                                                fontSize: 16,
+                              title: Consumer<ThemeNotifier>(
+                                builder: (context, value, child) => RichText(
+                                  text: TextSpan(
+                                      text: _name,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: value.darkTheme
+                                              ? Colors.white
+                                              : Colors.black,
+                                          fontWeight: FontWeight.bold),
+                                      children: _tag
+                                          ? <TextSpan>[
+                                              TextSpan(
+                                                text: ' is with',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w300),
                                               ),
-                                            ),
-                                            TextSpan(
-                                              text: ' and',
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                            TextSpan(
-                                              text: ' $_nooftag others',
-                                            ),
-                                          ]
-                                        : <TextSpan>[
-                                            TextSpan(
-                                              text: '',
-                                            ),
-                                          ]),
+                                              TextSpan(
+                                                text: ' $_firstPersononTagList',
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: ' and',
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                              TextSpan(
+                                                text: ' $_nooftag others',
+                                              ),
+                                            ]
+                                          : <TextSpan>[
+                                              TextSpan(
+                                                text: '',
+                                              ),
+                                            ]),
+                                ),
                               ),
                               subtitle: new Row(
                                 children: [
@@ -307,29 +314,34 @@ class _FacebookPostState extends State<FacebookPost> {
                                             ],
                                           ),
                                   ),
-                                  RichText(
-                                    text: TextSpan(
-                                        text: _commentController.text != '0'
-                                            ? _commentController.text +
-                                                ' comments'
-                                            : '',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 14,
-                                            color: Colors.black),
-                                        children: <TextSpan>[
-                                          TextSpan(
-                                            text: _shareController.text != '0'
-                                                ? ' . ' +
-                                                    _shareController.text +
-                                                    ' shares'
-                                                : '',
-                                            style: TextStyle(
+                                  Consumer<ThemeNotifier>(
+                                    builder: (context, value, child) =>
+                                        RichText(
+                                      text: TextSpan(
+                                          text: _commentController.text != '0'
+                                              ? _commentController.text +
+                                                  ' comments'
+                                              : '',
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                              color: value.darkTheme
+                                                  ? Colors.white
+                                                  : Colors.black),
+                                          children: <TextSpan>[
+                                            TextSpan(
+                                              text: _shareController.text != '0'
+                                                  ? ' . ' +
+                                                      _shareController.text +
+                                                      ' shares'
+                                                  : '',
+                                              style: TextStyle(
                                                 fontWeight: FontWeight.w400,
                                                 fontSize: 14,
-                                                color: Colors.black),
-                                          ),
-                                        ]),
+                                              ),
+                                            ),
+                                          ]),
+                                    ),
                                   ),
                                 ],
                               ),

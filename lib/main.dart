@@ -36,15 +36,15 @@ class _MyAppState extends State<MyApp> {
             theme: value.darkTheme ? dark : light,
             title: 'MemeBahadur',
             home: SplashScreen(
-              seconds: 1,
+              seconds: 10,
               navigateAfterSeconds: NavigationBar(),
               image: Image.asset('assets/images/logo.png'),
               photoSize: 200,
-              backgroundColor: Colors.black,
-              loaderColor: Colors.grey,
+              
+              loaderColor: Colors.red,
               styleTextUnderTheLoader: TextStyle(
-                backgroundColor: Colors.black,
-                color: Colors.white,
+                backgroundColor: Colors.blue[800],
+                color: Colors.red,
               ),
               loadingText: Text(
                 'Getting Things Ready',

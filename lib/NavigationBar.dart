@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
+import 'package:memebahadur/Screens/MyFavorites/myFavorite.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 import 'package:memebahadur/utils/Theme.dart';
 import 'package:provider/provider.dart';
@@ -45,6 +46,13 @@ class NavigationBarState extends State<NavigationBar> {
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
+              DrawerHeader(
+                child: Center(
+                  child: ClipRRect(
+                    child: Image.asset('assets/images/logo.png'),
+                  ),
+                ),
+              ),
               ListTile(
                 title: Text('Dark Mode'),
                 trailing: Consumer<ThemeNotifier>(
@@ -57,7 +65,14 @@ class NavigationBarState extends State<NavigationBar> {
                     );
                   },
                 ),
-              )
+              ),
+              ListTile(
+                title: Text('About Us'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, '/aboutus');
+                },
+              ),
             ],
           ),
         ),
@@ -65,46 +80,46 @@ class NavigationBarState extends State<NavigationBar> {
           leading: null,
           elevation: 1,
           backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.info),
-              onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
-            )
-          ],
           title: Text(
             'Memebahadur',
             style: TextStyle(
-                fontFamily: 'logo2',
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
+              fontFamily: 'logo2',
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           centerTitle: true,
         ),
         body: DoubleBackToCloseApp(
           child: IndexedStack(
             index: _currentIndex,
-            children: <Widget>[Template(), SocialMediaHomepage()],
+            children: <Widget>[
+              Template(),
+              SocialMediaHomepage(),
+              MyFavorites()
+            ],
           ),
           snackBar: const SnackBar(
             content: Text('Tap back again to Exit The App'),
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-            currentIndex: _currentIndex,
-            selectedItemColor: Colors.black,
-            onTap: (index) {
-              setState(() {
-                _currentIndex = index;
-              });
-            },
-            items: [
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.home), title: Text('Home')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.add_circle_outline),
-                  title: Text('Social Medias'))
-            ]),
+          elevation: 1,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home), title: Text('Home')),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_circle_outline),
+              title: Text('Social Medias'),
+            ),
+          ],
+        ),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
           overlayColor: Colors.transparent,

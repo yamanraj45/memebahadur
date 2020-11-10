@@ -294,23 +294,33 @@ class _InstaScreenState extends State<InstaScreen> {
                             _captionController.text.isNotEmpty
                                 ? Padding(
                                     padding: const EdgeInsets.only(left: 15.0),
-                                    child: RichText(
-                                      text: TextSpan(
+                                    child: Consumer<ThemeNotifier>(
+                                      builder: (context, ThemeNotifier value,
+                                              child) =>
+                                          RichText(
+                                        text: TextSpan(
                                           text: _username,
                                           style: TextStyle(
                                               fontSize: 14,
-                                              color: Colors.black,
+                                              color: value.darkTheme
+                                                  ? Colors.white
+                                                  : Colors.black,
                                               fontWeight: FontWeight.bold),
                                           children: <TextSpan>[
                                             TextSpan(
                                               text: '  ' +
                                                   _captionController.text,
                                               style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 14,
-                                                  color: Colors.black),
+                                                color: value.darkTheme
+                                                    ? Colors.white
+                                                    : Colors.black,
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14,
+                                              ),
                                             ),
-                                          ]),
+                                          ],
+                                        ),
+                                      ),
                                     ),
                                   )
                                 : Container(),
