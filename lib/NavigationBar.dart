@@ -116,22 +116,20 @@ class NavigationBarState extends State<NavigationBar> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-          elevation: 1,
-          currentIndex: _currentIndex,
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home), title: Text('Home')),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.add_circle_outline),
-              title: Text('Social Medias'),
-            ),
-          ],
-        ),
+            currentIndex: _currentIndex,
+            selectedItemColor: Colors.black,
+            onTap: (index) {
+              setState(() {
+                _currentIndex = index;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.home), title: Text('Home')),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.add_circle_outline),
+                  title: Text('Social Media'))
+            ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
           overlayColor: Colors.transparent,
