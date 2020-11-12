@@ -590,34 +590,39 @@ class _TweetState extends State<Tweet> {
                                   Spacer(),
                                   Container(
                                     child: RaisedButton(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(15.0),
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceAround,
-                                          children: [
-                                            Icon(Icons.timer),
-                                            Text(" Time")
-                                          ],
-                                        ),
-                                        onPressed: () => {
-                                              showTimePicker(
-                                                context: context,
-                                                initialTime: TimeOfDay(
-                                                  hour: 12,
-                                                  minute: 00,
-                                                ),
-                                              ).then((value) {
-                                                if (value != null) {
-                                                  setState(() {
-                                                    isTweetEdited = true;
-                                                    time = formatTime(value);
-                                                  });
-                                                }
-                                              })
-                                            }),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(15.0),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Icon(Icons.timer),
+                                          Text(" Time")
+                                        ],
+                                      ),
+                                      onPressed: () => {
+                                        showTimePicker(
+                                          context: context,
+                                          initialTime: TimeOfDay(
+                                            hour: 12,
+                                            minute: 00,
+                                          ),
+                                        ).then(
+                                          (value) {
+                                            if (value != null) {
+                                              setState(
+                                                () {
+                                                  isTweetEdited = true;
+                                                  time = formatTime(value);
+                                                },
+                                              );
+                                            }
+                                          },
+                                        )
+                                      },
+                                    ),
                                   ),
                                   Spacer(),
                                   Row(

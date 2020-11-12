@@ -17,6 +17,7 @@ class NewsScreen extends StatefulWidget {
 class _NewsScreenState extends State<NewsScreen> {
   final GlobalKey previewContainer = new GlobalKey();
   String mainHeading = 'Main Heading Section';
+  String time = '11:00';
   String subheading = 'Enter Subheading Here';
   File _newsImage;
   bool _isNewsEdited = false;
@@ -59,6 +60,13 @@ class _NewsScreenState extends State<NewsScreen> {
       });
     }
 
+    String formatTime(time) {
+      var hour = time.hour;
+      var minute = time.minute;
+      print(hour + minute);
+      return ("${hour > 9 ? hour : '0' + hour.toString()}:${minute > 9 ? minute : '0' + minute.toString()}");
+    }
+
     return MemeScaffold(
       onBackKeyPress: () {
         _onBackPress();
@@ -75,14 +83,13 @@ class _NewsScreenState extends State<NewsScreen> {
               RepaintBoundary(
                 key: previewContainer,
                 child: Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(9),
                   child: Stack(
                     children: <Widget>[
                       _newsImage != null
                           ? Image.file(_newsImage)
                           : Container(
                               width: screenWidth,
-                              height: MediaQuery.of(context).size.height * 0.35,
                               child: CachedNetworkImage(
                                 imageUrl: url2,
                                 placeholder: (context, url2) => Center(
@@ -138,15 +145,18 @@ class _NewsScreenState extends State<NewsScreen> {
                                   Container(
                                     width: screenWidth * 0.80,
                                     color: Colors.white,
-                                    child: Text(subheading),
+                                    child: Text(
+                                      subheading,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                   SizedBox(
-                                    width: 2,
+                                    width: 17,
                                   ),
                                   Container(
                                     color: Colors.black,
                                     child: Text(
-                                      '11:00 PM',
+                                      time,
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
@@ -165,6 +175,9 @@ class _NewsScreenState extends State<NewsScreen> {
                 child: Card(
                   child: Column(
                     children: <Widget>[
+                      SizedBox(
+                        height: 10,
+                      ),
                       InputText(
                         maxLength: 50,
                         label: 'Enter Heading',
@@ -186,9 +199,41 @@ class _NewsScreenState extends State<NewsScreen> {
                           });
                         },
                       ),
-                      RaisedButton(
-                        onPressed: () => getImage(),
-                        child: Text('Pick Image'),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          RaisedButton(
+                            onPressed: () => getImage(),
+                            child: Text('Pick Image'),
+                          ),
+                          RaisedButton(
+                            onPressed: () {
+                              showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay(
+                                  hour: 12,
+                                  minute: 00,
+                                ),
+                              ).then(
+                                (value) {
+                                  print(time);
+                                  if (value != null) {
+                                    setState(
+                                      () {
+                                        time = formatTime(value);
+                                        print(time);
+                                      },
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                            child: Text('Change Time'),
+                          ),
+                        ],
                       )
                     ],
                   ),

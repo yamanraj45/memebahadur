@@ -49,7 +49,6 @@ class _MemeScaffoldState extends State<MemeScaffold> {
                             icon: Icon(
                               Icons.share,
                               size: 30,
-                              color: Colors.black,
                             ),
                           )
                         ],
@@ -67,7 +66,6 @@ class _MemeScaffoldState extends State<MemeScaffold> {
                       icon: Icon(
                         Icons.save,
                         size: 30,
-                        color: Colors.black,
                       ),
                     )
                   ],

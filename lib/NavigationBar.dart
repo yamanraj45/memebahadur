@@ -73,6 +73,18 @@ class NavigationBarState extends State<NavigationBar> {
                   Navigator.pushNamed(context, '/aboutus');
                 },
               ),
+              ListTile(
+                title: Text('Like Us On Facebook'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('Rate Us On PlayStore'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),
