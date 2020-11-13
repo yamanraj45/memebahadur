@@ -89,6 +89,7 @@ class _NewsScreenState extends State<NewsScreen> {
                       _newsImage != null
                           ? Image.file(_newsImage)
                           : Container(
+                              height: MediaQuery.of(context).size.height * 0.31,
                               width: screenWidth,
                               child: CachedNetworkImage(
                                 imageUrl: url2,
