@@ -117,7 +117,6 @@ class NavigationBarState extends State<NavigationBar> {
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
-            selectedItemColor: Colors.black,
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
