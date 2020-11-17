@@ -1,19 +1,22 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/all.dart';
+import 'package:flutter/services.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/Screens/Login/loginscreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
-
 import 'package:memebahadur/Screens/SocialMedia/InstaScreen.dart';
+import 'package:memebahadur/Screens/SocialMedia/NewsScreen.dart';
 
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
+import 'package:memebahadur/utils/Theme.dart';
 import 'package:memebahadur/utils/path.dart';
+
 import 'package:splashscreen/splashscreen.dart';
 import 'package:memebahadur/utils/permissions.dart';
 
@@ -31,6 +34,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     PathUtils.getDataDir();
     askPermissions();
     return Consumer(
@@ -66,9 +73,48 @@ class _MyAppState extends State<MyApp> {
             '/didyoumean': (BuildContext context) => DidYouMean(),
             '/insta': (BuildContext context) => InstaScreen(),
             '/facebook': (BuildContext context) => FacebookPost(),
+            '/news': (BuildContext context) => NewsScreen(),
           },
         );
       },
     );
   }
 }
+// return ChangeNotifierProvider(
+//       create: (_) => ThemeNotifier(),
+//       child: Consumer(
+//         builder: (context, ThemeNotifier value, child) {
+//           return MaterialApp(
+//             debugShowCheckedModeBanner: false,
+//             theme: value.darkTheme ? dark : light,
+//             title: 'Meme Bahadur',
+//             home: SplashScreen(
+//               seconds: 1,
+//               navigateAfterSeconds: NavigationBar(),
+//               image: Image.asset('assets/images/logo.png'),
+//               photoSize: 200,
+//               loaderColor: Colors.red,
+//               styleTextUnderTheLoader: TextStyle(
+//                 backgroundColor: Colors.blue[800],
+//                 color: Colors.red,
+//               ),
+//               loadingText: Text(
+//                 'Getting Things Ready',
+//                 style:
+//                     TextStyle(color: Colors.grey, fontWeight: FontWeight.bold),
+//               ),
+//             ),
+//             routes: <String, WidgetBuilder>{
+//               '/home': (BuildContext context) => NavigationBar(),
+//               '/aboutus': (BuildContext context) => AboutUs(),
+//               '/tweet': (BuildContext context) => Tweet(),
+//               '/youtubescreen': (BuildContext context) => YoutubeScreen(),
+//               '/googletranslate': (BuildContext context) => GoogleTranslate(),
+//               '/didyoumean': (BuildContext context) => DidYouMean(),
+//               '/insta': (BuildContext context) => InstaScreen(),
+//               '/facebook': (BuildContext context) => FacebookPost(),
+//               '/news': (BuildContext context) => NewsScreen(),
+//             },
+//           );
+//         },
+//       ),

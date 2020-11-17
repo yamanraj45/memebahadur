@@ -5,7 +5,7 @@ class AboutUs extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          elevation: 0,
+          elevation: 1,
           title: Text('About Us'),
           centerTitle: true,
           backgroundColor: Colors.transparent,

@@ -13,6 +13,7 @@ import 'package:memebahadur/Screens/MyFavorites/myFavorite.dart';
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
 import 'package:memebahadur/utils/login_authentication.dart';
+import 'package:memebahadur/utils/Theme.dart';
 import 'package:provider/provider.dart';
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
@@ -41,13 +42,12 @@ class NavigationBarState extends State<NavigationBar> {
   }
 
   int _currentIndex = 0;
-  final navigationScreens = [Template(), SocialMediaHomepage(), MyFavorites()];
+  final navigationScreens = [Template(), SocialMediaHomepage()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         drawer: Drawer(
           child: ListView(
-            padding: EdgeInsets.only(top: 30, bottom: 30),
             children: <Widget>[
               Consumer<User>(
                 builder: (context, watch, child) => Text('Hello'),
@@ -60,17 +60,37 @@ class NavigationBarState extends State<NavigationBar> {
                 ),
               ),
               ListTile(
+                title: Text('Dark Mode'),
+                trailing: Consumer<ThemeNotifier>(
+                  builder: (context, ThemeNotifier value, child) {
+                    return Switch(
+                      value: value.darkTheme,
+                      onChanged: (theme) {
+                        value.toggleTheme();
+                      },
+                    );
+                  },
+                ),
+              ),
+              ListTile(
                 title: Text('About Us'),
                 onTap: () {
                   Navigator.pop(context);
+                  Navigator.pushNamed(context, '/aboutus');
                 },
               ),
-              ListTile(
-                title: Text('Settings'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   title: Text('Like Us On Facebook'),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
+              // ListTile(
+              //   title: Text('Rate Us On PlayStore'),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
             ],
           ),
         ),
@@ -95,10 +115,10 @@ class NavigationBarState extends State<NavigationBar> {
           title: Text(
             'Memebahadur',
             style: TextStyle(
-                fontFamily: 'logo2',
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-                color: Colors.black),
+              fontFamily: 'logo2',
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           centerTitle: true,
         ),
@@ -116,10 +136,7 @@ class NavigationBarState extends State<NavigationBar> {
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
-            elevation: 1,
-            unselectedItemColor: Colors.black45,
             currentIndex: _currentIndex,
-            selectedItemColor: Colors.black,
             onTap: (index) {
               setState(() {
                 _currentIndex = index;
@@ -130,12 +147,8 @@ class NavigationBarState extends State<NavigationBar> {
                   icon: Icon(Icons.home), title: Text('Home')),
               BottomNavigationBarItem(
                 icon: Icon(Icons.add_circle_outline),
-                title: Text('Social Medias'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.star),
-                title: Text('My Favorites'),
-              ),
+                title: Text('Other '),
+              )
             ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,

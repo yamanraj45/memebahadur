@@ -64,6 +64,20 @@ class SocialMediaHomepage extends StatelessWidget {
                     ),
                   ],
                 ),
+                SizedBox(
+                  height: 15,
+                ),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: SocialMediaNavigatorCard(
+                          'News', '/news', 'assets/images/news.png'),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -91,7 +105,6 @@ class SocialMediaNavigatorCard extends StatelessWidget {
         ),
         shadowColor: Colors.grey[600],
         elevation: 4,
-        color: Colors.grey[200],
         child: InkWell(
           onTap: () => Navigator.pushNamed(context, _navigationPath),
           child: Column(

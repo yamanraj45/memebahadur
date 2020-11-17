@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:esys_flutter_share/esys_flutter_share.dart';
 import 'package:flutter/material.dart';
+import 'package:memebahadur/utils/Theme.dart';
 import 'package:memebahadur/utils/screenshot.dart';
 import 'package:memebahadur/widgets/InputText.dart';
 import 'package:memebahadur/widgets/MemeScaffold.dart';
+import 'package:provider/provider.dart';
 
 class GoogleTranslate extends StatefulWidget {
   @override
@@ -58,139 +60,143 @@ class _GoogleTranslateState extends State<GoogleTranslate> {
               children: <Widget>[
                 RepaintBoundary(
                   key: previewContainer,
-                  child: Container(
-                    color: Colors.white,
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Column(
-                              children: <Widget>[
-                                Row(
-                                  children: <Widget>[
-                                    Container(
-                                      child: Text(
-                                        langTranslatedFrom,
-                                        style:
-                                            TextStyle(color: Colors.blue[600]),
+                  child: Consumer<ThemeNotifier>(
+                    builder: (context, value, child) => Container(
+                      color: value.darkTheme ? Colors.grey[850] : Colors.white,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Row(
+                                    children: <Widget>[
+                                      Container(
+                                        child: Text(
+                                          langTranslatedFrom,
+                                          style: TextStyle(
+                                              color: Colors.blue[600]),
+                                        ),
                                       ),
-                                    ),
-                                    Icon(Icons.arrow_drop_down)
-                                  ],
-                                ),
-                              ],
-                            ),
-                            Container(
-                              height: 50,
-                              child: Icon(Icons.repeat),
-                            ),
-                            Container(
-                              child: Text(
-                                langTranslatedTo,
-                                style: TextStyle(color: Colors.blue[600]),
+                                      Icon(Icons.arrow_drop_down)
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        Divider(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(18.0),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.7,
+                              Container(
+                                height: 50,
+                                child: Icon(Icons.repeat),
+                              ),
+                              Container(
                                 child: Text(
-                                  translatedfrom,
-                                  style: TextStyle(fontSize: 25),
+                                  langTranslatedTo,
+                                  style: TextStyle(color: Colors.blue[600]),
                                 ),
                               ),
-                            ),
-                            _translatedto.text.isEmpty
-                                ? Container()
-                                : Container(
-                                    alignment: Alignment.topRight,
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: IconButton(
-                                      onPressed: () {
-                                        setState(() {
-                                          _translatedto.clear();
-                                          translatedfrom = 'Enter Text';
-                                          _isPageEdited = true;
-                                        });
-                                      },
-                                      icon: Icon(Icons.close),
-                                    ),
-                                  )
-                          ],
-                        ),
-                        _translatedto.text.isEmpty
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      child: Icon(
-                                        Icons.volume_up,
-                                        color: Colors.grey[700],
-                                        size: 30,
-                                      ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      child: Icon(
-                                        Icons.mic,
-                                        color: Colors.grey[700],
-                                        size: 30,
-                                      ),
-                                    ),
-                                  ],
+                            ],
+                          ),
+                          Divider(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.all(18.0),
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: Text(
+                                    translatedfrom,
+                                    style: TextStyle(fontSize: 25),
+                                  ),
                                 ),
                               ),
-                        Divider(
-                          thickness: 1,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(18.0),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 1,
-                            child: Text(
-                              translatedto,
-                              style: TextStyle(fontSize: 25),
+                              _translatedto.text.isEmpty
+                                  ? Container()
+                                  : Container(
+                                      alignment: Alignment.topRight,
+                                      padding:
+                                          const EdgeInsets.only(right: 8.0),
+                                      child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            _translatedto.clear();
+                                            translatedfrom = 'Enter Text';
+                                            _isPageEdited = true;
+                                          });
+                                        },
+                                        icon: Icon(Icons.close),
+                                      ),
+                                    )
+                            ],
+                          ),
+                          _translatedto.text.isEmpty
+                              ? Container()
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(
+                                          Icons.volume_up,
+                                          color: Colors.grey[700],
+                                          size: 30,
+                                        ),
+                                      ),
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(
+                                          Icons.mic,
+                                          color: Colors.grey[700],
+                                          size: 30,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                          Divider(
+                            thickness: 1,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 1,
+                              child: Text(
+                                translatedto,
+                                style: TextStyle(fontSize: 25),
+                              ),
                             ),
                           ),
-                        ),
-                        _translatedfrom.text.isEmpty
-                            ? Container()
-                            : Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      child: Icon(
-                                        Icons.volume_up,
-                                        color: Colors.grey[700],
-                                        size: 30,
+                          _translatedfrom.text.isEmpty
+                              ? Container()
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(
+                                          Icons.volume_up,
+                                          color: Colors.grey[700],
+                                          size: 30,
+                                        ),
                                       ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      child: Icon(
-                                        Icons.content_copy,
-                                        color: Colors.grey[700],
-                                        size: 30,
+                                      Container(
+                                        alignment: Alignment.topRight,
+                                        child: Icon(
+                                          Icons.content_copy,
+                                          color: Colors.grey[700],
+                                          size: 30,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
