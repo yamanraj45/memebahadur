@@ -73,18 +73,18 @@ class NavigationBarState extends State<NavigationBar> {
                   Navigator.pushNamed(context, '/aboutus');
                 },
               ),
-              ListTile(
-                title: Text('Like Us On Facebook'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text('Rate Us On PlayStore'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   title: Text('Like Us On Facebook'),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
+              // ListTile(
+              //   title: Text('Rate Us On PlayStore'),
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //   },
+              // ),
             ],
           ),
         ),
@@ -126,8 +126,9 @@ class NavigationBarState extends State<NavigationBar> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.home), title: Text('Home')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.add_circle_outline),
-                  title: Text('Social Media'))
+                icon: Icon(Icons.add_circle_outline),
+                title: Text('Other '),
+              )
             ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,

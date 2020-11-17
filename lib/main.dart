@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: value.darkTheme ? dark : light,
-            title: 'MemeBahadur',
+            title: 'Meme Bahadur',
             home: SplashScreen(
               seconds: 1,
               navigateAfterSeconds: NavigationBar(),

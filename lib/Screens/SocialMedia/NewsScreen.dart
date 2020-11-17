@@ -22,12 +22,10 @@ class _NewsScreenState extends State<NewsScreen> {
   File _newsImage;
   bool _isNewsEdited = false;
   final picker = ImagePicker();
-  final url1 =
-      'https://drive.google.com/uc?export=view&id=1lNQr9zEh9DxcnEAVswgeecFm8oD-nJxt';
-  final url2 =
-      'https://drive.google.com/uc?export=view&id=10yEupKbm2VEWQiLEZgLgcwWVQK-_hl7l';
+
   final url =
-      'https://drive.google.com/uc?export=view&id=112jcK61HSBZ6Jc8pMf6qWVk7nT9Ld4Xv';
+      'https://drive.google.com/uc?export=view&id=1ly9kxokD9Dq6tyIXAer8AGPdDgspIPoi';
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -92,7 +90,7 @@ class _NewsScreenState extends State<NewsScreen> {
                               height: MediaQuery.of(context).size.height * 0.31,
                               width: screenWidth,
                               child: CachedNetworkImage(
-                                imageUrl: url2,
+                                imageUrl: url,
                                 placeholder: (context, url2) => Center(
                                   child: CircularProgressIndicator(
                                       backgroundColor: Colors.red),
@@ -144,20 +142,17 @@ class _NewsScreenState extends State<NewsScreen> {
                                 //     MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Container(
-                                    width: screenWidth * 0.80,
+                                    width: screenWidth * 0.83,
                                     color: Colors.white,
                                     child: Text(
                                       subheading,
                                       style: TextStyle(color: Colors.black),
                                     ),
                                   ),
-                                  SizedBox(
-                                    width: 17,
-                                  ),
                                   Container(
                                     color: Colors.black,
                                     child: Text(
-                                      time,
+                                      '  $time',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
