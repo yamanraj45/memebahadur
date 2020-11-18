@@ -49,9 +49,6 @@ class NavigationBarState extends State<NavigationBar> {
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
-              Consumer<User>(
-                builder: (context, watch, child) => Text('Hello'),
-              ),
               DrawerHeader(
                 child: Center(
                   child: ClipRRect(
@@ -98,20 +95,6 @@ class NavigationBarState extends State<NavigationBar> {
           leading: null,
           elevation: 1,
           backgroundColor: Colors.transparent,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.info),
-              color: Colors.black,
-              onPressed: () => Navigator.of(context).pushNamed('/aboutus'),
-            ),
-            IconButton(
-              icon: Icon(Icons.info),
-              color: Colors.red,
-              onPressed: () async {
-                await AuthenticationService.logout();
-              },
-            )
-          ],
           title: Text(
             'Memebahadur',
             style: TextStyle(

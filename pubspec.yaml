@@ -30,7 +30,7 @@ dependencies:
   flutter_speed_dial:
   image_picker: ^0.6.7+4
   image: any
-
+  transparent_image:
   path_provider: any
   double_back_to_close_app: ^1.2.0
   image_gallery_saver: ^1.2.2
@@ -54,6 +54,8 @@ dependencies:
   flutter_riverpod:
   cached_network_image: 
   flutter_cache_manager:
+  flutter_signin_button:
+    
 
 dev_dependencies:
   flutter_test:
