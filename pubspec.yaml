@@ -51,10 +51,12 @@ dependencies:
   # cloud_firestore: ^0.14.0+2
   firebase_auth:
   google_sign_in:
+  flutter_facebook_login: ^3.0.0
   flutter_riverpod:
   cached_network_image: 
   flutter_cache_manager:
   flutter_signin_button:
+  http:
     
 
 dev_dependencies:

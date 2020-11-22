@@ -15,6 +15,7 @@ import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
 import 'package:memebahadur/utils/login_authentication.dart';
 import 'package:memebahadur/utils/Theme.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
 
@@ -76,18 +77,18 @@ class NavigationBarState extends State<NavigationBar> {
                   Navigator.pushNamed(context, '/aboutus');
                 },
               ),
-              // ListTile(
-              //   title: Text('Like Us On Facebook'),
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              // ),
-              // ListTile(
-              //   title: Text('Rate Us On PlayStore'),
-              //   onTap: () {
-              //     Navigator.pop(context);
-              //   },
-              // ),
+              ListTile(
+                title: Text('Logout'),
+                onTap: () {
+                  AuthenticationService.logout(context);
+                },
+              ),
+              ListTile(
+                title: Text('Rate Us On PlayStore'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
             ],
           ),
         ),

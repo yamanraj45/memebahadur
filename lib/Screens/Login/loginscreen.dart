@@ -56,9 +56,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: SignInButton(
                   Buttons.Facebook,
                   elevation: 2,
-                  shape: RoundedRectangleBorder(),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
                   text: 'Continue With Facebook',
-                  onPressed: () {},
+                  onPressed: () async {
+                    final user =
+                        await AuthenticationService.loginWithFB(context);
+                    if (user != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return NavigationBar();
+                          },
+                        ),
+                      );
+                    }
+                  },
                 ),
               ),
               SizedBox(
@@ -70,7 +84,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: SignInButton(
                   Buttons.Google,
                   elevation: 2,
-                  shape: RoundedRectangleBorder(),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25)),
                   onPressed: () async {
                     final user = await AuthenticationService.signinWithGoogle();
                     if (user != null) {

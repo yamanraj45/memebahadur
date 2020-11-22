@@ -599,10 +599,10 @@ class EditorState extends State<Editor> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           RaisedButton(
+                            color: Colors.red,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
                             ),
-                            color: Colors.red[100],
                             child: Row(
                               children: [
                                 Icon(Icons.clear),
@@ -624,10 +624,10 @@ class EditorState extends State<Editor> {
                             },
                           ),
                           RaisedButton(
+                            color: Colors.blue,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(50.0),
                             ),
-                            color: Colors.blue[100],
                             child: Row(
                               children: [
                                 Icon(Icons.add),

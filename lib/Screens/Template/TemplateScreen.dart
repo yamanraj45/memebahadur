@@ -28,7 +28,8 @@ class _TemplateState extends State<Template>
         'name': 'Trend $trendImage',
         'image': 'assets/images/1/Trend ($trendImage).jpg'
       },
-    for (int pashupatiImage = 1; pashupatiImage < 8; pashupatiImage++)
+    //Nepali Image
+    for (int pashupatiImage = 1; pashupatiImage < 5; pashupatiImage++)
       {
         'name': 'Pashupati $pashupatiImage',
         'image': 'assets/images/2/Pashupati ($pashupatiImage).jpg'
@@ -43,7 +44,7 @@ class _TemplateState extends State<Template>
         'name': 'Pashupati $herapheriImage',
         'image': 'assets/images/4/HeraPheri ($herapheriImage).jpg'
       },
-    for (int extraImage = 1; extraImage < 92; extraImage++)
+    for (int extraImage = 1; extraImage < 64; extraImage++)
       {
         'name': 'Extra $extraImage',
         'image': 'assets/images/5/Extra ($extraImage).jpg'

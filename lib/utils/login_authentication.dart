@@ -1,15 +1,73 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:memebahadur/Screens/Login/loginscreen.dart';
 
 class AuthenticationService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  static Future<bool> logout() async {
+  static Future loginWithFB(BuildContext context) async {
+    final facebookLogin = FacebookLogin();
+    final result = await facebookLogin.logIn(['email', 'public_profile']);
+
+    print("Result : ${result.status}");
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        try {
+          var fbtoken = result.accessToken.token;
+          print(fbtoken);
+
+          var graphResponse = await http.get(
+              'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${fbtoken}');
+
+          final profile = jsonDecode(graphResponse.body);
+          final credential = await FacebookAuthProvider.credential(fbtoken);
+          _auth.signInWithCredential(credential);
+          print('\n\n\n${graphResponse.body} \n\n\n');
+          print('Profile $profile');
+          return profile;
+        } catch (e) {
+          print(e);
+        }
+
+        break;
+
+      case FacebookLoginStatus.cancelledByUser:
+        // setState(() => _isLoggedIn = false);
+        break;
+      case FacebookLoginStatus.error:
+        return showDialog(
+          context: context,
+          child: AlertDialog(
+            title: Text("Error Connecting Server"),
+            content: Text("Try Other Method"),
+            actions: <Widget>[
+              FlatButton(
+                child: Text("OK"),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+
+        break;
+    }
+  }
+
+  static Future<bool> logout(BuildContext context) async {
     try {
       await _auth.signOut();
-
-      return true;
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return LoginScreen();
+        }),
+      );
     } catch (e) {
       print(e.message);
       return false;

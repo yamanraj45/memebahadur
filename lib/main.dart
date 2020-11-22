@@ -58,7 +58,7 @@ class _MyAppState extends State<MyApp> {
                 title: 'Meme Bahadur',
                 home: SplashScreen(
                   image: Image.asset('assets/images/logo.png'),
-                  seconds: 10,
+                  seconds: 1,
                   backgroundColor:
                       value.darkTheme ? Colors.black : Colors.white,
                   navigateAfterSeconds:
