@@ -16,6 +16,7 @@ import 'package:memebahadur/utils/login_authentication.dart';
 import 'package:memebahadur/utils/Theme.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
+import 'package:wiredash/wiredash.dart';
 
 import 'Screens/SocialMedia/SocailmediaController.dart';
 
@@ -84,9 +85,9 @@ class NavigationBarState extends State<NavigationBar> {
                 },
               ),
               ListTile(
-                title: Text('Rate Us On PlayStore'),
+                title: Text('Connect With Us'),
                 onTap: () {
-                  Navigator.pop(context);
+                  Wiredash.of(context).show();
                 },
               ),
             ],

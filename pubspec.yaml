@@ -57,6 +57,7 @@ dependencies:
   flutter_cache_manager:
   flutter_signin_button:
   http:
+  wiredash:
     
 
 dev_dependencies:
