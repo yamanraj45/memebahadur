@@ -62,6 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () async {
                     final user =
                         await AuthenticationService.loginWithFB(context);
+
                     if (user != null) {
                       Navigator.pushReplacement(
                         context,
@@ -69,6 +70,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           builder: (context) {
                             return NavigationBar();
                           },
+                        ),
+                      );
+                    } else {
+                      showDialog(
+                        context: context,
+                        child: AlertDialog(
+                          title: Text("user null"),
+                          content: Text("Try Other Method"),
+                          actions: <Widget>[
+                            FlatButton(
+                              child: Text("OK"),
+                              onPressed: () => Navigator.of(context).pop(),
+                            ),
+                          ],
                         ),
                       );
                     }
