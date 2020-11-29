@@ -16,6 +16,7 @@ class AuthenticationService {
     final result = await facebookLogin.logIn(['email', 'public_profile']);
 
     print("Result : ${result.status}");
+    print("ERRORRRRRRRRR" + result.errorMessage.toString());
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         try {
@@ -33,6 +34,19 @@ class AuthenticationService {
           return profile;
         } catch (e) {
           print(e);
+          showDialog(
+            context: context,
+            child: AlertDialog(
+              title: Text("error before profile"),
+              content: Text(e.toString()),
+              actions: <Widget>[
+                FlatButton(
+                  child: Text("OK"),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            ),
+          );
         }
 
         break;
@@ -40,6 +54,7 @@ class AuthenticationService {
       case FacebookLoginStatus.cancelledByUser:
         // setState(() => _isLoggedIn = false);
         break;
+
       case FacebookLoginStatus.error:
         return showDialog(
           context: context,
@@ -105,6 +120,8 @@ class AuthenticationService {
     final credetial = await GoogleAuthProvider.credential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
     final res = await _auth.signInWithCredential(credetial);
+    print('-' * 100);
+    print(res.user);
     return res.user;
   }
 }
