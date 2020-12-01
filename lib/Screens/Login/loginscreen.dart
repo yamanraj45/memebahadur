@@ -6,6 +6,7 @@ import 'package:memebahadur/NavigationBar.dart';
 // import 'package:memebahadur/Screens/Login/signupform.dart';
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
 import 'package:memebahadur/utils/login_authentication.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -40,87 +41,98 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget topSection(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Center(child: Image.asset('assets/images/logo.png')),
-        SizedBox(
-          height: 32.0,
-        ),
-        Container(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            children: <Widget>[
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: SignInButton(
-                  Buttons.Facebook,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  text: 'Continue With Facebook',
-                  onPressed: () async {
-                    final user =
-                        await AuthenticationService.loginWithFB(context);
-
-                    if (user != null) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return NavigationBar();
-                          },
-                        ),
-                      );
-                    } else {
-                      showDialog(
-                        context: context,
-                        child: AlertDialog(
-                          title: Text("user null"),
-                          content: Text("Try Other Method"),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text("OK"),
-                              onPressed: () => Navigator.of(context).pop(),
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              SizedBox(
-                height: 50,
-                width: double.infinity,
-                child: SignInButton(
-                  Buttons.Google,
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  onPressed: () async {
-                    final user = await AuthenticationService.signinWithGoogle();
-                    if (user != null) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return NavigationBar();
-                          },
-                        ),
-                      );
-                    }
-                  },
-                  text: 'Continue With Google',
-                ),
-              ),
-            ],
+    bool _login = false;
+    return ModalProgressHUD(
+      inAsyncCall: _login,
+      child: Column(
+        children: <Widget>[
+          Center(child: Image.asset('assets/images/logo.png')),
+          SizedBox(
+            height: 32.0,
           ),
-        )
-      ],
+          Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              children: <Widget>[
+                SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: SignInButton(
+                    Buttons.Facebook,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                    text: 'Continue With Facebook',
+                    onPressed: () async {
+                      final user =
+                          await AuthenticationService.loginWithFB(context);
+
+                      if (user != null) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return NavigationBar();
+                            },
+                          ),
+                        );
+                      } else {
+                        showDialog(
+                          context: context,
+                          child: AlertDialog(
+                            title: Text("user null"),
+                            content: Text("Try Other Method"),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("OK"),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                SizedBox(
+                  height: 50,
+                  width: double.infinity,
+                  child: SignInButton(
+                    Buttons.Google,
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                    onPressed: () async {
+                      setState(() {
+                        _login = true;
+                      });
+                      final user =
+                          await AuthenticationService.signinWithGoogle();
+                      setState(() {
+                        _login = false;
+                      });
+                      if (user != null) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return NavigationBar();
+                            },
+                          ),
+                        );
+                      }
+                    },
+                    text: 'Continue With Google',
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

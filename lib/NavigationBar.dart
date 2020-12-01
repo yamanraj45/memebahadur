@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,12 +52,46 @@ class NavigationBarState extends State<NavigationBar> {
         drawer: Drawer(
           child: ListView(
             children: <Widget>[
-              DrawerHeader(
-                child: Center(
-                  child: ClipRRect(
-                    child: Image.asset('assets/images/logo.png'),
-                  ),
-                ),
+              rp.Consumer(
+                builder: (context, watch, child) {
+                  final user = watch(logincheckProvider).data?.value;
+                  return DrawerHeader(
+                    child: Center(
+                      child: user != null
+                          ? Column(
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 70,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(30.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: user.photoURL,
+                                      placeholder: (context, url2) => Center(
+                                        child: CircularProgressIndicator(
+                                            backgroundColor: Colors.red),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          new Icon(Icons.error),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                Text(
+                                  user.displayName,
+                                  style: TextStyle(color: Colors.grey[600]),
+                                ),
+                                Text(
+                                  user.email,
+                                  style: TextStyle(color: Colors.grey[600]),
+                                )
+                              ],
+                            )
+                          : Container(),
+                    ),
+                  );
+                },
               ),
               ListTile(
                 title: Text('Dark Mode'),
@@ -84,10 +119,17 @@ class NavigationBarState extends State<NavigationBar> {
                   AuthenticationService.logout(context);
                 },
               ),
-              ListTile(
-                title: Text('Connect With Us'),
-                onTap: () {
-                  Wiredash.of(context).show();
+              rp.Consumer(
+                builder: (context, value, child) {
+                  rp.StateController<bool> intro = value(introbool);
+
+                  return ListTile(
+                    title: Text('Connect With Us'),
+                    onTap: () {
+                      intro.state = !intro.state;
+                      print(intro.state);
+                    },
+                  );
                 },
               ),
             ],
