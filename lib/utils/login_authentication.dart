@@ -27,7 +27,7 @@ class AuthenticationService {
               'https://graph.facebook.com/v2.12/me?fields=name,picture,email&access_token=${fbtoken}');
 
           final profile = jsonDecode(graphResponse.body);
-          final credential = await FacebookAuthProvider.credential(fbtoken);
+          final credential = FacebookAuthProvider.credential(fbtoken);
           _auth.signInWithCredential(credential);
           print('\n\n\n${graphResponse.body} \n\n\n');
           print('Profile $profile');
@@ -114,10 +114,10 @@ class AuthenticationService {
   }
 
   static Future<User> signinWithGoogle() async {
-    GoogleSignIn gs = GoogleSignIn();
+    final GoogleSignIn gs = GoogleSignIn();
     final googleUser = await gs.signIn();
     final googleAuth = await googleUser.authentication;
-    final credetial = await GoogleAuthProvider.credential(
+    final credetial = GoogleAuthProvider.credential(
         idToken: googleAuth.idToken, accessToken: googleAuth.accessToken);
     final res = await _auth.signInWithCredential(credetial);
     print('-' * 100);

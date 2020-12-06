@@ -55,7 +55,6 @@ class _TemplateState extends State<Template>
     super.build(context);
     return Scaffold(
       body: Container(
-        padding: EdgeInsets.all(15),
         child: Column(
           children: <Widget>[
             Padding(padding: EdgeInsets.all(5.00)),

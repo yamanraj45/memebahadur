@@ -4,10 +4,9 @@ import 'package:flutter_signin_button/button_view.dart';
 import 'package:memebahadur/NavigationBar.dart';
 // import 'package:memebahadur/Screens/Login/loginfields.dart';
 // import 'package:memebahadur/Screens/Login/signupform.dart';
-import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
+
 import 'package:memebahadur/utils/login_authentication.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -17,8 +16,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
+    return Container(
+      color: Colors.white,
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.0),
         child: Stack(
           children: [

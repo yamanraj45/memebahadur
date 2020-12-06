@@ -119,19 +119,6 @@ class NavigationBarState extends State<NavigationBar> {
                   AuthenticationService.logout(context);
                 },
               ),
-              rp.Consumer(
-                builder: (context, value, child) {
-                  rp.StateController<bool> intro = value(introbool);
-
-                  return ListTile(
-                    title: Text('Connect With Us'),
-                    onTap: () {
-                      intro.state = !intro.state;
-                      print(intro.state);
-                    },
-                  );
-                },
-              ),
             ],
           ),
         ),

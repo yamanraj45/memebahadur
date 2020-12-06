@@ -15,19 +15,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "843171670371-j9ifumon29jr7jo0aphv4kth3gcg4u8r.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.developer45.memebahadur",
-            "certificate_hash": "c49e3793bc4cac13071fb5b28e74adfb44c63674"
-          }
-        },
-        {
           "client_id": "843171670371-7ru5cegcse5ss8ru8594c3ehefqcg4qk.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.developer45.memebahadur",
             "certificate_hash": "a81b78b2c9faf1311ec706b8b7c2444e018f4396"
+          }
+        },
+        {
+          "client_id": "843171670371-dhh50k0cqeujkcb7do4s6mo4a1rptdv5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developer45.memebahadur",
+            "certificate_hash": "85897a1450d6503a56b5616512b6c971c81eece9"
+          }
+        },
+        {
+          "client_id": "843171670371-j9ifumon29jr7jo0aphv4kth3gcg4u8r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.developer45.memebahadur",
+            "certificate_hash": "c49e3793bc4cac13071fb5b28e74adfb44c63674"
           }
         },
         {

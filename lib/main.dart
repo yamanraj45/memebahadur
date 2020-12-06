@@ -69,8 +69,7 @@ class _MyAppState extends State<MyApp> {
                   home: SplashScreen(
                     image: Image.asset('assets/images/logo.png'),
                     seconds: 1,
-                    backgroundColor:
-                        value.darkTheme ? Colors.black : Colors.white,
+                    backgroundColor: Colors.white,
                     navigateAfterSeconds:
                         user != null ? NavigationBar() : LoginScreen(),
                     photoSize: 200,
