@@ -171,6 +171,13 @@ class _NewsScreenState extends State<NewsScreen> {
                 child: Card(
                   child: Column(
                     children: <Widget>[
+                      Text(
+                        '   Edit News Screen',
+                        style: TextStyle(
+                          fontSize: 20.00,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       SizedBox(
                         height: 10,
                       ),

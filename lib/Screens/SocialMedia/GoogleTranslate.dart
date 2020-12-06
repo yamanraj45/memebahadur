@@ -206,6 +206,13 @@ class _GoogleTranslateState extends State<GoogleTranslate> {
                 Container(
                   child: Column(
                     children: <Widget>[
+                      Text(
+                        '   Edit Translator',
+                        style: TextStyle(
+                          fontSize: 20.00,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                       Container(
                         child: InputText(
                           maxLength: 20,

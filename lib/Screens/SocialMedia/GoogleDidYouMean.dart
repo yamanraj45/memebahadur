@@ -257,9 +257,11 @@ class DidYouMeanState extends State<DidYouMean>
                 Column(
                   children: <Widget>[
                     Text(
-                      'Edit The Field Below For CHanging Screen',
-                      style:
-                          TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
+                      '   Edit Google Search',
+                      style: TextStyle(
+                        fontSize: 20.00,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     Container(
                       child: SwitchListTile(

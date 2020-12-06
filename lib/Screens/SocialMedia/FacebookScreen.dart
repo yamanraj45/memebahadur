@@ -465,7 +465,13 @@ class _FacebookPostState extends State<FacebookPost> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Text('Edit Image'),
+                          Text(
+                            '   Edit Facebook',
+                            style: TextStyle(
+                              fontSize: 20.00,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           InputText(
                             onChanged: (value) {
                               setState(() {

@@ -454,9 +454,9 @@ class _TweetState extends State<Tweet> {
                       //     crossAxisAlignment: CrossAxisAlignment.start,
                       //     children: <Widget>[]),
                       Text(
-                        'Edit Tweet',
+                        '   Edit Tweet',
                         style: TextStyle(
-                          fontSize: 30.00,
+                          fontSize: 20.00,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
