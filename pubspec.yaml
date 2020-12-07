@@ -36,7 +36,7 @@ dependencies:
   image_gallery_saver: ^1.2.2
   permission_handler: any
   path_provider_ex:
-  splashscreen:
+  
   esys_flutter_share: ^1.0.2
   local_image_provider:
   storage_path:
@@ -58,7 +58,8 @@ dependencies:
   flutter_signin_button:
   http:
   wiredash:
-  modal_progress_hud: ^0.1.3
+  velocity_x:
+  google_fonts:
     
 
 dev_dependencies:

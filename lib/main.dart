@@ -13,18 +13,23 @@ import 'package:memebahadur/Screens/SocialMedia/NewsScreen.dart';
 
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
+import 'package:memebahadur/Screens/SplashScreen.dart/splashscreen.dart';
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
 import 'package:memebahadur/utils/Theme.dart';
 import 'package:memebahadur/utils/constants.dart';
 import 'package:memebahadur/utils/path.dart';
 import 'package:provider/provider.dart';
 
-import 'package:splashscreen/splashscreen.dart';
 import 'package:memebahadur/utils/permissions.dart';
 import 'package:wiredash/wiredash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        systemNavigationBarColor: Colors.grey[850]),
+  );
   await Firebase.initializeApp();
   runApp(
     rp.ProviderScope(
@@ -66,24 +71,7 @@ class _MyAppState extends State<MyApp> {
                   debugShowCheckedModeBanner: false,
                   theme: value.darkTheme ? dark : light,
                   title: 'Meme Bahadur',
-                  home: SplashScreen(
-                    image: Image.asset('assets/images/logo.png'),
-                    seconds: 1,
-                    backgroundColor: Colors.white,
-                    navigateAfterSeconds:
-                        user != null ? NavigationBar() : LoginScreen(),
-                    photoSize: 200,
-                    loaderColor: Colors.red,
-                    styleTextUnderTheLoader: TextStyle(
-                      backgroundColor: Colors.blue[800],
-                      color: Colors.red,
-                    ),
-                    loadingText: Text(
-                      'Getting Things Ready',
-                      style: TextStyle(
-                          color: Colors.grey, fontWeight: FontWeight.bold),
-                    ),
-                  ),
+                  home: SplashScreen(),
                   routes: <String, WidgetBuilder>{
                     '/home': (BuildContext context) => NavigationBar(),
                     '/aboutus': (BuildContext context) => AboutUs(),

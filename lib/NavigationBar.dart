@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:double_back_to_close_app/double_back_to_close_app.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/file_input.dart';
@@ -124,13 +124,11 @@ class NavigationBarState extends State<NavigationBar> {
         ),
         appBar: AppBar(
           leading: null,
-          elevation: 1,
           backgroundColor: Colors.transparent,
           title: Text(
             'Memebahadur',
             style: TextStyle(
-              fontFamily: 'logo2',
-              fontSize: 30,
+              fontFamily: GoogleFonts.poppins().fontFamily,
               fontWeight: FontWeight.bold,
             ),
           ),
