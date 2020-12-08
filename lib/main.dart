@@ -14,14 +14,18 @@ import 'package:memebahadur/Screens/SocialMedia/NewsScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
 import 'package:memebahadur/Screens/SplashScreen.dart/splashscreen.dart';
+
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
 import 'package:memebahadur/utils/Theme.dart';
 import 'package:memebahadur/utils/constants.dart';
+import 'package:memebahadur/utils/image_manager.dart';
 import 'package:memebahadur/utils/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-
+import 'package:hive/hive.dart';
 import 'package:memebahadur/utils/permissions.dart';
 import 'package:wiredash/wiredash.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,7 +34,12 @@ void main() async {
         statusBarColor: Colors.transparent,
         systemNavigationBarColor: Colors.grey[850]),
   );
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
   await Firebase.initializeApp();
+  Hive.init(appDocumentDirectory.path);
+  Hive.registerAdapter(ImageClassSaveAdapter());
+  await Hive.openBox(favoriteBox);
+  await Hive.openBox(myImageBox);
   runApp(
     rp.ProviderScope(
       child: MyApp(),
