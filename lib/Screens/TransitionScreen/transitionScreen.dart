@@ -10,10 +10,7 @@ class TransitionScreen extends StatelessWidget {
   final Image _image;
   final Size _imageSize;
   TransitionScreen(this._image, this._imageSize);
-  addImage(ImageClassSave newEntry) {
-    final box = Hive.box(favoriteBox);
-    box.add(newEntry);
-  }
+  addImage(ImageClassSave newEntry) {}
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +28,7 @@ class TransitionScreen extends StatelessWidget {
       ),
       appBar: AppBar(
         actions: [
-          IconButton(
-              icon: Icon(Icons.favorite),
-              onPressed: ()async {
-                final byte = await ;
-              })
+          IconButton(icon: Icon(Icons.favorite), onPressed: () async {})
         ],
       ),
       body: Container(

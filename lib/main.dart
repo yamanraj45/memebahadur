@@ -38,8 +38,7 @@ void main() async {
   await Firebase.initializeApp();
   Hive.init(appDocumentDirectory.path);
   Hive.registerAdapter(ImageClassSaveAdapter());
-  await Hive.openBox(favoriteBox);
-  await Hive.openBox(myImageBox);
+
   runApp(
     rp.ProviderScope(
       child: MyApp(),
