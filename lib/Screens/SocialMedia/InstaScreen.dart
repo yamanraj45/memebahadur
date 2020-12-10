@@ -34,6 +34,8 @@ enum ImageType { avatar, insta }
 
 class _InstaScreenState extends State<InstaScreen> {
   String _username = 'MemeBahadur';
+  String _commentor = '';
+  String _comments = '';
   bool _like = true;
   String _firstLiker = '45developers';
   String _totalLiker = '45';
@@ -41,6 +43,7 @@ class _InstaScreenState extends State<InstaScreen> {
   File _instaImage;
   var _captionController = TextEditingController();
   bool isInstaEdited = false;
+  bool _comment = false;
   final picker = ImagePicker();
   final previewContainer = GlobalKey();
   Future getImage(imageType, {source = ImageSource.gallery}) async {
@@ -338,8 +341,36 @@ class _InstaScreenState extends State<InstaScreen> {
                                   )
                                 : Container(),
                             SizedBox(
-                              height: 10,
-                            )
+                              height: 5,
+                            ),
+                            _comment
+                                ? Container(
+                                    padding: EdgeInsets.only(left: 15),
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: _commentor,
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: value.darkTheme
+                                                ? Colors.white
+                                                : Colors.black,
+                                            fontWeight: FontWeight.bold),
+                                        children: <TextSpan>[
+                                          TextSpan(
+                                            text: '  ' + _comments,
+                                            style: TextStyle(
+                                              color: value.darkTheme
+                                                  ? Colors.white
+                                                  : Colors.black,
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
                           ],
                         ),
                       ),
@@ -433,9 +464,47 @@ class _InstaScreenState extends State<InstaScreen> {
                           });
                         },
                       ),
-                      SizedBox(
-                        height: 15,
+                      SwitchListTile(
+                        title: Text('Show Comment on image'),
+                        value: _comment,
+                        onChanged: (value) {
+                          setState(() {
+                            isInstaEdited = true;
+                            _comment = value;
+                          });
+                        },
                       ),
+                      _comment
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.25,
+                                  child: InputText(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _commentor = value;
+                                      });
+                                    },
+                                    maxLength: 50,
+                                    label: 'Commentor',
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: MediaQuery.of(context).size.width * .7,
+                                  child: InputText(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        _comments = value;
+                                      });
+                                    },
+                                    label: 'Comment',
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Container(),
                     ],
                   ),
                 ),
