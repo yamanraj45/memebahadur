@@ -12,11 +12,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:image_size_getter/image_size_getter.dart';
 import 'package:image_size_getter/file_input.dart';
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
-import 'package:memebahadur/Screens/MyFavorites/myfavoritecontroller.dart';
+
+import 'package:memebahadur/Screens/MyFavorites/myFavorite.dart';
+
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
 import 'package:memebahadur/Screens/TransitionScreen/transitionScreen.dart';
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
-import 'package:memebahadur/utils/image_converter.dart';
+
 import 'package:memebahadur/utils/login_authentication.dart';
 import 'package:memebahadur/utils/Theme.dart';
 import 'package:provider/provider.dart';
@@ -43,8 +45,7 @@ class NavigationBarState extends State<NavigationBar> {
     final Size imageSize = ImageSizeGetter.getSize(FileInput(_imagePath));
     Navigator.push(
       context,
-      MaterialPageRoute(
-          builder: (context) => TransitionScreen(image, imageSize)),
+      MaterialPageRoute(builder: (context) => Editor(image, imageSize)),
     );
   }
 
@@ -144,7 +145,7 @@ class NavigationBarState extends State<NavigationBar> {
             children: <Widget>[
               Template(),
               SocialMediaHomepage(),
-              MyFavoriteController(),
+              MyFavorites(),
             ],
           ),
           snackBar: const SnackBar(
@@ -164,7 +165,7 @@ class NavigationBarState extends State<NavigationBar> {
             tabs: [
               TabData(icon: Icons.home, title: 'Home'),
               TabData(icon: Icons.add_circle_outline, title: 'Others'),
-              TabData(icon: Icons.my_library_add_rounded, title: 'Templates')
+              // TabData(icon: Icons.my_library_add_rounded, title: 'Templates')
             ]),
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
@@ -181,10 +182,7 @@ class NavigationBarState extends State<NavigationBar> {
             SpeedDialChild(
                 child: Icon(Icons.photo_library),
                 label: 'Gallery',
-                onTap: () => getImage(ImageSource.gallery).then((value) {
-                      String imgString =
-                          Utility.base64String(value.readAsByteSync());
-                    }),
+                onTap: () => getImage(ImageSource.gallery),
                 labelStyle: TextStyle(fontSize: 18.0, color: Colors.black)),
           ],
         ));

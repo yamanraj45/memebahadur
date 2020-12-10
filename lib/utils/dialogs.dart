@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:memebahadur/utils/circularprogressindicator.dart';
 
 showExitDialog(BuildContext context) {
   showDialog(
@@ -59,5 +60,18 @@ void showFailedDialog(BuildContext context, String error) {
     title: "Error",
     content: error,
     autoClose: false,
+  );
+}
+
+showLoadingDialog(BuildContext context,
+    {List<Widget> children,
+    String title = "",
+    String content = "",
+    bool autoClose = true}) {
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(content),
+    actions: [LoadingProgressIndictor()],
   );
 }

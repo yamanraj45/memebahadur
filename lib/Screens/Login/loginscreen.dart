@@ -3,6 +3,8 @@ import 'package:flutter_signin_button/button_list.dart';
 import 'package:flutter_signin_button/button_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:memebahadur/NavigationBar.dart';
+import 'package:memebahadur/utils/circularprogressindicator.dart';
+import 'package:memebahadur/utils/dialogs.dart';
 // import 'package:memebahadur/Screens/Login/loginfields.dart';
 // import 'package:memebahadur/Screens/Login/signupform.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -14,6 +16,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  bool _loading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,33 +24,37 @@ class _LoginScreenState extends State<LoginScreen> {
         fit: StackFit.passthrough,
         children: [
           Container(),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Expanded(
-                flex: 3,
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.transparent,
-                  child: Image.asset('assets/images/mainlogo.png'),
-                ).shimmer(
-                    showAnimation: true,
-                    primaryColor: Colors.red,
-                    secondaryColor: Colors.blue),
-              ),
-              Expanded(flex: 2, child: topSection(context)),
-              Container(
-                child: Text(
-                  'MemeBahadur',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: GoogleFonts.poppins().fontFamily,
-                      fontSize: 24.0),
-                ).shimmer(count: 2),
-              ),
-            ],
+          Opacity(
+            opacity: _loading ? 0.1 : 1.0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: CircleAvatar(
+                    radius: 50,
+                    backgroundColor: Colors.transparent,
+                    child: Image.asset('assets/images/mainlogo.png'),
+                  ).shimmer(
+                      showAnimation: true,
+                      primaryColor: Colors.red,
+                      secondaryColor: Colors.blue),
+                ),
+                Expanded(flex: 2, child: topSection(context)),
+                Container(
+                  child: Text(
+                    'MemeBahadur',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: GoogleFonts.poppins().fontFamily,
+                        fontSize: 24.0),
+                  ).shimmer(count: 2),
+                ),
+              ],
+            ),
           ),
+          _loading ? LoadingProgressIndictor() : Container()
         ],
       ),
     );
@@ -71,9 +78,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(15)),
                   text: 'Continue With Facebook',
                   onPressed: () async {
+                    setState(() {
+                      _loading = true;
+                    });
                     final user =
                         await AuthenticationService.loginWithFB(context);
-
+                    setState(() {
+                      _loading = false;
+                    });
                     if (user != null) {
                       Navigator.pushReplacement(
                         context,
@@ -113,8 +125,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)),
                   onPressed: () async {
+                    setState(() {
+                      _loading = true;
+                    });
                     final user = await AuthenticationService.signinWithGoogle();
-
+                    setState(() {
+                      _loading = false;
+                    });
                     if (user != null) {
                       Navigator.pushReplacement(
                         context,
