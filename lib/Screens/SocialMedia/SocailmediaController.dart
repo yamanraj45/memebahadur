@@ -76,6 +76,10 @@ class SocialMediaHomepage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(5.0),
                     ),
+                    Expanded(
+                      child: SocialMediaNavigatorCard('Password',
+                          '/passwordindicator', 'assets/images/news.png'),
+                    ),
                   ],
                 ),
               ],

@@ -5,11 +5,12 @@ import 'package:flutter/services.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/Screens/Login/loginscreen.dart';
+import 'package:memebahadur/Screens/OtherApp/passwordIndicator.dart';
 import 'package:memebahadur/Screens/SocialMedia/FacebookScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleDidYouMean.dart';
 import 'package:memebahadur/Screens/SocialMedia/GoogleTranslate.dart';
 import 'package:memebahadur/Screens/SocialMedia/InstaScreen.dart';
-import 'package:memebahadur/Screens/SocialMedia/NewsScreen.dart';
+import 'package:memebahadur/Screens/OtherApp/NewsScreen.dart';
 
 import 'package:memebahadur/Screens/SocialMedia/TwitterScreen.dart';
 import 'package:memebahadur/Screens/SocialMedia/YoutubeScreen.dart';
@@ -88,6 +89,8 @@ class _MyAppState extends State<MyApp> {
                     '/insta': (BuildContext context) => InstaScreen(),
                     '/facebook': (BuildContext context) => FacebookPost(),
                     '/news': (BuildContext context) => NewsScreen(),
+                    '/passwordindicator': (BuildContext context) =>
+                        PasswordIndicatorMeme(),
                   },
                 ),
               );
