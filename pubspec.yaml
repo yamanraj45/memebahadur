@@ -26,50 +26,50 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.3
+  cupertino_icons: ^1.0.2
   flutter_speed_dial:
-  image_picker: ^0.6.7+4
-  image: any
+  image_picker: 
+  image: 
   transparent_image:
-  path_provider: any
-  double_back_to_close_app: ^1.2.0
-  image_gallery_saver: ^1.2.2
-  permission_handler: any
+  path_provider:
+  double_back_to_close_app: 
+  image_gallery_saver: 
+  permission_handler: 
   path_provider_ex:
-  
-  esys_flutter_share: ^1.0.2
+  # google_mobile_ads: 
+  esys_flutter_share: 
   local_image_provider:
   storage_path:
-  shared_preferences: ^0.5.12+4
-  provider: ^4.3.2+2
-  dotted_border: ^1.0.6
+  shared_preferences: 
+  provider:
+  dotted_border: 
   intl:
   font_awesome_flutter:
   flutter_colorpicker:
   image_size_getter:
   firebase_core:
   # cloud_firestore: ^0.14.0+2
-  firebase_auth: ^0.18.3+1
+  firebase_auth: 
   google_sign_in:
-  flutter_facebook_login: ^3.0.0
+  flutter_facebook_login: 
   flutter_riverpod:
   cached_network_image:
   flutter_cache_manager:
   flutter_signin_button:
   http:
-  wiredash:
   velocity_x:
   google_fonts:
-  circle_bottom_navigation: ^1.0.6
-  hive: ^1.4.4+1
-  hive_flutter: ^0.3.1
-  sqflite:
+  circle_bottom_navigation:
+  hive: 
+  hive_flutter: 
+  
+  
     
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.7.3"
+  flutter_launcher_icons: ^0.8.1
   hive_generator: 
   build_runner:
 
