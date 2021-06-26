@@ -45,20 +45,20 @@ class EditMenu extends StatelessWidget {
                 onPressed: () {
                   showDialog(
                       context: context,
-                      child: AlertDialog(
-                        title: Text("Undo"),
-                        content: Text("Are You Sure You want to undo"),
-                        actions: <Widget>[
-                          FlatButton(
-                            child: Text("Yes"),
-                            onPressed: null,
-                          ),
-                          FlatButton(
-                            child: Text("No"),
-                            onPressed: Navigator.of(context).pop,
-                          )
-                        ],
-                      ));
+                      builder: (context) => AlertDialog(
+                            title: Text("Undo"),
+                            content: Text("Are You Sure You want to undo"),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text("Yes"),
+                                onPressed: null,
+                              ),
+                              TextButton(
+                                child: Text("No"),
+                                onPressed: Navigator.of(context).pop,
+                              )
+                            ],
+                          ));
                 },
               ),
               VerticalDivider(),

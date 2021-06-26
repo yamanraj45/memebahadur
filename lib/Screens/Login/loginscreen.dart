@@ -98,11 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     } else {
                       showDialog(
                         context: context,
-                        child: AlertDialog(
+                        builder: (context) => AlertDialog(
                           title: Text("user null"),
                           content: Text("Try Other Method"),
                           actions: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text("OK"),
                               onPressed: () => Navigator.of(context).pop(),
                             ),

@@ -170,7 +170,7 @@ class NavigationBarState extends State<NavigationBar> {
         floatingActionButton: SpeedDial(
           curve: Curves.decelerate,
           overlayColor: Colors.transparent,
-          child: Icon(Icons.add),
+          icon: Icons.add,
           shape: CircleBorder(),
           children: [
             SpeedDialChild(

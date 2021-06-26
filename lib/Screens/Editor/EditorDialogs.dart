@@ -83,39 +83,40 @@ class _TextOptionsDialogState extends State<TextOptionsDialog> {
                 SizedBox(
                   width: 30,
                   height: 25,
-                  child: FlatButton(
-                      child: Text(''),
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          child: AlertDialog(
-                            title: Text('Pick A Color'),
-                            content: SingleChildScrollView(
-                              child: ColorPicker(
-                                pickerColor: _color,
-                                onColorChanged: (color) {
-                                  setState(() {
-                                    _color = color;
-                                  });
-                                  widget.onFontColorChange(
-                                      widget.location, color);
-                                },
-                                showLabel: true,
-                                pickerAreaHeightPercent: 0.8,
-                              ),
+                  child: TextButton(
+                    child: Text(''),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Pick A Color'),
+                          content: SingleChildScrollView(
+                            child: ColorPicker(
+                              pickerColor: _color,
+                              onColorChanged: (color) {
+                                setState(() {
+                                  _color = color;
+                                });
+                                widget.onFontColorChange(
+                                    widget.location, color);
+                              },
+                              showLabel: true,
+                              pickerAreaHeightPercent: 0.8,
                             ),
-                            actions: <Widget>[
-                              FlatButton(
-                                child: Text('Done'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              )
-                            ],
                           ),
-                        );
-                      },
-                      color: _color),
+                          actions: <Widget>[
+                            ElevatedButton(
+                              child: Text('Done'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                    // color: _color,
+                  ),
                 ),
               ],
             ),
@@ -177,7 +178,7 @@ class _ScreenOptionsDialogState extends State<ScreenOptionsDialog> {
                     onTap: () {
                       showDialog(
                         context: context,
-                        child: AlertDialog(
+                        builder: (context) => AlertDialog(
                           title: Text('Pick A Color'),
                           content: SingleChildScrollView(
                             child: ColorPicker(
@@ -225,7 +226,7 @@ class _ScreenOptionsDialogState extends State<ScreenOptionsDialog> {
                     onTap: () {
                       showDialog(
                         context: context,
-                        child: AlertDialog(
+                        builder: (context) => AlertDialog(
                           title: Text('Pick A Color'),
                           content: SingleChildScrollView(
                             child: ColorPicker(
@@ -242,7 +243,7 @@ class _ScreenOptionsDialogState extends State<ScreenOptionsDialog> {
                             ),
                           ),
                           actions: <Widget>[
-                            FlatButton(
+                            TextButton(
                               child: Text('Done'),
                               onPressed: () {
                                 Navigator.of(context).pop();
@@ -260,7 +261,7 @@ class _ScreenOptionsDialogState extends State<ScreenOptionsDialog> {
         ),
       ),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
           child: Text("Ok"),
           onPressed: () => Navigator.of(context).pop(),
         ),

@@ -36,11 +36,11 @@ class AuthenticationService {
           print(e);
           showDialog(
             context: context,
-            child: AlertDialog(
+            builder: (context) => AlertDialog(
               title: Text("error before profile"),
               content: Text(e.toString()),
               actions: <Widget>[
-                FlatButton(
+                TextButton(
                   child: Text("OK"),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
@@ -58,11 +58,11 @@ class AuthenticationService {
       case FacebookLoginStatus.error:
         return showDialog(
           context: context,
-          child: AlertDialog(
+          builder: (context) => AlertDialog(
             title: Text("Error Connecting Server"),
             content: Text("Try Other Method"),
             actions: <Widget>[
-              FlatButton(
+              TextButton(
                 child: Text("OK"),
                 onPressed: () => Navigator.of(context).pop(),
               ),

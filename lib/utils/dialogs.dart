@@ -4,15 +4,15 @@ import 'package:memebahadur/utils/circularprogressindicator.dart';
 showExitDialog(BuildContext context) {
   showDialog(
     context: context,
-    child: AlertDialog(
+    builder: (context) => AlertDialog(
       title: Text("Exit"),
       content: Text("Do You Want To Discard Changes ?"),
       actions: <Widget>[
-        FlatButton(
+        TextButton(
             child: Text("Yes"),
             onPressed: () => Navigator.of(context)
                 .pushNamedAndRemoveUntil('/home', (route) => false)),
-        FlatButton(
+        TextButton(
           child: Text("No"),
           onPressed: Navigator.of(context).pop,
         )

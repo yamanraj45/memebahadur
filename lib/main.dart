@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/all.dart' as rp;
+import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 import 'package:flutter/services.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
@@ -24,7 +24,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:memebahadur/utils/permissions.dart';
-import 'package:wiredash/wiredash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +48,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final wiredashNavigatorKey = GlobalKey<NavigatorState>();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -65,31 +63,23 @@ class _MyAppState extends State<MyApp> {
           return rp.Consumer(
             builder: (context, watch, child) {
               final user = watch(logincheckProvider).data?.value;
-              return Wiredash(
-                options: WiredashOptionsData(),
-                theme: WiredashThemeData(brightness: Brightness.dark),
-                navigatorKey: wiredashNavigatorKey,
-                projectId: wireProjectId,
-                secret: wireDashApi,
-                child: MaterialApp(
-                  navigatorKey: wiredashNavigatorKey,
-                  debugShowCheckedModeBanner: false,
-                  theme: value.darkTheme ? dark : light,
-                  title: 'Meme Bahadur',
-                  home: SplashScreen(),
-                  routes: <String, WidgetBuilder>{
-                    '/home': (BuildContext context) => NavigationBar(),
-                    '/aboutus': (BuildContext context) => AboutUs(),
-                    '/tweet': (BuildContext context) => Tweet(),
-                    '/youtubescreen': (BuildContext context) => YoutubeScreen(),
-                    '/googletranslate': (BuildContext context) =>
-                        GoogleTranslate(),
-                    '/didyoumean': (BuildContext context) => DidYouMean(),
-                    '/insta': (BuildContext context) => InstaScreen(),
-                    '/facebook': (BuildContext context) => FacebookPost(),
-                    '/news': (BuildContext context) => NewsScreen(),
-                  },
-                ),
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                theme: value.darkTheme ? dark : light,
+                title: 'Meme Bahadur',
+                home: SplashScreen(),
+                routes: <String, WidgetBuilder>{
+                  '/home': (BuildContext context) => NavigationBar(),
+                  '/aboutus': (BuildContext context) => AboutUs(),
+                  '/tweet': (BuildContext context) => Tweet(),
+                  '/youtubescreen': (BuildContext context) => YoutubeScreen(),
+                  '/googletranslate': (BuildContext context) =>
+                      GoogleTranslate(),
+                  '/didyoumean': (BuildContext context) => DidYouMean(),
+                  '/insta': (BuildContext context) => InstaScreen(),
+                  '/facebook': (BuildContext context) => FacebookPost(),
+                  '/news': (BuildContext context) => NewsScreen(),
+                },
               );
             },
           );

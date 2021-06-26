@@ -145,10 +145,10 @@ class EditorState extends State<Editor> {
           onPressed: () {
             showDialog(
                 context: context,
-                child: ScreenOptionsDialog(
-                  options: _screenOptions,
-                  onScreenColorChange: _onColorChange,
-                ));
+                builder: (context) => ScreenOptionsDialog(
+                      options: _screenOptions,
+                      onScreenColorChange: _onColorChange,
+                    ));
           },
           icon: Icon(Icons.edit),
           label: Text('Edit Screen'),
@@ -221,7 +221,7 @@ class EditorState extends State<Editor> {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      child: TextOptionsDialog(
+                                      builder: (context) => TextOptionsDialog(
                                         location: ScreenLocation.uppertext,
                                         fontOptions: _upper,
                                         onFontSizeChange: _onFontSizeChange,
@@ -576,7 +576,7 @@ class EditorState extends State<Editor> {
                                   onPressed: () {
                                     showDialog(
                                       context: context,
-                                      child: TextOptionsDialog(
+                                      builder: (c) => TextOptionsDialog(
                                         location: ScreenLocation.lowertext,
                                         fontOptions: _lower,
                                         onFontSizeChange: _onFontSizeChange,
