@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:image/image.dart' as image;
 import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:image_size_getter/image_size_getter.dart';
+import 'package:memebahadur/Screens/Template/transitionScreen.dart';
 
 import 'TemplateListItem.dart';
 
@@ -70,28 +71,11 @@ class _TemplateState extends State<Template>
                       templateImage: _templateList[index]['image'],
                       templateName: _templateList[index]['name'],
                     ),
-                    onTap: () async {
-                      final path = _templateList[index]['image'];
-                      Image image = Image.asset(path);
-                      final imageSize = await getUiImage(path);
-                      Navigator.push(
-                        context,
-                        PageRouteBuilder(
-                          pageBuilder: (c, a1, a2) => Editor(image, imageSize),
-                          maintainState: true,
-                          transitionsBuilder: (c, anim, a2, child) =>
-                              SlideTransition(
-                                  position: Tween(
-                                    begin: Offset(1.0, 0.0),
-                                    end: Offset(0.0, 0.0),
-                                  ).animate(
-                                    CurvedAnimation(
-                                        parent: anim, curve: Curves.linear),
-                                  ),
-                                  child: child),
-                          transitionDuration: Duration(milliseconds: 400),
-                        ),
-                      );
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return TemplateTransition(_templateList, index);
+                      }));
                     },
                   );
                 },

@@ -167,9 +167,6 @@ class EditorState extends State<Editor> {
                   child: Column(
                     children: <Widget>[
                       SizedBox(height: 20),
-                      Padding(
-                        padding: EdgeInsets.all(10),
-                      ),
                       Container(
                         child: Column(
                           children: <Widget>[
@@ -277,7 +274,6 @@ class EditorState extends State<Editor> {
                                         : Container(),
                                     Container(
                                       color: _screenOptions.backgroundColor,
-                                      height: height * heightFactor,
                                       width: width,
                                       alignment: Alignment.topLeft,
                                       child: Stack(
