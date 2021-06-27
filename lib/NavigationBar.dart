@@ -16,7 +16,7 @@ import 'package:memebahadur/Screens/Editor/EditorScreen.dart';
 import 'package:memebahadur/Screens/MyFavorites/myFavorite.dart';
 
 import 'package:memebahadur/Screens/Template/TemplateScreen.dart';
-import 'package:memebahadur/Screens/TransitionScreen/transitionScreen.dart';
+import 'package:memebahadur/Screens/UserTemplate/userTemplate.dart';
 import 'package:memebahadur/utils/StateManagement/loginScreenState.dart';
 
 import 'package:memebahadur/utils/login_authentication.dart';
@@ -50,7 +50,7 @@ class NavigationBarState extends State<NavigationBar> {
   }
 
   int _currentIndex = 0;
-  final navigationScreens = [Template(), SocialMediaHomepage()];
+  final navigationScreens = [Template(), SocialMediaHomepage(), UserTemplate()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -145,7 +145,7 @@ class NavigationBarState extends State<NavigationBar> {
             children: <Widget>[
               Template(),
               SocialMediaHomepage(),
-              MyFavorites(),
+              UserTemplate(),
             ],
           ),
           snackBar: const SnackBar(
@@ -165,6 +165,7 @@ class NavigationBarState extends State<NavigationBar> {
             tabs: [
               TabData(icon: Icons.home, title: 'Home'),
               TabData(icon: Icons.add_circle_outline, title: 'Others'),
+              TabData(icon: Icons.saved_search, title: 'Template'),
               // TabData(icon: Icons.my_library_add_rounded, title: 'Templates')
             ]),
         floatingActionButton: SpeedDial(

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart' as rp;
 import 'package:flutter/services.dart';
+import 'package:hive/hive.dart';
 import 'package:memebahadur/NavigationBar.dart';
 import 'package:memebahadur/Screens/AboutUs/aboutus.dart';
 import 'package:memebahadur/Screens/Login/loginscreen.dart';
@@ -22,6 +23,7 @@ import 'package:memebahadur/utils/constants.dart';
 import 'package:memebahadur/utils/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:memebahadur/utils/Hiveconstant.dart';
 
 import 'package:memebahadur/utils/permissions.dart';
 
@@ -34,7 +36,9 @@ void main() async {
   );
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   await Firebase.initializeApp();
-
+  Hive.init(appDocumentDirectory.path);
+  Hive.openBox(Stared_Template);
+  Hive.openBox(User_Template);
   runApp(
     rp.ProviderScope(
       child: MyApp(),
